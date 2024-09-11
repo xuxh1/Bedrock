@@ -1,85 +1,123 @@
-import glob
-import subprocess
-import xarray as xr
-import numpy as np
 import os
-from joblib import Parallel, delayed
-from tqdm import tqdm, trange
-import sys
-sys.path.append('/home/xuxh22/anaconda3/lib/mylib/')
-from myfunc import timer
-import netCDF4 as nc
 import shutil
+import subprocess
+import numpy as np
+import xarray as xr
+import netCDF4 as nc
+from tqdm import tqdm, trange
+from joblib import Parallel, delayed
+from myfunc import timer
+from myfunc import DirMan
+import config
 
-path = os.getcwd()+'/'
-print("当前文件路径:", path)
 
-# 计算CWD(累计水分亏缺)为Dr值
+resolution = config.resolution
+name = config.name
+data_path = config.data_path
+
+
+# Calculate Dr(the Culmulate Water Deficit - CWD) version2 and 
+# the first month to use bedrock water
 @timer
 def Dr():
     ds = xr.open_dataset('diff.nc')
     data_var = ds['et']
-
     ds2 = xr.open_dataset('SnowCover.nc')
     snowf = ds2['snowf']
-    
-    # 遍历每个时间步
+    ds3 = xr.open_dataset('Ssoil.nc')
+    ssoil = ds3['Band1']
+
     for j in range(18):
-        print(j)
+        print(j+2003)
         
-        # 初始化一个数组来存储正值累加
-        positive_accumulation = np.zeros_like(data_var.isel(time=0+46*j).values)
+        # Initialize matrices
+        shape = data_var.isel(time=0).shape
+        pos_acc = np.zeros(shape)
+        neg_acc = np.zeros(shape)
+        last_max_pos_acc = np.zeros(shape)
+        max_pos_acc = np.zeros(shape)
+        min_neg_acc = np.zeros(shape)
+        all_max_pos_acc = np.zeros(shape)
+        net_pos_acc = np.zeros(shape)
+        last_data_mask = np.zeros(shape)
+        first_day = np.full_like(data_var.isel(time=0+46*j).values, -1, dtype=int)
 
-        # 初始化一个数组来存储正值累加最大值
-        max_positive_accumulation = np.zeros_like(data_var.isel(time=0+46*j).values)
-        
         for i in range(0+46*j,46+46*j):
-            print(i)
+            print(i-46*j)
             current_data = data_var.isel(time=i).values
-            
             sc = snowf.isel(time=i).values
-            
             current_data_mask = current_data*sc
-            # 累加正值
-            positive_accumulation = np.where((current_data_mask > 0), positive_accumulation + current_data, 0)
-            
-            # 更新最大正值累加
-            max_positive_accumulation = np.maximum(max_positive_accumulation, positive_accumulation)
 
-        output_ds = xr.Dataset({'Dr': (('lat', 'lon'), max_positive_accumulation)},
+            # Accumulate positive and negative values
+            pos_acc = np.where(current_data_mask > 0, pos_acc + current_data_mask, 0)
+            neg_acc = np.where(current_data_mask < 0, neg_acc + current_data_mask, 0)
+
+            # Update last max positive accumulation
+            last_max_pos_acc = np.where((last_data_mask < 0) & (current_data_mask > 0), max_pos_acc, last_max_pos_acc)
+            max_pos_acc = np.where(current_data_mask > 0, pos_acc, max_pos_acc)
+            min_neg_acc = np.where(current_data_mask < 0, neg_acc, min_neg_acc)
+
+            # Update net positive accumulation
+            net_pos_acc = np.where((net_pos_acc + last_max_pos_acc + min_neg_acc > 0) & (last_data_mask > 0) & (current_data_mask < 0), net_pos_acc + last_max_pos_acc + min_neg_acc, 0)
+
+            # When first use the bedrock water?
+            first_occurrence = ((max_pos_acc + net_pos_acc) > ssoil.values) & (first_day == -1)
+            first_day[first_occurrence] = 8*(i-46*j)+1
+
+            # Update all time maximum positive accumulation
+            all_max_pos_acc = np.maximum(all_max_pos_acc, max_pos_acc + net_pos_acc)
+            
+            last_data_mask = current_data_mask
+
+        # Save the results to a new NetCDF file
+        output_ds = xr.Dataset({'Dr': (('lat', 'lon'), all_max_pos_acc)},
                             coords={'lat': ds['lat'], 'lon': ds['lon']})
         output_ds.to_netcdf(f'Dr_{2003+j}_temp1.nc')
+
+        output_ds2 = xr.Dataset({'FD': (('lat', 'lon'), first_day)},
+                    coords={'lat': ds['lat'], 'lon': ds['lon']})
+        output_ds2.to_netcdf(f'FD_{2003+j}_temp1.nc')
+
+    # Close datasets
     ds.close()
-    
+    ds2.close()   
+
+
+# Set cdo function to use parallel operations 
 def cdo_mul(filename1, filename2, filename3):
     subprocess.run(f"cdo mul {filename1} {filename2} {filename3}", shell=True, check=True)
     
 def cdo_sub(filename1, filename2, filename3):
     subprocess.run(f"cdo sub {filename1} {filename2} {filename3}", shell=True, check=True)
     
-# 对Dr进行筛选
+
+# Mask Dr
 @timer
 def Dr_mask():
-    # 将0.1°分辨率重投影到500m上
+    # remap the 0p1 resolution to 0p1 resolution(no need, but for the sake of formatting consistency)
     for j in range(18):
         print(j+2003)
         subprocess.run(f"cdo -b F32 -P 12 --no_remap_weights remapbil,mask1.nc Dr_{2003+j}_temp1.nc Dr_{2003+j}_temp2.nc", shell=True, check=True)
     
     Parallel(n_jobs=5)(delayed(cdo_mul)(f"Dr_{2003+j}_temp2.nc", "mask123.nc", f"Dr_{2003+j}.nc") for j in tqdm(range(18)))
     
-# 计算Ssoil和Sbedrock
+
+# Calculate Dbedrock(rock moisture) 
 @timer
-def Ssoil_Dbedrock():
+def Db():
     Parallel(n_jobs=5)(delayed(cdo_sub)(f"Dr_{2003+j}.nc", "Ssoil.nc", f"Dbedrock_{2003+j}_temp1.nc") for j in tqdm(range(18)))
     
     Parallel(n_jobs=5)(delayed(cdo_mul)(f"Dbedrock_{2003+j}_temp1.nc", "mask123.nc", f"Dbedrock_{2003+j}.nc") for j in tqdm(range(18)))
 
-    
+
+# Delete the intermediate data to save memory
+@timer
 def delete():
     os.system('rm -rf Dr_*_temp1.nc')
     os.system('rm -rf Dr_*_temp2.nc')
     os.system('rm -rf Dbedrock_*_temp1.nc')    
     
+
 # calculate Dbedrock Frequency
 def cal_DbF():
     s1 = 0
@@ -89,10 +127,10 @@ def cal_DbF():
         image = xr.open_dataset(file)
         # print(dtb)
         s = image['Dr']
-        print(f'年份: {year}, 最小值: {s.min().values}, 最大值: {s.max().values}')
+        print(f'year: {year}, min: {s.min().values}, max: {s.max().values}')
         
         s = np.where(s > 0, 2, np.where(s < 0, 1, 0))
-        print(f'年份: {year}, 最小值: {s.min()}, 最大值: {s.max()}')
+        print(f'year: {year}, min: {s.min()}, max: {s.max()}')
         
         print(s.min(),s.max())
         
@@ -122,20 +160,31 @@ def cal_DbF():
     shutil.copyfile('Dbedrock_2003.nc', 'Dbedrock_Frequency.nc')
 
     with nc.Dataset('Dbedrock_Frequency.nc', 'a') as file:
-        # 获取 's' 变量
         s_var = file.variables['Dr']
 
-        # 修改 's' 数据
         new_s_data = s1 
 
-        # 将修改后的数据写回 's' 变量
         s_var[:,:] = new_s_data
 
+# Execute all program
+def cal_D():        
+    # Transfer the current path to the calculation path
+    dir_man = DirMan(data_path)
+    dir_man.enter()
+    path = os.getcwd()+'/'
+    print("Current file path: ", path)
+
+    Dr()
+    Dr_mask()
+    Db()
+    delete()
+    cal_DbF()
+
+    # Transfer from the calculation path to the later path 
+    dir_man.exit()
+    path = os.getcwd()+'/'
+    print("Current file path: ", path)
 
 
 if __name__=='__main__':
-    Dr()
-    Dr_mask()
-    Ssoil_Dbedrock()
-    delete()
-    cal_DbF()
+    cal_D()

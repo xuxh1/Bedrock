@@ -1,9 +1,16 @@
 import os
+import config
 
-def ln(resolution,name):
+resolution = config.resolution
+name = config.name
+data_path = config.data_path
+fig_path = config.fig_path
+
+def ln():
     path1 = f'/tera11/zhwei/students/Xionghui/data/run/{resolution}/'
     path2 = f'/tera11/zhwei/students/Xionghui/data/run/{resolution}_{name}/'
     os.makedirs(path2, exist_ok=True)
+    os.makedirs(fig_path, exist_ok=True)
     
     # -----------------------------------DTB-----------------------------------------
     os.system(f'ln -sf {path1}mask1.nc {path2}mask1.nc')
@@ -34,4 +41,4 @@ def ln(resolution,name):
     os.system(f'cp {path1}0p1.txt {path2}')
 
 if __name__ == '__main__':
-    ln('0p1','exp1')
+    ln()
