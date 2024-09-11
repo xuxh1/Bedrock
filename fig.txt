@@ -1,0 +1,54 @@
+全球分布图：
+1 Sbedrock
+
+2 Sr
+
+3 Ssoil
+
+4 Dbedrock
+
+5 Dr
+
+6 Dbedrock Frequency
+
+7 mask系列
+
+9 Q
+
+10 ET
+
+11 PR
+
+12 Sbedrock/ET
+
+13 Q/PR
+
+14 first month/day
+
+15 biomass
+
+16 Koppen
+
+17 IGBP
+
+18 Latent Heat
+
+19 PET
+
+20 蒸发指数(ET/P)
+
+21 干旱指数(PET/P)
+
+22 异步气候指数(ASI)
+
+23 DTB
+
+...
+
+箱线图：
+1 不同国家和地区分布
+
+站点验证图：(直方图)
+1 DTB站点
+
+2 Sbedrock站点
