@@ -1,0 +1,197 @@
+import xarray as xr
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import matplotlib.dates as mdates
+import matplotlib.ticker as ticker
+import matplotlib.gridspec as gridspec
+import os
+
+path = os.getcwd()+'/'
+print("当前文件路径:", path)
+
+def plot_xG_rolling(team, ax, data, window = 5, color_for = "blue", color_ag = "orange", color_Sr="balck"):
+
+    Y_for = df["et"].reset_index(drop = True)
+    Y_ag = df["pr"].reset_index(drop = True)
+
+
+
+    X_ = pd.Series(range(len(Y_for)))
+
+    Y_for = Y_for.rolling(window = 5, min_periods = 0).mean() # min_periods is for partial avg.
+    Y_ag = Y_ag.rolling(window = 5, min_periods = 0).mean()
+    # Sr = Sr.rolling(window = 5, min_periods = 0).mean()
+
+    d = Y_for-Y_ag
+    pos = d
+    pos[0] = 0
+    for i in range(1,len(d)):
+        current_data = d[i]
+        
+        pos[i] = np.where((current_data>0), pos[i-1]+current_data, 0)
+    Sr = pd.Series(pos)
+    
+    # ---- Create auxiliary series for filling between curves
+
+    X_aux = X_.copy()
+    X_aux.index = X_aux.index * 10 # 9 aux points in between each match
+    last_idx = X_aux.index[-1] + 1
+    X_aux = X_aux.reindex(range(last_idx))
+    X_aux = X_aux.interpolate()
+
+    # --- Aux series for the xG created (Y_for)
+    Y_for_aux = Y_for.copy()
+    Y_for_aux.index = Y_for_aux.index * 10
+    last_idx = Y_for_aux.index[-1] + 1
+    Y_for_aux = Y_for_aux.reindex(range(last_idx))
+    Y_for_aux = Y_for_aux.interpolate()
+
+    # --- Aux series for the xG conceded (Y_ag)
+    Y_ag_aux = Y_ag.copy()
+    Y_ag_aux.index = Y_ag_aux.index * 10
+    last_idx = Y_ag_aux.index[-1] + 1
+    Y_ag_aux = Y_ag_aux.reindex(range(last_idx))
+    Y_ag_aux = Y_ag_aux.interpolate()
+
+    # --- Plotting our data
+
+    # --- Remove spines and add gridlines
+
+    ax.spines["left"].set_visible(False)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    ax.grid(ls = "--", lw = 0.25, color = "#4E616C")
+
+    # --- The data
+
+    for_ = ax.plot(X_, Y_for, mfc = "white", ms = 4, color = color_for)
+    ag_ = ax.plot(X_, Y_ag, mfc = "white", ms = 4, color = color_ag)
+    # ag_ = ax.plot(X_, Sr, mfc = "white", ms = 4, color = color_Sr)
+    
+
+    # --- Fill between
+
+    for index in range(len(X_aux) - 1):
+        # Choose color based on which line's on top
+        if Y_for_aux.iloc[index + 1] > Y_ag_aux.iloc[index + 1]:
+            color = for_[0].get_color()
+        else:
+            color = ag_[0].get_color()
+        
+        # Fill between the current point and the next point in pur extended series.
+        ax.fill_between([X_aux[index], X_aux[index+1]], 
+                        [Y_for_aux.iloc[index], Y_for_aux.iloc[index+1]], 
+                        [Y_ag_aux.iloc[index], Y_ag_aux.iloc[index+1]], 
+                        color=color, zorder = 2, alpha = 0.2, ec = None)
+        
+
+    # --- Ensure minimum value of Y-axis is zero
+    ax.set_ylim(0)
+
+    # --- Adjust tickers and spine to match the style of our grid
+
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(2)) # ticker every 2 matchdays
+    #   xticks_ = ax.xaxis.set_ticklabels([x - 1 for x in range(0, len(X_) + 3, 2)])
+    xticks = ['Jan', 'Feb', 'Apr', 'Mar', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan']
+    ax.xaxis.set_ticks([x for x in range(0, len(X_) + 1, 2)])
+    xticks_ = ax.xaxis.set_ticklabels([x for x in range(0, len(X_) + 1, 2)])
+
+    ax.xaxis.set_tick_params(length = 2, color = "#4E616C", labelcolor = "#4E616C", labelsize = 6)
+    ax.yaxis.set_tick_params(length = 2, color = "#4E616C", labelcolor = "#4E616C", labelsize = 6)
+
+    ax.spines["bottom"].set_edgecolor("#4E616C")
+
+    # --- Legend and team name
+
+    Y_for_last = Y_for.iloc[-1]
+    Y_ag_last = Y_ag.iloc[-1]
+    Y_Sr_last = Sr.max()
+    # -- Add the team's name
+    team_ = ax.text(
+            x = 0, y = ax.get_ylim()[1] + ax.get_ylim()[1]/20,
+            s = f'{team}',
+            color = "#4E616C",
+            va = 'center',
+            ha = 'left',
+            size = 7
+            )
+
+    # -- Add the xG created label
+    for_label_ = ax.text(
+            x = X_.iloc[-1] + 0.75, y = Y_for_last,
+            s = f'{Y_for_last:,.1f} Evapotranspiration',
+            color = color_for,
+            va = 'center',
+            ha = 'left',
+            size = 6.5
+            )
+
+    # -- Add the xG conceded label
+    ag_label_ = ax.text(
+            x = X_.iloc[-1] + 0.75, y = Y_ag_last,
+            s = f'{Y_ag_last:,.1f} Precipitation',
+            color = color_ag,
+            va = 'center',
+            ha = 'left',
+            size = 6.5
+            )
+    
+    # Sr_label_ = ax.text(
+    #         x = X_.iloc[33] + 0.75, y = Y_Sr_last,
+    #         s = f'Root-zone storage deficit is {Y_Sr_last:,.1f}',
+    #         color = color_Sr,
+    #         va = 'center',
+    #         ha = 'left',
+    #         size = 6.5
+    #         )
+
+
+path = '/tera11/zhwei/students/Xionghui/data/diff/'
+et = xr.open_dataset(f'{path}ET_PMLV2.nc')
+pr = xr.open_dataset(f'{path}PR_ERA5LAND.nc')
+t = pd.Series(pd.to_datetime(et['time'])).dt.date
+
+lon = 112
+lat = 22
+year = 2012
+start = 46*(year-2003)
+end = 46*(year-2003+1)+1
+p1_et = et['et'].sel(lon=lon,lat=lat, method='nearest')
+p1_pr = pr['tp'].sel(longitude=lon,latitude=lat, method='nearest')
+
+df = pd.DataFrame()
+df['et'] = p1_et[start:end]
+df['pr'] = p1_pr[start:end]
+df['date'] = t[start:end]
+df['lat'] = [lat] * (end-start)
+df['lon'] = [lon] * (end-start)
+
+
+fig = plt.figure(figsize=(5, 2), dpi = 200)
+ax = plt.subplot(111)
+
+plot_xG_rolling("8-days Water Flux or Root-Zone Deficit (mm)", ax, data = df, color_for = "#fdcf41", color_ag = "#153aab", color_Sr="red")
+
+plt.tight_layout()
+plt.savefig("fig/values.png",dpi=500, bbox_inches='tight')
+# exit(0)
+# fig, ax = plt.subplots(figsize=(12,6), dpi=2000)
+
+# ax.plot(t[start:end], p1_et[start:end], linestyle = '-', lw=2, label='ET') 
+# ax.plot(t[start:end], p1_pr[start:end], linestyle = '-', lw=2, label='P') 
+
+# ax.set_xlim(t[start],t[end-1])
+# ax.set_ylim(0,275)
+# ax.xaxis.set_major_locator(mdates.MonthLocator())
+# ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
+# # plt.xticks(rotation=45)
+# # xticks = ['Jan', 'Feb', 'Apr', 'Mar', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan']
+# # ax.set_xticks(xticks,rotation=45)
+
+# # fig.autofmt_xdate()
+# plt.legend(bbox_to_anchor=(1.20, 1), loc=1, borderaxespad=0)   #显示标签，并放在外侧
+# plt.xlabel('time',fontsize=12) #设置x轴的标签
+# plt.ylabel('8-days Water Flux or Root-Zone Deficit (mm)',fontsize=12) #设置y轴的标签
+# plt.savefig("values.png",dpi=500, bbox_inches='tight') # 保存图片
