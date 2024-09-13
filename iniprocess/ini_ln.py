@@ -25,6 +25,8 @@ def ln():
     os.system(f'ln -sf {path1}diff.nc {path2}diff.nc')
     os.system(f'ln -sf {path1}ET.nc {path2}ET.nc')
     os.system(f'ln -sf {path1}PR.nc {path2}PR.nc')
+    os.system(f'ln -sf {path1}Q.nc {path2}Q.nc')
+
     os.system(f'ln -sf {path1}SnowCover.nc {path2}SnowCover.nc')
     os.system(f'ln -sf {path1}mask3.nc {path2}mask3.nc')
     

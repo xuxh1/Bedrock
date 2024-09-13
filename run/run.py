@@ -15,7 +15,14 @@ def main():
     os.system('python main/cal_S.py')
     os.system('python main/cal_D.py')
 
+def draw():
+    os.system('python draw/draw_S_G.py')
+    os.system('python draw/draw_D_G.py')
+    os.system('python draw/c_plot_DFG.py')
+    os.system('python draw/c_plot_mask.py')
+
 
 if __name__=='__main__':
-    ini()
-    main()
+    # ini()
+    # main()
+    draw()

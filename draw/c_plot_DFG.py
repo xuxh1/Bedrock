@@ -1,25 +1,26 @@
-# plot_Dbedrock_Frequency_Global.py
-
-import xarray as xr
+import os
 import numpy as np
+import xarray as xr
 from shapely.geometry import box
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+from matplotlib.patches import Patch
+from matplotlib.colors import ListedColormap, BoundaryNorm
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
-# import cmaps
-import matplotlib
-import matplotlib.pyplot as plt
-import matplotlib.colors as colors
-from matplotlib.colors import ListedColormap, BoundaryNorm
-from matplotlib.patches import Patch
 from pylab import rcParams
-import os
+from myfunc import timer
+import config
 
-path = os.getcwd()+'/'
-print("当前文件路径:", path)
+resolution = config.resolution
+name = config.name
+data_path = config.data_path
+fig_path = config.fig_path
+region = config.region
 
-# matplotlib.use('QT5Agg')
 font = {'family': 'Times New Roman'}
 matplotlib.rc('font', **font)
 
@@ -41,11 +42,12 @@ params = {'backend': 'ps',
           'text.usetex': False}
 rcParams.update(params)
 
+@timer
 def set_plot_params(): 
     var = 'Dbedrock'
 
     # Create a GeoAxes instance
-    fig = plt.figure(figsize=(14, 4), dpi=2000)
+    fig = plt.figure(figsize=(14, 4), dpi=500)
     ax = fig.add_subplot(1, 1, 1, projection=ccrs.PlateCarree())
 
     fig.subplots_adjust(left=0.01, right=0.68, 
@@ -131,7 +133,7 @@ if __name__ == "__main__":
     var, fig, ax, cmap, level = set_plot_params()
     cmap, norm= define_colormap(level,cmap)
 #_____________________________'Dbedrock_Frequency.nc'____________________________________________
-    with xr.open_dataset('Dbedrock_Frequency_0p1.nc') as image:
+    with xr.open_dataset(f'{data_path}/Dbedrock_Frequency.nc') as image:
         # 获取 's' 变量
         s1 = image['Dr']
 
@@ -177,4 +179,4 @@ if __name__ == "__main__":
     # plt.legend()
     # plt.tight_layout()
     # plt.show()
-    plt.savefig(f'fig/p_DFG.png')
+    plt.savefig(f'{fig_path}/g3_DF.png')

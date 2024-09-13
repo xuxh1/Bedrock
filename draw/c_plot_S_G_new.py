@@ -1,26 +1,24 @@
-
-# plot_S_Global.py
-
-import xarray as xr
-import matplotlib.pyplot as plt
+import os
+import cmaps
 import numpy as np
-from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
-from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
+import pandas as pd
+import xarray as xr
+from pylab import rcParams
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+from matplotlib.gridspec import GridSpec
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
-from matplotlib.gridspec import GridSpec
-import matplotlib.colors as colors
-import matplotlib
-from pylab import rcParams
-import sys
-sys.path.append('/home/xuxh22/anaconda3/lib/mylib/')
+from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
+from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 from myfunc import timer
-import os
-import pandas as pd
-import cmaps
+from myfunc import DirMan
+import config
 
-path = os.getcwd()+'/'
-print("当前文件路径:", path)
+resolution = config.resolution
+name = config.name
+data_path = config.data_path
 
 font = {'family': 'Times New Roman'}
 matplotlib.rc('font', **font)
@@ -42,6 +40,9 @@ params = {'backend': 'ps',
           "mathtext.default":"regular",
           'text.usetex': False}
 rcParams.update(params)
+
+path = os.getcwd()+'/'
+print("当前文件路径:", path)
 
 df = pd.read_csv('region2.csv')
 xmin,xmax,ymin,ymax = -180,180,-60,90
@@ -88,7 +89,6 @@ def plot(ax, xmin, xmax, ymin, ymax, name, level, cmap):
     ax.xaxis.set_major_formatter(LongitudeFormatter())
     ax.yaxis.set_major_formatter(LatitudeFormatter())
     
-
     return img
 
 # def plot_site(ax, xmin, xmax, ymin, ymax, name, level, cmap):
@@ -184,9 +184,12 @@ def DTB():
     cmap = cmaps.cmocean_matter
     draw(name,level,cmap)
     
-# Sr()
-Sb()
-# Sp()
-# Ss()
-# DTB()
+def plot_S_G():
+    Sr()
+    Sb()
+    Sp()
+    Ss()
+    DTB()
 
+if __name__=='__main__':
+    plot_S_G()

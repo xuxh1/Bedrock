@@ -14,9 +14,15 @@ import matplotlib.colors as colors
 import matplotlib
 from pylab import rcParams
 import os
+import config
+import salem
 
-path = os.getcwd()+'/'
-print("当前文件路径:", path)
+resolution = config.resolution
+name = config.name
+region = config.region
+data_path = config.data_path
+shp_path = config.shp_path
+fig_path = config.fig_path
 
 font = {'family': 'Times New Roman'}
 matplotlib.rc('font', **font)
@@ -39,7 +45,7 @@ params = {'backend': 'ps',
           'text.usetex': False}
 rcParams.update(params)
 
-shp_path   =  '/home/xuxh22/stu01/Bedrock/data/Shp/World_CN/'
+shp_path   =  f'{shp_path}/World_CN/'
 shp = gpd.read_file(shp_path+'ne_10m_admin_0_countries_chn.shp')
 mode  = ['Mexico' , 'Central Africa' , 'South Asia']
 
@@ -56,13 +62,14 @@ cmap.set_over('#CC0000')
 
 def plot(ax, xmin, xmax, ymin, ymax,name,band):
     # 读取数据
-    image = xr.open_dataset(f'{name}_0p1.nc').sel(lon=slice(xmin,xmax),lat=slice(ymin,ymax))
+    image = xr.open_dataset(f'{data_path}/{name}.nc').sel(lon=slice(xmin,xmax),lat=slice(ymin,ymax))
     # image = xr.open_dataset(f'Sr.nc')
     if name == 'mask2' or name == 'mask3':
         s = image[band][0,:,:]
     else:
-        s = image[band][:,:]
-        
+        s = image[band][:,:]    
+    s = s.salem.roi(shape=shp)
+
     print(s)
     lat = image['lat']
     
@@ -109,7 +116,7 @@ def plot(ax, xmin, xmax, ymin, ymax,name,band):
 
 # for year in range(2003,2018):
 def draw(name,band):
-    fig = plt.figure(figsize=(12, 6), dpi=2000)
+    fig = plt.figure(figsize=(12, 6), dpi=500)
 
     fig.subplots_adjust(left=0.05, right=0.98, 
                     bottom=0.14, top=0.95, hspace=0.25) 
@@ -128,7 +135,7 @@ def draw(name,band):
     # cb1.ax.tick_params(labelsize=18)
     # cb1.set_label(name, fontsize=30, fontweight='bold')
 
-    plt.savefig(f"fig/p_{name}.png")
+    plt.savefig(f"{fig_path}/g4_{name}.png")
 # print(year)
 
 name = ['mask1','mask12','mask123','mask2','mask3']

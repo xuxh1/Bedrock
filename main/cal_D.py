@@ -166,6 +166,15 @@ def cal_DbF():
 
         s_var[:,:] = new_s_data
 
+def cal_FD():
+    name_list = 'cdo ensmean '
+    for year in range(2003,2021):
+        name = f'FD_{year}_temp1.nc '
+        name_list = name_list+name
+    name_list = name_list+'FD_mean_temp1.nc'
+    os.system(name_list)
+    os.system('cdo mul FD_mean_temp1.nc mask123.nc FD_mean.nc')
+
 # Execute all program
 def cal_D():        
     # Transfer the current path to the calculation path
@@ -179,7 +188,8 @@ def cal_D():
     Db()
     delete()
     cal_DbF()
-
+    cal_FD()
+    
     # Transfer from the calculation path to the later path 
     dir_man.exit()
     path = os.getcwd()+'/'

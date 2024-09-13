@@ -1,10 +1,10 @@
 import glob
 import os
 
-path = '/stu01/xuxh22/Bedrock/preprocess/'
-list = glob.glob(f'{path}a_pre_*.py', recursive=True)
+path = '/stu01/xuxh22/Bedrock/'
+list = glob.glob(f'{path}*.txt', recursive=True)
 
 for file in list:
     print(file)
-    newfile = file.replace('a_pre_', 'pre_')
+    newfile = file.replace('.txt', '.md')
     os.system(f'mv {file} {newfile}')

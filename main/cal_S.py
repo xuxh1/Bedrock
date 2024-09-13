@@ -71,20 +71,31 @@ def Sr_mask():
     print(f'The Sr has finished')    
     
 
-# Calculate Sbedrock(rock moisture) and Sproportion(Sbedrock/Sr)
+# Calculate Sbedrock(rock moisture) and Proportion1(Sbedrock/Sr)
 @timer
-def Sb_Sp():
+def Sb_P1_P2():
     # Calculate Sbedrock(rock moisture)
     subprocess.run(f"cdo sub Sr_temp2.nc Ssoil.nc Sbedrock_temp1.nc", shell=True, check=True)
     subprocess.run(f"cdo mul Sbedrock_temp1.nc mask123.nc Sbedrock.nc", shell=True, check=True)
     print(f'The Sbedrock has finished')
     
-    # Calculate Sproportion(Sbedrock/Sr)
-    subprocess.run(f"cdo -mulc,100 -div Sbedrock_temp1.nc Sr_temp2.nc Sproportion_temp1.nc", shell=True, check=True)
-    subprocess.run(f"cdo mul Sproportion_temp1.nc mask123.nc Sproportion.nc", shell=True, check=True)
-    # subprocess.run(f"cdo setrtomiss,-inf,0 Sproportion_temp1.nc Sproportion.nc", shell=True, check=True)
-    print(f'The Sproportion has finished')
+    # Calculate Proportion1(Sbedrock/Sr)
+    subprocess.run(f"cdo -mulc,100 -div Sbedrock_temp1.nc Sr_temp2.nc Proportion1_temp1.nc", shell=True, check=True)
+    subprocess.run(f"cdo mul Proportion1_temp1.nc mask123.nc Proportion1.nc", shell=True, check=True)
+    # subprocess.run(f"cdo setrtomiss,-inf,0 Proportion1_temp1.nc Proportion1.nc", shell=True, check=True)
+    print(f'The Proportion1 has finished')
 
+    # Calculate Proportion2(Sbedrock/ET)
+    subprocess.run(f"cdo -mulc,100 -div Sbedrock_temp1.nc ET.nc Proportion2_temp1.nc", shell=True, check=True)
+    subprocess.run(f"cdo mul Proportion2_temp1.nc mask123.nc Proportion2.nc", shell=True, check=True)
+    # subprocess.run(f"cdo setrtomiss,-inf,0 Proportion2_temp1.nc Proportion2.nc", shell=True, check=True)
+    print(f'The Proportion2 has finished')
+
+    # Calculate Proportion3(Q/PR)
+    subprocess.run(f"cdo -mulc,100 -div Q.nc PR.nc Proportion3_temp1.nc", shell=True, check=True)
+    subprocess.run(f"cdo mul Proportion3_temp1.nc mask123.nc Proportion3.nc", shell=True, check=True)
+    # subprocess.run(f"cdo setrtomiss,-inf,0 Proportion3_temp1.nc Proportion3.nc", shell=True, check=True)
+    print(f'The Proportion3 has finished')
 
 # Delete the intermediate data to save memory
 @timer
@@ -92,7 +103,7 @@ def delete():
     os.system('rm -rf Sr_temp1.nc')
     os.system('rm -rf Sr_temp2.nc')
     os.system('rm -rf Sbedrock_temp1.nc')
-    os.system('rm -rf Sproportion_temp1.nc')    
+    os.system('rm -rf Proportion1_temp1.nc')    
 
 
 # Execute all program
