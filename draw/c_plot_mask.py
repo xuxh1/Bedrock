@@ -135,7 +135,7 @@ def draw(name,band):
     # cb1.ax.tick_params(labelsize=18)
     # cb1.set_label(name, fontsize=30, fontweight='bold')
 
-    plt.savefig(f"{fig_path}/g4_{name}.png")
+    plt.savefig(f"{fig_path}/g2_{name}.png")
 # print(year)
 
 name = ['mask1','mask12','mask123','mask2','mask3']

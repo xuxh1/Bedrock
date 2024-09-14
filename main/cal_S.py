@@ -73,7 +73,7 @@ def Sr_mask():
 
 # Calculate Sbedrock(rock moisture) and Proportion1(Sbedrock/Sr)
 @timer
-def Sb_P1_P2():
+def Sb_P1_P2_P3_LH():
     # Calculate Sbedrock(rock moisture)
     subprocess.run(f"cdo sub Sr_temp2.nc Ssoil.nc Sbedrock_temp1.nc", shell=True, check=True)
     subprocess.run(f"cdo mul Sbedrock_temp1.nc mask123.nc Sbedrock.nc", shell=True, check=True)
@@ -97,6 +97,10 @@ def Sb_P1_P2():
     # subprocess.run(f"cdo setrtomiss,-inf,0 Proportion3_temp1.nc Proportion3.nc", shell=True, check=True)
     print(f'The Proportion3 has finished')
 
+    # Calculate Latent Heat(Ee=Sbedrock*1000*2257/(3600*24*365))
+    subprocess.run(f'cdo -expr,"Ee=Sr*1000*2257/(3600*24*365)" Sbedrock.nc LH.nc', shell=True, check=True)
+    print(f'The Latent Heat has finished')
+
 # Delete the intermediate data to save memory
 @timer
 def delete():
@@ -116,7 +120,7 @@ def cal_S():
 
     Sr()
     Sr_mask()
-    Sb_Sp()
+    Sb_P1_P2_P3_LH()
     # delete()
 
     # Transfer from the calculation path to the later path 

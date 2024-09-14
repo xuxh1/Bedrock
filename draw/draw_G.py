@@ -60,7 +60,7 @@ def data_process(name):
     if ((name[1]=='LC') or (name[1]=='tp') or (name[1]=='et')):
         s = s[0,:,:]
 
-    if (name[2]=='Sb') or (name[2]=='Sp'):
+    if (name[2]=='Sb') or (name[2]=='Sp') or (name[1]=='FD') or (name[1]=='Dr'):
         s = np.where(s<=0, np.nan, s)   
     s = np.where(s==0, np.nan, s)    
     s = np.ma.masked_where(np.isnan(s), s)  
@@ -137,7 +137,7 @@ level1 = np.arange(0,500,50)
 level2 = np.arange(-300,350,50)
 level3 = np.arange(0,120,20)
 level4 = np.arange(-100,125,25)
-level5 = np.arange(0,450,50)
+level5 = np.arange(0,300,50)
 
 rgb_list = ['#606060','#8ec0cb','#00CC66','#66CC00',
                                 '#69aa4c','#CCCC00','#ebc874','#99004C','#FF6666']
@@ -177,17 +177,21 @@ def Ss():
     cmap = cmap1
     draw(name,level,cmap)
 
-def PR_ET_Q():
-    name = ['PR', 'tp', 'PR', 'Precipitation (mm)']
-    level = np.arange(0,1600,400)
-    cmap = cmaps.WhiteBlue
-    draw(name,level,cmap)
-    name = ['ET', 'et', 'ET', 'Evapotranspiration (mm)']
-    level = np.arange(0,1600,400)
-    cmap = cmaps.WhiteBlue
-    draw(name,level,cmap)
-    name = ['Q', 'tp', 'Q', 'Streamflow (mm)']
-    level = np.arange(0,1600,400)
+def PR_ET_Q_LH():
+    # name = ['PR', 'tp', 'PR', 'Precipitation (mm)']
+    # level = np.arange(0,1600,400)
+    # cmap = cmaps.WhiteBlue
+    # draw(name,level,cmap)
+    # name = ['ET', 'et', 'ET', 'Evapotranspiration (mm)']
+    # level = np.arange(0,1600,400)
+    # cmap = cmaps.WhiteBlue
+    # draw(name,level,cmap)
+    # name = ['Q', 'tp', 'Q', 'Streamflow (mm)']
+    # level = np.arange(0,1600,400)
+    # cmap = cmaps.WhiteBlue
+    # draw(name,level,cmap)
+    name = ['LH', 'Ee', 'LH', 'Latent Heat (W/$m^{{2}}$)']
+    level = np.arange(0,400,40)
     cmap = cmaps.WhiteBlue
     draw(name,level,cmap)
 
@@ -269,6 +273,14 @@ def Biomass():
 #     cmap = colors.ListedColormap(rgb_list)
 #     draw(name,level,cmap)
     
+def Db():
+    for year in range(2003,2021):
+        print(f'draw {year} Dbedrock')
+        name = [f'Dbedrock_{year}', 'Dr', f'Db_{year}', f'$D_{{bedrock}}$ {year} (mm)']
+        level = level1
+        cmap = cmap1
+        draw(name, level, cmap)
+
 @timer
 def draw_S_G():
     path = os.getcwd()+'/'
@@ -277,14 +289,16 @@ def draw_S_G():
     # Sb()
     # Sr()
     # Ss()
-    # PR_ET_Q()
+    # PR_ET_Q_LH()
     # P1()
     # P2()
     # P3()
-    FD()
+    # FD()
     # DTB()
     # Biomass()
     # IGBP()
+
+    Db()
 
 if __name__=='__main__':
     draw_S_G()
