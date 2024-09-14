@@ -1,39 +1,20 @@
-# plot_area.py
 
-import xarray as xr
-import matplotlib.pyplot as plt
-import numpy as np
-import geopandas as gpd
-from shapely.geometry import box
-from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
-from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
-import cartopy.crs as ccrs
-import cartopy.feature as cfeature
-from matplotlib.gridspec import GridSpec
-import matplotlib.colors as colors
-from math import radians, sin
-import matplotlib
-from pylab import rcParams
-import pandas as pd
-import netCDF4 as nc
-import seaborn as sns
 import os
-import matplotlib.ticker as ticker
-from matplotlib.lines import Line2D
-from shapely.geometry import Point
+import pandas as pd
 from plotnine import *
+from pylab import rcParams
+import matplotlib
+import matplotlib.colors as colors
 from myfunc import timer
 from myfunc import DirMan
 import config
 
 resolution = config.resolution
-name = config.name
-data_path = config.data_path
-post_data_path = config.post_data_path
-fig_path = config.fig_path
-
-path = os.getcwd()+'/'
-print("当前文件路径:", path)
+name       = config.name
+region     = config.region
+data_path  = config.data_path
+shp_path   = config.shp_path
+fig_path   = config.fig_path
 
 font = {'family': 'Times New Roman'}
 matplotlib.rc('font', **font)
@@ -79,17 +60,17 @@ def plot_bar():
                     geom_col(stat="identity", position="dodge")+
                     # scale_fill_hue(s=0.90, l=0.65, h=0.0417, color_space='husl') +
                     theme(
-            text=element_text(size=13, color="black"),
-            plot_title=element_text(size=15),
-            aspect_ratio=1.15,
-            figure_size=(5, 5)
-        )+
-        ylim(0, 400)+  
-        labs(x=None, y="mean value (mm)")+
-        guides(fill=False)+
-        scale_fill_gradient(name=cmap)
-        # ggtitle(column)
-        )
+                        text=element_text(size=13, color="black"),
+                        plot_title=element_text(size=15),
+                        aspect_ratio=1.15,
+                        figure_size=(5, 5)
+                    )+
+                    ylim(0, 400)+  
+                    labs(x=None, y="mean value (mm)")+
+                    guides(fill=False)+
+                    scale_fill_manual(values=rgb_list)
+                    # ggtitle(column)
+                    )
         base_hist.save(f'{fig_path}/test/{column}.png')
 
 plot_bar()

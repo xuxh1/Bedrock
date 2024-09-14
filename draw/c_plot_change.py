@@ -1,14 +1,22 @@
-import xarray as xr
+import os
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
+import xarray as xr
+import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.ticker as ticker
 import matplotlib.gridspec as gridspec
-import os
+from myfunc import timer
+from myfunc import DirMan
+import config
 
-path = os.getcwd()+'/'
-print("当前文件路径:", path)
+resolution     = config.resolution
+name           = config.name
+region         = config.region
+data_path      = config.data_path
+post_data_path = config.post_data_path
+shp_path       = config.shp_path
+fig_path       = config.fig_path
 
 def plot_xG_rolling(team, ax, data, window = 5, color_for = "blue", color_ag = "orange", color_Sr="balck"):
 
@@ -148,9 +156,8 @@ def plot_xG_rolling(team, ax, data, window = 5, color_for = "blue", color_ag = "
     #         )
 
 
-path = '/tera11/zhwei/students/Xionghui/data/diff/'
-et = xr.open_dataset(f'{path}ET_PMLV2.nc')
-pr = xr.open_dataset(f'{path}PR_ERA5LAND.nc')
+et = xr.open_dataset(f'{post_data_path}diff/ET_2003_2020_8D_0p1_mm8d_nn.nc')
+pr = xr.open_dataset(f'{post_data_path}diff/PR_2003_2020_8D_0p1_mm8d_nn.nc')
 t = pd.Series(pd.to_datetime(et['time'])).dt.date
 
 lon = 112
@@ -159,7 +166,7 @@ year = 2012
 start = 46*(year-2003)
 end = 46*(year-2003+1)+1
 p1_et = et['et'].sel(lon=lon,lat=lat, method='nearest')
-p1_pr = pr['tp'].sel(longitude=lon,latitude=lat, method='nearest')
+p1_pr = pr['tp'].sel(lon=lon,lat=lat, method='nearest')
 
 df = pd.DataFrame()
 df['et'] = p1_et[start:end]
@@ -175,7 +182,7 @@ ax = plt.subplot(111)
 plot_xG_rolling("8-days Water Flux or Root-Zone Deficit (mm)", ax, data = df, color_for = "#fdcf41", color_ag = "#153aab", color_Sr="red")
 
 plt.tight_layout()
-plt.savefig("fig/values.png",dpi=500, bbox_inches='tight')
+plt.savefig(f"{fig_path}/test/change.png",dpi=500, bbox_inches='tight')
 # exit(0)
 # fig, ax = plt.subplots(figsize=(12,6), dpi=2000)
 

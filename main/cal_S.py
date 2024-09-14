@@ -1,7 +1,7 @@
 import os
 import subprocess
-import xarray as xr
 import numpy as np
+import xarray as xr
 from myfunc import timer
 from myfunc import DirMan
 import config
