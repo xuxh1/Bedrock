@@ -22,6 +22,15 @@ import matplotlib.ticker as ticker
 from matplotlib.lines import Line2D
 from shapely.geometry import Point
 from plotnine import *
+from myfunc import timer
+from myfunc import DirMan
+import config
+
+resolution = config.resolution
+name = config.name
+data_path = config.data_path
+post_data_path = config.post_data_path
+fig_path = config.fig_path
 
 path = os.getcwd()+'/'
 print("当前文件路径:", path)
@@ -47,16 +56,16 @@ params = {'backend': 'ps',
           'text.usetex': False}
 rcParams.update(params)
 
-df = pd.read_csv('region.csv')
+df = pd.read_csv(f'{data_path}/Global.csv')
 rgb_list = ['#ed4a69', '#6c7bbc', '#65677e']
 cmap = colors.ListedColormap(rgb_list)
 
 def plot_bar():
     df_area = df.copy()
     df1 = pd.DataFrame()
-    df1['Sr'] = df_area.groupby('Contient')['Sr'].mean()
-    df1['Sbedrock'] = df_area.groupby('Contient')['Sbedrock'].mean()
-    df1['Ssoil'] = df_area.groupby('Contient')['Ssoil'].mean()
+    df1['Sr'] = df_area.groupby('Continent')['Sr'].mean()
+    df1['Sbedrock'] = df_area.groupby('Continent')['Sbedrock'].mean()
+    df1['Ssoil'] = df_area.groupby('Continent')['Ssoil'].mean()
     df1['Continent'] = df1.index
     print(df1)
     df2 = df1.set_index('Continent').transpose()
@@ -81,6 +90,6 @@ def plot_bar():
         scale_fill_gradient(name=cmap)
         # ggtitle(column)
         )
-        base_hist.save(f'fig4/{column}.png')
+        base_hist.save(f'{fig_path}/test/{column}.png')
 
 plot_bar()
