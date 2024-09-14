@@ -1,3 +1,4 @@
+# the old version code
 cal_area_US.py:计算美国各州面积？得到US.csv
 
 cal_area.py:给各网格经纬度、面积、LC、

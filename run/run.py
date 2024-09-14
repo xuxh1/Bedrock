@@ -14,6 +14,8 @@ def ini():
 def main():
     os.system('python main/cal_S.py')
     os.system('python main/cal_D.py')
+    os.system('python main/cal_area.py')
+
 
 def draw():
     os.system('python draw/draw_S_G.py')

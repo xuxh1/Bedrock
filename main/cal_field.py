@@ -1,22 +1,30 @@
-import rioxarray as rxr
+import os
+import xarray as xr
 import pandas as pd
 import geopandas as gpd
-import matplotlib.pyplot as plt
+import rioxarray as rxr
 import cartopy.crs as ccrs
-import xarray as xr
-import os
+import matplotlib.pyplot as plt
+from myfunc import timer
+from myfunc import DirMan
+import config
+
+resolution = config.resolution
+name = config.name
+data_path = config.data_path
+post_data_path = config.post_data_path
 
 path = os.getcwd()+'/'
 print("当前文件路径:", path)
 
 def fDTB():
-    file_path1 = '/tera11/zhwei/students/Xionghui/data/mask1/BDTICM_M_1km_ll.tif'
-    file_path2 = '/tera11/zhwei/students/Xionghui/data/DTB/gNATSGO/Bedrock_US_gNATSGO_90m-1.tif'
-    file_path3 = '/tera11/zhwei/students/Xionghui/data/DTB/gNATSGO/Bedrock_US_gNATSGO_90m-6.tif'
-    file_path4 = '/tera11/zhwei/students/Xionghui/data/DTB/Soilgrids_Iowa/DTB_temp3.nc'
-    csv_file1 = '/tera11/zhwei/students/Xionghui/data/field/DTB/new_literature_compilation.csv'
-    csv_file2 = '/tera11/zhwei/students/Xionghui/data/field/DTB/DTB1.csv'
-    csv_file3 = '/tera11/zhwei/students/Xionghui/data/field/DTB/DTB2.csv'
+    file_path1 = f'{post_data_path}mask1/BDTICM_M_1km_ll.tif'
+    file_path2 = f'{post_data_path}DTB/gNATSGO/Bedrock_US_gNATSGO_90m-1.tif'
+    file_path3 = f'{post_data_path}DTB/gNATSGO/Bedrock_US_gNATSGO_90m-6.tif'
+    file_path4 = f'{post_data_path}DTB/Soilgrids_Iowa/DTB_temp3.nc'
+    csv_file1 = f'{post_data_path}field/DTB/new_literature_compilation.csv'
+    csv_file2 = f'{post_data_path}field/DTB/DTB1.csv'
+    csv_file3 = f'{post_data_path}field/DTB/DTB2.csv'
 
     s1 = rxr.open_rasterio(file_path1)
     s2 = rxr.open_rasterio(file_path2)
@@ -89,11 +97,11 @@ def fDTB():
     print(csv_copy)
 
 def fSb():
-    file_path1 = 'Ssoil.nc'
-    file_path2 = 'Sbedrock.nc'
-    csv_file1 = '/tera11/zhwei/students/Xionghui/data/field/Sbedrock/literature_compilation.csv'
-    csv_file2 = '/tera11/zhwei/students/Xionghui/data/field/Sbedrock/Sbedrock_new1.csv'
-    csv_file3 = '/tera11/zhwei/students/Xionghui/data/field/Sbedrock/Sbedrock_new2.csv'
+    file_path1 = f'{data_path}Ssoil.nc'
+    file_path2 = f'{data_path}Sbedrock.nc'
+    csv_file1 = f'{post_data_path}field/Sbedrock/literature_compilation.csv'
+    csv_file2 = f'{post_data_path}field/Sbedrock/Sbedrock_new1.csv'
+    csv_file3 = f'{post_data_path}field/Sbedrock/Sbedrock_new2.csv'
 
     s1 = xr.open_dataset(file_path1)
     s2 = xr.open_dataset(file_path2)

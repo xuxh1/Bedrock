@@ -101,8 +101,6 @@ for i in range(len(lat)):
         df2.loc[j, 'mask3'] = s6['et'][0,lat1_index,lon1_index]
         df2.loc[j, 'mask'] = s7['Band1'][lat1_index,lon1_index]
         
-        
-        
         j += 1
 
 df3 = df2.groupby(['lat', 'lon']).first().reset_index()

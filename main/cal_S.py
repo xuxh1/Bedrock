@@ -111,6 +111,7 @@ def delete():
 
 
 # Execute all program
+@timer
 def cal_S():        
     # Transfer the current path to the calculation path
     dir_man = DirMan(data_path)
@@ -130,9 +131,4 @@ def cal_S():
 
 
 if __name__=='__main__':
-    cal_S()
-
-
-
-
- 
+    cal_S() 
