@@ -75,9 +75,13 @@ Ssoil
 ...
 
 ## Fit Station Map:
-...
+p_cao_t1.png
+change.png
 
 ## Box plot：
+p_fSb_test1.pdf
+
+## Violin plot:
 Continent:
 Subregion:
 Sovereignt:
@@ -85,4 +89,20 @@ Sovereignt:
 ## Histogram (Site Validation)
 DTB site:
 Sbedrock site:
+
+fig_scatter:
+scatter绘图
+
+fig1:
+各种diff
+
+fig3:
+lat\lon.png
+各种diff
+
+fig4_US:
+对比US数据
+
+fig5:
+violin图
 

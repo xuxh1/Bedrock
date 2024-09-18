@@ -33,6 +33,11 @@ def count_G():
     dtb = nc.Dataset(f'DTB.nc')['Band1'][:,:].flatten()
     et = nc.Dataset(f'ET.nc')['et'][0,:,:].flatten()
     pr = nc.Dataset(f'PR.nc')['tp'][0,:,:].flatten()
+    q = nc.Dataset(f'Q.nc')['tp'][0,:,:].flatten()
+    lh = nc.Dataset(f'LH.nc')['Ee'][:,:].flatten()
+    fd = nc.Dataset(f'FD_mean.nc')['FD'][:,:].flatten()
+
+
     ag = nc.Dataset(f'Aboveground.nc')['Band1'][:,:].flatten()
     bg = nc.Dataset(f'Belowground.nc')['Band1'][:,:].flatten()
     
@@ -40,6 +45,9 @@ def count_G():
     s1 = nc.Dataset(f'Sr.nc')['Sr'][:,:].flatten()
     s2 = nc.Dataset(f'Ssoil.nc')['Band1'][:,:].flatten()
     s3 = nc.Dataset(f'Proportion1.nc')['Sr'][:,:].flatten()
+    s4 = nc.Dataset(f'Proportion2.nc')['Sr'][:,:].flatten()
+    s5 = nc.Dataset(f'Proportion3.nc')['tp'][0,:,:].flatten()
+
     shp1 = gpd.read_file(shp_path+'continent/continent.shp')
     shp2 = gpd.read_file(shp_path+'World_CN/ne_10m_admin_0_countries_chn.shp')
 
@@ -48,12 +56,15 @@ def count_G():
     df['lon'] = lonf
     df['Area'] = area
 
-    df['Landcover'] = lc.astype(int)
+    df['IGBP'] = lc.astype(int)
     df['Koppen'] = ct.astype(int)
 
     df['DTB'] = dtb
     df['ET'] = et
     df['PR'] = pr
+    df['Q'] = q
+    df['LH'] = lh
+    df['FD_mean'] = fd
     df['Aboveground'] = ag
     df['Belowground'] = bg
 
@@ -61,6 +72,9 @@ def count_G():
     df['Sr'] = s1
     df['Ssoil'] = s2
     df['Proportion1'] = s3
+    df['Proportion2'] = s4
+    df['Proportion3'] = s5
+
     
     print(df['Aboveground'].sum())
     print(df['Belowground'].sum())
@@ -68,8 +82,8 @@ def count_G():
     
     df = df.dropna()
     df = df[df['Sbedrock'] > 0]
-    df = df[df['Landcover']<10]
-    df = df[df['Landcover']>0]
+    df = df[df['IGBP']<10]
+    df = df[df['IGBP']>0]
     df = df[df['Koppen'] != 0]
     
     print(df['Aboveground'].sum())
@@ -109,8 +123,8 @@ def count_G():
     df1 = df[df['DTB'] <= 150]
     print(df1['Area'].sum()/(1e12)) 
     
-    df1 = df1[df1['Landcover']<10]
-    df1 = df1[df1['Landcover']>0]   
+    df1 = df1[df1['IGBP']<10]
+    df1 = df1[df1['IGBP']>0]   
     print(df1['Area'].sum()/(1e12)) 
        
     # df1 = df[df['Koppen'] != 0]
@@ -299,7 +313,7 @@ def count_fDTB():
     csv2['SoilGrids250m'] = a1
     csv2['gNATSGO'] = a2
     csv2['SoilGrids250m_rev'] = a3
-    csv2['Pelletier'] = a3
+    csv2['Pelletier'] = a4
 
     csv2.to_csv(csv_file2, index=False)
 
