@@ -14,6 +14,8 @@ data_path  = config.data_path
 shp_path   = config.shp_path
 fig_path   = config.fig_path
 
+print('python draw_h2_historgram.py')
+
 font = {'family': 'Times New Roman'}
 matplotlib.rc('font', **font)
 

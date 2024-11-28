@@ -24,6 +24,8 @@ data_path  = config.data_path
 shp_path   = config.shp_path
 fig_path   = config.fig_path
 
+print('python draw_r1_imshow.py')
+
 shp = gpd.GeoDataFrame.from_file(shp_path+'World_CN/ne_10m_admin_0_countries_chn.shp')
 
 font = {'family': 'Times New Roman'}
@@ -131,7 +133,8 @@ def draw(region,name,level,cmap):
     # set_other(name,img,level,fig)
 
     plt.savefig(f"{fig_path}/r1_{name[2]}_{name[4]}.png")
-
+    plt.close(fig)
+    
 def draw_region(name,name5,region,level,cmap):
     for i in range(4):
         name.append(name5[i])

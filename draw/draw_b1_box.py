@@ -14,7 +14,9 @@ data_path  = config.data_path
 shp_path   = config.shp_path
 fig_path   = config.fig_path
 
-df = pd.read_csv('Global.csv')
+print('python draw_b1_box.py')
+
+df = pd.read_csv(f'{data_path}Global.csv')
 
 def koppen():
     ## group together Koppen first and second letter groups
@@ -81,10 +83,12 @@ def koppen():
     # set figure size
     f, ax = plt.subplots(figsize=(6, 4), dpi=300) 
 
-    sns.boxplot(x="Koppen_Together", y="Sbedrock", hue = "Koppen_Together", data=df_Koppen, width=.6, linewidth = .7, palette=aesthetics['color'], whis = 1.5, showfliers = False)
+    sns.boxplot(x="Koppen_Together", y="Sbedrock", hue = "Koppen_Together", data=df_Koppen, width=.6, linewidth = .7, palette=aesthetics['color'].tolist(), whis = 1.5, showfliers = False)
+    plt.legend().remove()
     #sns.boxplot(x="Koppen_Together", y="Sbedrock", data=plotdf, width=.6,whis = 0, showfliers = False)
     # Tweak the visual presentation
-    plt.xticks(np.arange(0, 7, step=1), labels = aesthetics['name'],rotation = 'vertical') # rotation='25', ha="right"
+    # plt.xticks(np.arange(0, 7, step=1), labels = aesthetics['name'],rotation = 'vertical') # rotation='25', ha="right"
+    plt.xticks(np.arange(0, 11, step=1), labels = aesthetics['name'],rotation = 'vertical') # rotation='25', ha="right"
     ax.yaxis.grid(True)
     #ax.set_title('Köppen Climate Type')
     ax.set_axisbelow(True)
@@ -120,7 +124,8 @@ def koppen():
     # Set fig size
     f, ax = plt.subplots(figsize=(6, 4),dpi=300)
 
-    sns.boxplot(x="IGBP", y="Sbedrock", data=df_IGBP, hue = "IGBP", width=.6, linewidth = .7, palette = land_aesthetics['color'], whis = 1.5, showfliers = False)
+    sns.boxplot(x="IGBP", y="Sbedrock", data=df_IGBP, hue = "IGBP", width=.6, linewidth = .7, palette = land_aesthetics['color'].tolist(), whis = 1.5, showfliers = False)
+    plt.legend().remove()
     plt.xticks(np.arange(0, 9, step=1), labels = land_aesthetics['name'], rotation = 'vertical') # rotation='25', ha="right"
 
 

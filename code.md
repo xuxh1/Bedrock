@@ -18,7 +18,6 @@ cal_S.py:计算各S值(old)
 
 cal_site.py:针对有Sbedrock的几个站点进行计算，得到这些站点是否被mask，且该地计算得到Sbedrock等数据
 
-
 plot_bar.py:画出region.csv中各大洲平均Sr、Sbedrock、Ssoil柱状图
 
 plot_C_Density.py:画出biomass分布图

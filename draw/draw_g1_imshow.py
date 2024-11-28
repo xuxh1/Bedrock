@@ -9,6 +9,7 @@ from pylab import rcParams
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
+import matplotlib.patches as mpatches
 from matplotlib.gridspec import GridSpec
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
@@ -24,6 +25,8 @@ region     = config.region
 data_path  = config.data_path
 shp_path   = config.shp_path
 fig_path   = config.fig_path
+
+print('python draw_g1_imshow.py')
 
 shp = gpd.GeoDataFrame.from_file(shp_path+'World_CN/ne_10m_admin_0_countries_chn.shp')
 
@@ -89,22 +92,22 @@ def set_ax(ax,s,df2,cmap,level):
         df3 = df2[(df2['mask'] == 1) & (df2['Measure'] == 'Y')]
         print(df3)
         ax.scatter(df3['lon'], df3['lat'], marker='o',
-                        s=20, linewidths=1, edgecolors="#153aab", facecolors="#153aab", label='Report of roots \npenetrating bedrock, mask', zorder=2)
+                        s=20, linewidths=1, edgecolors="#153aab", facecolors="#153aab", label='Report of roots \npenetrating bedrock, unmask', zorder=2)
         
         df3 = df2[(df2['mask'] != 0) & (df2['Measure'] == 'Y')]
         print(df3)
         ax.scatter(df3['lon'], df3['lat'], marker='o',
-                        s=20, linewidths=1, edgecolors="#153aab", facecolors='none', label='Report of roots \npenetrating bedrock, unmask', zorder=2)
+                        s=20, linewidths=1, edgecolors="#153aab", facecolors='none', label='Report of roots \npenetrating bedrock, mask', zorder=2)
 
         df3 = df2[(df2['mask'] == 1) & (df2['Measure'] == 'N')]
         print(df3)
         ax.scatter(df3['lon'], df3['lat'], marker='o',
-                        s=20, linewidths=1, edgecolors="red", facecolors="red", label='Report of bedrock water contribution \nto ET from unsaturated zone, mask', zorder=2)
+                        s=20, linewidths=1, edgecolors="red", facecolors="red", label='Report of bedrock water contribution \nto ET from unsaturated zone, unmask', zorder=2)
         
         df3 = df2[(df2['mask'] != 0) & (df2['Measure'] == 'N')]
         print(df3)
         ax.scatter(df3['lon'], df3['lat'], marker='o',
-                        s=20, linewidths=1, edgecolors="red", facecolors='none', label='Report of bedrock water contribution \nto ET from unsaturated zone, unmask', zorder=2)
+                        s=20, linewidths=1, edgecolors="red", facecolors='none', label='Report of bedrock water contribution \nto ET from unsaturated zone, mask', zorder=2)
         
         ax.legend(fontsize=12 ,bbox_to_anchor=(0.29, 0.379))
 
@@ -139,7 +142,7 @@ def set_ax(ax,s,df2,cmap,level):
     return img
 
 @timer
-def set_other(name,img,level,fig):
+def set_colorbar(name,img,level,fig):
     # From the bottom left corner x, y, width, height
     cbar_ax = fig.add_axes([0.1, 0.1, 0.8, 0.04], frameon = False) 
     cb = fig.colorbar(img, 
@@ -151,15 +154,63 @@ def set_other(name,img,level,fig):
     cb.ax.tick_params(labelsize=12)
     cb.set_label(f'{name[3]}', fontsize=30, fontweight='bold')
 
+def set_legend(fig,name):
+    if name[2]=='IGBP':
+        RGBs = ['#05450a', '#086a10', '#54a708', '#78d203', 
+                '#009900','#c6b044', '#dcd159', '#dade48',  
+                '#fbff13','#b6ff05', '#27ff87', '#c24f44', 
+                '#a5a5a5', '#ff6d4c','#69fff8', '#f9ffa4', 
+                '#1c0dff', 'white', 'white', 'white']
+        labels = ['Evergreen Needleleaf Forests', 'Evergreen Broadleaf Forests', 'Deciduous Needleleaf Forests, Open Space','Deciduous Broadleaf Forests',
+                 'Mixed Forests','Closed Shrublands', 'Open Shrublands', 'Woody Savannas', 
+                'Savannas', 'Grasslands', 'Permanent Wetlands', 'Croplands',
+                 'Urban and Built-up Lands', 'Cropland/Natural Vegetation Mosaics','Permanent Snow and Ice', 'Barren',
+                 'Water Bodies', '', '', '']
+        # RGBs = ['#05450a', '#086a10', '#54a708', '#78d203', 
+        #         '#009900','#c6b044', '#dcd159', '#dade48',  
+        #         '#fbff13']
+        # labels = ['Evergreen Needleleaf Forests', 'Evergreen Broadleaf Forests', 'Deciduous Needleleaf Forests, Open Space','Deciduous Broadleaf Forests',
+        #          'Mixed Forests','Closed Shrublands', 'Open Shrublands', 'Woody Savannas', 
+        #         'Savannas']
+        # From the bottom left corner x, y, width, height
+        legend_ax = fig.add_axes([0, 0.03, 1, 0.06], frameon=False)
+        legend_patches = [mpatches.Patch(color=color, label=label) for color, label in zip(RGBs, labels)]
+
+        legend = legend_ax.legend(handles=legend_patches, loc='center', fontsize=12, frameon=False, ncol=5, edgecolor='black', columnspacing=1.5)
+    elif name[2]=='Koppen':
+        RGBs = ['#0000FF', '#0078FF', '#46AAFA', 'white', '#FF0000', '#FF9696', '#F5A500', '#FFDC64', '#FFFF00', '#C8C800', '#969600', 'white', '#96FF96',
+                '#64C864', '#329632', 'white', '#C8FF50', '#64FF32', '#32C800', 'white', '#FF00FF', '#C800C8', '#963296', '#966496', '#AAAFFF', '#5A78DC',
+                '#4B50B4', '#320087', '#00FFFF', '#37C8FF', '#007D7D', '#00465F', '#B3B3B3', '#666666', 'white', 'white']
+        labels = ['Af', 'Am', 'Aw', '', 'BWh', 'BWk', 'BSh', 'BSk', 'Csa', 'Csb', 'Csc', '', 'Cwa', 'Cwb', 'Cwc', '', 'Cfa', 'Cfb', 'Cfc', '', 'Dsa', 
+                  'Dsb', 'Dsc', 'Dsd', 'Dwa', 'Dwb', 'Dwc', 'Dwd', 'Dfa', 'Dfb', 'Dfc', 'Dfd', 'ET', 'EF', '', '', ]
+        # From the bottom left corner x, y, width, height
+        legend_ax = fig.add_axes([0, 0.02, 1, 0.06], frameon=False)
+        legend_patches = [mpatches.Patch(color=color, label=label) for color, label in zip(RGBs, labels)]
+
+        legend = legend_ax.legend(handles=legend_patches, loc='center', fontsize=16, frameon=False, ncol=9, edgecolor='black', columnspacing=2)
+
+    legend_ax.set_xticks([])
+    legend_ax.set_yticks([])
+    legend_ax.set_xticklabels([])
+    legend_ax.set_yticklabels([])
+
 @timer
 def draw(name,level,cmap):
-    s,df2 = data_process(name)
+    legend_list1 = ['IGBP', 'Koppen']
+    legend_list2 = ['mask1', 'mask2', 'mask3', 'mask12', 'mask123']
+
+    df1,df2 = data_process(name)
     fig,ax = set_fig()
-    img = set_ax(ax,s,df2,cmap,level)
-    set_other(name,img,level,fig)
+    img = set_ax(ax,df1,df2,cmap,level)
+    if name[2] in legend_list1:
+        set_legend(fig,name)
+    elif name[2] in legend_list2:
+        print('no use colorbar')
+    else:
+        set_colorbar(name,img,level,fig)
 
     plt.savefig(f"{fig_path}/g1_{name[2]}.png")
-
+    plt.close(fig)
 
 level1 = np.arange(0,500,50)
 level2 = np.arange(-300,350,50)
@@ -194,7 +245,7 @@ def Sr():
     level = level1
     cmap = cmap1
     draw(name,level,cmap)
-    name = ['Sr_temp1', 'Sr', 'Sr_n2p_nm', '$S_{{r}}$ (mm)']
+    name = ['Sr_temp1', 'Sr', 'Sr_nm', '$S_{{r}}$ (mm)']
     level = level1
     cmap = cmap1
     draw(name,level,cmap)
@@ -219,6 +270,10 @@ def PR_ET_Q_LH():
     cmap = cmaps.WhiteBlue
     draw(name,level,cmap)
     name = ['LH', 'Ee', 'LH', 'Latent Heat (W/$m^{{2}}$)']
+    level = np.arange(0,100,10)
+    cmap = cmaps.WhiteBlue
+    draw(name,level,cmap)
+    name = ['LH_temp1', 'Ee', 'LH_nm', 'Latent Heat (W/$m^{{2}}$)']
     level = np.arange(0,100,10)
     cmap = cmaps.WhiteBlue
     draw(name,level,cmap)
@@ -266,30 +321,44 @@ def P3():
     draw(name,level,cmap)
     
 def FD():
-    name = ['FD_mean', 'FD', 'FD', 'First Day']
+    name = ['FD', 'FD', 'FD', 'First Day']
+    level = np.arange(0,900,150)
+    cmap = cmaps.StepSeq25_r
+    draw(name,level,cmap)
+    name = ['FD_mean', 'FD', 'FD_mean', 'First Day']
     level = level5
-    cmap = cmaps.StepSeq25
+    cmap = cmaps.StepSeq25_r
     draw(name,level,cmap)
 
 def DTB():
     name = ['DTB', 'Band1', 'DTB', 'DTB (cm)']
-    level = np.arange(0,200,50)
+    level = np.arange(0,300,25)
     # rgb_list = ['#ed4a69', '#6c7bbc', '#65677e']
     # cmap = colors.ListedColormap(rgb_list)
-    cmap = cmaps.cmocean_matter
+    cmap = cmaps.CBR_drywet
     draw(name,level,cmap)
-    
-def Biomass():
-    name = ['Aboveground', 'Band1', 'Ag', 'Aboveground Carbon Density (MgC $ha^{{-1}}$)']
-    level = np.arange(0,1600,400)
+    name = ['DTB_mask2', 'Band1', 'DTB_mask2', 'DTB (cm)']
+    level = np.arange(0,300,25)
     # rgb_list = ['#ed4a69', '#6c7bbc', '#65677e']
     # cmap = colors.ListedColormap(rgb_list)
+    cmap = cmaps.CBR_drywet
+    draw(name,level,cmap)
+
+def Biomass():
+    name = ['Aboveground', 'Band1', 'Ag_nm', 'Aboveground Carbon Density (MgC/ha)']
+    level = np.arange(0,1600,400)
     cmap = cmaps.cmocean_speed[:200]
     draw(name,level,cmap)
-    name = ['Belowground', 'Band1', 'Bg', 'Belowground Carbon Density (MgC $ha^{{-1}}$)']
+    name = ['Aboveground_mask123', 'Band1', 'Ag', 'Aboveground Carbon Density (MgC/ha)']
+    level = np.arange(0,1600,400)
+    cmap = cmaps.cmocean_speed[:200]
+    draw(name,level,cmap)
+    name = ['Belowground', 'Band1', 'Bg_nm', 'Belowground Carbon Density (MgC/ha)']
     level = np.arange(0,400,100)
-    # rgb_list = ['#ed4a69', '#6c7bbc', '#65677e']
-    # cmap = colors.ListedColormap(rgb_list)
+    cmap = cmaps.cmocean_speed[:200]
+    draw(name,level,cmap)
+    name = ['Belowground_mask123', 'Band1', 'Bg', 'Belowground Carbon Density (MgC/ha)']
+    level = np.arange(0,400,100)
     cmap = cmaps.cmocean_speed[:200]
     draw(name,level,cmap)
     
@@ -336,6 +405,12 @@ def mask():
     draw(name,level,cmap)
 
 def Db():
+    # for year in range(2003,2021):
+    #     print(f'draw {year} Dr')
+    #     name = [f'Dr_{year}', 'Dr', f'Dr_{year}', f'Dr {year} (mm)']
+    #     level = level1
+    #     cmap = cmap1
+    #     draw(name, level, cmap)
     for year in range(2003,2021):
         print(f'draw {year} Dbedrock')
         name = [f'Dbedrock_{year}', 'Dr', f'Db_{year}', f'$D_{{bedrock}}$ {year} (mm)']
@@ -343,25 +418,34 @@ def Db():
         cmap = cmap1
         draw(name, level, cmap)
 
+def LH():
+    for year in range(2003,2021):
+        for mon in range(1,13):
+            name = [f'LH_{year}_{mon}_temp1', 'Ee', f'LH_{year}_{mon}', 'Latent Heat (W/$m^{{2}}$)']
+            level = np.arange(0,50,5)
+            cmap = cmaps.WhiteBlue
+            draw(name,level,cmap)
+
 @timer
 def draw_G():
     path = os.getcwd()+'/'
     print("Current file path: ", path)
 
-    Sb()
-    Sr()
-    Ss()
-    PR_ET_Q_LH()
-    P1()
-    P2()
-    P3()
-    FD()
-    DTB()
-    Biomass()
-    IGBP()
-    Koppen()
-    mask()
-    Db()
+    # Sb()
+    # Sr()
+    # Ss()
+    # PR_ET_Q_LH()
+    # P1()
+    # P2()
+    # P3()
+    # FD()
+    # DTB()
+    # Biomass()
+    # IGBP()
+    # Koppen()
+    # mask()
+    # Db()
+    LH()
 
 if __name__=='__main__':
     draw_G()

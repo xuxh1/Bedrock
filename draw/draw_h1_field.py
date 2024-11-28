@@ -13,6 +13,8 @@ post_data_path = config.post_data_path
 shp_path       = config.shp_path
 fig_path       = config.fig_path
 
+print('python draw_h1_field.py')
+
 pd.set_option('display.max_columns', None)
 
 def fDTB():
@@ -109,7 +111,7 @@ def fDTB():
 #     ## Uncomment for downloading fig
 #     plt.rcParams['pdf.fonttype'] = 42
 #     plt.savefig(f"{fig_path}/h1_fSb.pdf", transparent=True)
-    
+      
 def fSb():
     ## Extract Columns for Barplot (NOTE: Must exclude first header row manually)
     roots = pd.read_csv(f'{data_path}site.csv', encoding='latin-1')

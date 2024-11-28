@@ -26,6 +26,8 @@ post_data_path = config.post_data_path
 shp_path       = config.shp_path
 fig_path       = config.fig_path
 
+print('python draw_c1_DTB.py')
+
 font = {'family': 'Times New Roman'}
 matplotlib.rc('font', **font)
 

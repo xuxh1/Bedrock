@@ -15,6 +15,8 @@ post_data_path = config.post_data_path
 shp_path       = config.shp_path
 fig_path       = config.fig_path
 
+print('python draw_l1_change.py')
+
 def plot_xG_rolling(team, ax, data, window = 5, color_for = "blue", color_ag = "orange", color_Sr="balck"):
 
     Y_for = df["et"].reset_index(drop = True)
@@ -157,20 +159,36 @@ et = xr.open_dataset(f'{post_data_path}diff/ET_2003_2020_8D_0p1_mm8d_nn.nc')
 pr = xr.open_dataset(f'{post_data_path}diff/PR_2003_2020_8D_0p1_mm8d_nn.nc')
 t = pd.Series(pd.to_datetime(et['time'])).dt.date
 
-lon = 112
-lat = 22
+lon = -112
+lat = 38
 year = 2012
 start = 46*(year-2003)
 end = 46*(year-2003+1)+1
-p1_et = et['et'].sel(lon=lon,lat=lat, method='nearest')
-p1_pr = pr['tp'].sel(lon=lon,lat=lat, method='nearest')
+
+lon_min = lon - 5
+lon_max = lon + 5
+lat_min = lat - 5
+lat_max = lat + 5
+
+p1_et = et['et'].sel(lon=slice(lon_min, lon_max), lat=slice(lat_min, lat_max)).mean(dim=['lon', 'lat'])
+p1_pr = pr['tp'].sel(lon=slice(lon_min, lon_max), lat=slice(lat_min, lat_max)).mean(dim=['lon', 'lat'])
+
+# p1_et = et['et'].sel(lon=lon,lat=lat, method='nearest')
+# p1_pr = pr['tp'].sel(lon=lon,lat=lat, method='nearest')
+
+# df = pd.DataFrame()
+# df['et'] = p1_et[start:end]
+# df['pr'] = p1_pr[start:end]
+# df['date'] = t[start:end]
+# df['lat'] = [lat] * (end-start)
+# df['lon'] = [lon] * (end-start)
 
 df = pd.DataFrame()
-df['et'] = p1_et[start:end]
-df['pr'] = p1_pr[start:end]
-df['date'] = t[start:end]
-df['lat'] = [lat] * (end-start)
-df['lon'] = [lon] * (end-start)
+df['et'] = p1_et[start:end].values
+df['pr'] = p1_pr[start:end].values
+df['date'] = t[start:end].values
+df['lat'] = [lat] * (end - start)
+df['lon'] = [lon] * (end - start)
 
 
 fig = plt.figure(figsize=(5, 2), dpi = 200)

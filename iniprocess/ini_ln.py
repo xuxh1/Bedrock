@@ -76,6 +76,8 @@ def ln():
     os.system(f'ln -sf {path1}Area.nc {path2}Area.nc')
     os.system(f'ln -sf {path1}Aboveground.nc {path2}Aboveground.nc')
     os.system(f'ln -sf {path1}Belowground.nc {path2}Belowground.nc')
+    os.system(f'ln -sf {path1}Aboveground_mask123.nc {path2}Aboveground_mask123.nc')
+    os.system(f'ln -sf {path1}Belowground_mask123.nc {path2}Belowground_mask123.nc')
 
     os.system(f'cp {path1}500.txt {path2}')
     os.system(f'cp {path1}0p1.txt {path2}')

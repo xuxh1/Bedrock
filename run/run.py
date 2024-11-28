@@ -13,9 +13,9 @@ def ini():
     os.system(f'python {path}iniprocess/ini_ln.py')
 
 def main():
-    os.system(f'python {path}main/cal_S.py')
-    os.system(f'python {path}main/cal_D.py')
-    os.system(f'python {path}main/cal_area.py')
+    os.system(f'python {path}main/cal_S_{name}.py')
+    os.system(f'python {path}main/cal_D_{name}.py')
+    os.system(f'python {path}main/count_data.py')
 
 
 def draw():
@@ -34,4 +34,4 @@ def draw():
 if __name__=='__main__':
     ini()
     main()
-    draw()
+    # draw()

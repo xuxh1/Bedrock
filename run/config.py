@@ -1,5 +1,6 @@
 # configuration
 resolution = "0p1"
+# resolution = "500"
 name = "exp1"
 region = [-180,180,-60,90]
 data_path = f'/tera11/zhwei/students/Xionghui/data/run/{resolution}_{name}/'

@@ -1,0 +1,334 @@
+Entered /tera11/zhwei/students/Xionghui/data/run/500_exp1/
+Current file path:  /tera11/zhwei/students/Xionghui/data/run/500_exp1/
+Traceback (most recent call last):
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/file_manager.py", line 211, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/lru_cache.py", line 56, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/tera11/zhwei/students/Xionghui/data/run/500_exp1/Sr_temp1.nc',), 'a', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False)), '434e2610-74c1-49a4-8634-286c2a6e908a']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/main/cal_S.py", line 134, in <module>
+    cal_S() 
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/main/cal_S.py", line 122, in cal_S
+    Sr()
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/main/cal_S.py", line 59, in Sr
+    output_ds.to_netcdf('Sr_temp1.nc')
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/core/dataset.py", line 1957, in to_netcdf
+    return to_netcdf(  # type: ignore  # mypy cannot resolve the overloads:(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/api.py", line 1255, in to_netcdf
+    store = store_open(target, mode, format, group, **kwargs)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 391, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 338, in __init__
+    self.format = self.ds.data_model
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 400, in ds
+    return self._acquire()
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 394, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/home/xuxh22/anaconda3/lib/python3.10/contextlib.py", line 135, in __enter__
+    return next(self.gen)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/file_manager.py", line 199, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/file_manager.py", line 217, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "src/netCDF4/_netCDF4.pyx", line 2463, in netCDF4._netCDF4.Dataset.__init__
+  File "src/netCDF4/_netCDF4.pyx", line 2026, in netCDF4._netCDF4._ensure_nc_success
+PermissionError: [Errno 13] Permission denied: b'/tera11/zhwei/students/Xionghui/data/run/500_exp1/Sr_temp1.nc'
+Entered /tera11/zhwei/students/Xionghui/data/run/500_exp1/
+Current file path:  /tera11/zhwei/students/Xionghui/data/run/500_exp1/
+2003
+0
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/main/cal_D.py", line 200, in <module>
+    cal_D()
+  File "/home/xuxh22/stu01/Bedrock/main/cal_D.py", line 186, in cal_D
+    Dr()
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/main/cal_D.py", line 64, in Dr
+    first_occurrence = ((max_pos_acc + net_pos_acc) > ssoil.values) & (first_day == -1)
+ValueError: operands could not be broadcast together with shapes (1800,3600) (43200,86400) 
+Entered /tera11/zhwei/students/Xionghui/data/run/500_exp1/
+Current file path:  /tera11/zhwei/students/Xionghui/data/run/500_exp1/
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/main/count_data.py", line 414, in <module>
+    count_data()
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/main/count_data.py", line 402, in count_data
+    count_G()
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/main/count_data.py", line 23, in count_G
+    lat = nc.Dataset(f'Sbedrock.nc')['lat'][:].flatten()
+  File "src/netCDF4/_netCDF4.pyx", line 2463, in netCDF4._netCDF4.Dataset.__init__
+  File "src/netCDF4/_netCDF4.pyx", line 2026, in netCDF4._netCDF4._ensure_nc_success
+FileNotFoundError: [Errno 2] No such file or directory: b'Sbedrock.nc'
+python draw_b1_box.py
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_b1_box.py", line 19, in <module>
+    df = pd.read_csv(f'{data_path}Global.csv')
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: '/tera11/zhwei/students/Xionghui/data/run/500_exp1/Global.csv'
+python draw_c1_DTB.py
+-------draw_finish----------
+-------draw_finish----------
+-------draw_finish----------
+-------draw_finish----------
+python draw_g1_imshow.py
+Current file path:  /stu01/xuxh22/
+Traceback (most recent call last):
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/file_manager.py", line 211, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/lru_cache.py", line 56, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/tera11/zhwei/students/Xionghui/data/run/500_exp1/Sbedrock.nc',), 'r', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False)), '0d97c59e-0560-4660-baf6-8c088a85385f']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g1_imshow.py", line 369, in <module>
+    draw_G()
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g1_imshow.py", line 353, in draw_G
+    Sb()
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g1_imshow.py", line 184, in Sb
+    draw(name,level,cmap)
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g1_imshow.py", line 158, in draw
+    s,df2 = data_process(name)
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g1_imshow.py", line 55, in data_process
+    image = xr.open_dataset(f'{data_path}/{name[0]}.nc').sel(lon=slice(region[0],region[1]),lat=slice(region[2],region[3]))
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/api.py", line 566, in open_dataset
+    backend_ds = backend.open_dataset(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 590, in open_dataset
+    store = NetCDF4DataStore.open(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 391, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 338, in __init__
+    self.format = self.ds.data_model
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 400, in ds
+    return self._acquire()
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 394, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/home/xuxh22/anaconda3/lib/python3.10/contextlib.py", line 135, in __enter__
+    return next(self.gen)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/file_manager.py", line 199, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/file_manager.py", line 217, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "src/netCDF4/_netCDF4.pyx", line 2463, in netCDF4._netCDF4.Dataset.__init__
+  File "src/netCDF4/_netCDF4.pyx", line 2026, in netCDF4._netCDF4._ensure_nc_success
+FileNotFoundError: [Errno 2] No such file or directory: b'/tera11/zhwei/students/Xionghui/data/run/500_exp1/Sbedrock.nc'
+python draw_g1r1_DF.py
+Current file path:  /stu01/xuxh22/
+Traceback (most recent call last):
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/file_manager.py", line 211, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/lru_cache.py", line 56, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/tera11/zhwei/students/Xionghui/data/run/500_exp1/Dbedrock_Frequency.nc',), 'r', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False)), 'ac407462-72a9-4752-80fa-be62a29ad3c7']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g1r1_DF.py", line 186, in <module>
+    draw_DF()
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g1r1_DF.py", line 182, in draw_DF
+    DFG()
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g1r1_DF.py", line 161, in DFG
+    draw(region,name,level,cmap)
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g1r1_DF.py", line 125, in draw
+    s = data_process(region)
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g1r1_DF.py", line 51, in data_process
+    image = xr.open_dataset(f'{data_path}/Dbedrock_Frequency.nc').sel(lon=slice(region[0],region[1]),lat=slice(region[2],region[3]))
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/api.py", line 566, in open_dataset
+    backend_ds = backend.open_dataset(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 590, in open_dataset
+    store = NetCDF4DataStore.open(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 391, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 338, in __init__
+    self.format = self.ds.data_model
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 400, in ds
+    return self._acquire()
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 394, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/home/xuxh22/anaconda3/lib/python3.10/contextlib.py", line 135, in __enter__
+    return next(self.gen)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/file_manager.py", line 199, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/file_manager.py", line 217, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "src/netCDF4/_netCDF4.pyx", line 2463, in netCDF4._netCDF4.Dataset.__init__
+  File "src/netCDF4/_netCDF4.pyx", line 2026, in netCDF4._netCDF4._ensure_nc_success
+FileNotFoundError: [Errno 2] No such file or directory: b'/tera11/zhwei/students/Xionghui/data/run/500_exp1/Dbedrock_Frequency.nc'
+python draw_g2_scatter.py
+Current file path:  /stu01/xuxh22/
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g2_scatter.py", line 294, in <module>
+    draw_G()
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g2_scatter.py", line 280, in draw_G
+    Sb()
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g2_scatter.py", line 161, in Sb
+    draw(name,level,cmap)
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g2_scatter.py", line 135, in draw
+    df1,df2 = data_process(name)
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_g2_scatter.py", line 57, in data_process
+    df = pd.read_csv(f'{data_path}Global.csv')
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: '/tera11/zhwei/students/Xionghui/data/run/500_exp1/Global.csv'
+python draw_h1_field.py
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_h1_field.py", line 166, in <module>
+    fDTB()
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_h1_field.py", line 21, in fDTB
+    roots = pd.read_csv(f'{data_path}DTB.csv', encoding='latin-1')
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: '/tera11/zhwei/students/Xionghui/data/run/500_exp1/DTB.csv'
+python draw_h2_historgram.py
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_h2_histogram.py", line 40, in <module>
+    df = pd.read_csv(f'{data_path}/Global.csv')
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: '/tera11/zhwei/students/Xionghui/data/run/500_exp1//Global.csv'
+python draw_l1_change.py
+python draw_l2_latlon.py
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_l2_latlon.py", line 43, in <module>
+    df = pd.read_csv(f'{data_path}Global.csv')
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: '/tera11/zhwei/students/Xionghui/data/run/500_exp1/Global.csv'
+python draw_r1_imshow.py
+Current file path:  /stu01/xuxh22/
+[-125, -75, 10, 40]
+Traceback (most recent call last):
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/file_manager.py", line 211, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/lru_cache.py", line 56, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/tera11/zhwei/students/Xionghui/data/run/500_exp1/Sbedrock.nc',), 'r', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False)), '3232ef94-edf6-48d3-bf7a-4c6f33aeff85']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_r1_imshow.py", line 316, in <module>
+    draw_R()
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_r1_imshow.py", line 302, in draw_R
+    Sb()
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_r1_imshow.py", line 171, in Sb
+    draw_region(name,name5,region,level,cmap)
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_r1_imshow.py", line 142, in draw_region
+    draw(region[i], name, level, cmap)
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_r1_imshow.py", line 130, in draw
+    s = data_process(name,region)
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 8, in func_wrapper
+    result = func(*args, **kwargs)
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_r1_imshow.py", line 54, in data_process
+    image = xr.open_dataset(f'{data_path}/{name[0]}.nc').sel(lon=slice(region[0],region[1]),lat=slice(region[2],region[3]))
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/api.py", line 566, in open_dataset
+    backend_ds = backend.open_dataset(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 590, in open_dataset
+    store = NetCDF4DataStore.open(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 391, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 338, in __init__
+    self.format = self.ds.data_model
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 400, in ds
+    return self._acquire()
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/netCDF4_.py", line 394, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/home/xuxh22/anaconda3/lib/python3.10/contextlib.py", line 135, in __enter__
+    return next(self.gen)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/file_manager.py", line 199, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/xarray/backends/file_manager.py", line 217, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "src/netCDF4/_netCDF4.pyx", line 2463, in netCDF4._netCDF4.Dataset.__init__
+  File "src/netCDF4/_netCDF4.pyx", line 2026, in netCDF4._netCDF4._ensure_nc_success
+FileNotFoundError: [Errno 2] No such file or directory: b'/tera11/zhwei/students/Xionghui/data/run/500_exp1/Sbedrock.nc'
+python draw_v1_class.py
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_v1_class.py", line 43, in <module>
+    df = pd.read_csv(f'{data_path}Global.csv')
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: '/tera11/zhwei/students/Xionghui/data/run/500_exp1/Global.csv'

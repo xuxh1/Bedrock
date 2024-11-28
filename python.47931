@@ -1,0 +1,2569 @@
+python draw_b1_box.py
+Area of each group (km^2):
+Koppen_Together
+1     1.206483e+12
+2     1.293706e+12
+3     3.379708e+12
+4     9.265449e+11
+6     5.543956e+11
+8     5.049803e+11
+11    1.849511e+12
+14    1.953819e+12
+17    3.454951e+11
+21    1.143255e+12
+25    4.283523e+12
+Name: Area, dtype: float64
+IGBP
+1    6.025085e+11
+2    3.259882e+12
+3    4.459953e+11
+4    1.409750e+12
+5    2.002352e+12
+6    7.452814e+11
+7    2.534966e+12
+8    2.888823e+12
+9    3.661634e+12
+Name: Area, dtype: float64
+Koppen_Together
+1      9828
+2     10602
+3     27892
+4      8358
+6      5051
+8      5076
+11    16208
+14    19005
+17     5059
+21    15221
+25    65748
+Name: Area, dtype: int64
+IGBP
+1     8190
+2    27597
+3     5161
+4    14909
+5    24781
+6     8125
+7    29912
+8    33814
+9    37529
+Name: Area, dtype: int64
+      color                                 name  number
+0   #0000FE             Tropical Rainforest (Af)       1
+1   #0077FF                Tropical Monsoon (Am)       2
+2   #46A9FA                Tropical Savanna (Aw)       3
+3   #FE0000                   Desert & Arid (BW)       4
+4   #FE9695                           Arid (BWk)       5
+5   #F5A301                       Semi Arid (BS)       6
+6   #FFDB63                      Semi Arid (BSk)       7
+7   #FDFD45                   Mediterranean (Cs)       8
+8   #C6C700                  Mediterranean (Csb)       9
+9   #96FF96                  Mediterranean (Csc)      10
+10  #63C764    Humid Subtropical &\nOceanic (Cw)      11
+11  #329633                        Oceanic (Cwb)      12
+12  #C6FF4E                         Ocanic (Cwc)      13
+13  #66FF33    Humid Subtropical &\nOceanic (Cf)      14
+14  #33C701                        Oceanic (Cfb)      15
+15  #FF00FE                        Oceanic (Cfc)      16
+16  #C600C7  Humid Continental &\nSubarctic (Ds)      17
+17  #963295              Humid Continental (Dsb)      18
+18  #966495                      Subarctic (Dsc)      19
+19  #ABB1FF                      Subarctic (Dsd)      20
+20  #5A77DB  Humid Continental &\nSubarctic (Dw)      21
+21  #4C51B5               Humid Continental (Dw)      22
+22  #320087                      Subarctic (Dwc)      23
+23  #18DCDC                      Subarctic (Dwd)      24
+24  #38C7FF  Humid Continental &\nSubarctic (Df)      25
+25  #007E7D              Humid Continental (Dfb)      26
+26  #00455E                      Subarctic (Dfc)      27
+27  #B2B2B2                      Subarctic (Dfd)      28
+28  #686868                          Tundra (ET)      29
+      color                                 name  number
+0   #0000FE             Tropical Rainforest (Af)       1
+1   #0077FF                Tropical Monsoon (Am)       2
+2   #46A9FA                Tropical Savanna (Aw)       3
+3   #FE0000                   Desert & Arid (BW)       4
+5   #F5A301                       Semi Arid (BS)       6
+7   #FDFD45                   Mediterranean (Cs)       8
+10  #63C764    Humid Subtropical &\nOceanic (Cw)      11
+13  #66FF33    Humid Subtropical &\nOceanic (Cf)      14
+16  #C600C7  Humid Continental &\nSubarctic (Ds)      17
+20  #5A77DB  Humid Continental &\nSubarctic (Dw)      21
+24  #38C7FF  Humid Continental &\nSubarctic (Df)      25
+['#0000FE', '#0077FF', '#46A9FA', '#FE0000', '#F5A301', '#FDFD45', '#63C764', '#66FF33', '#C600C7', '#5A77DB', '#38C7FF']
+                            name  number    color
+0  Evergreen Needleleaf\nForests       1  #f8de85
+1   Evergreen Broadleaf\nForests       2  #FAC13E
+2  Deciduous Needleleaf\nForests       3  #a5537f
+3   Deciduous Broadleaf\nForests       4  #a52653
+4                  Mixed Forests       5  #c04a02
+5              Closed Shrublands       6  #A4B381
+6                Open Shrublands       7  #52B33F
+7                 Woody Savannas       8  #74B3B8
+8                       Savannas       9  #B183B8
+python draw_c1_DTB.py
+-------draw_finish----------
+-------draw_finish----------
+-------draw_finish----------
+-------draw_finish----------
+/home/xuxh22/stu01/Bedrock/draw/draw_g1_imshow.py:78: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`). Consider using `matplotlib.pyplot.close()`.
+  fig = plt.figure(figsize=(12, 6), dpi=500)
+python draw_g1_imshow.py
+Current file path:  /stu01/xuxh22/
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:17 2024: cdo mul Sbedrock_tem...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-191.20965576) <xarray.DataArray 'Sr' ()>
+array(1320.9510498)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:17 2024: cdo mul Sbedrock_tem...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-191.20965576) <xarray.DataArray 'Sr' ()>
+array(1320.9510498)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:17 2024: cdo sub Sr_temp2.nc ...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-495.80429077) <xarray.DataArray 'Sr' ()>
+array(18530.44921875)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:16 2024: cdo mul Sr_temp2.nc ...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(0.) <xarray.DataArray 'Sr' ()>
+array(1422.77416992)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:25
+
+<xarray.Dataset>
+Dimensions:  (lat: 1500, lon: 3600)
+Coordinates:
+  * lat      (lat) float32 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+  * lon      (lon) float32 -179.9 -179.9 -179.8 -179.6 ... 179.8 179.9 179.9
+Data variables:
+    Sr       (lat, lon) float64 ...
+<xarray.DataArray 'Sr' ()>
+array(0.) <xarray.DataArray 'Sr' ()>
+array(18560.16157913)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Band1    (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.5
+    history:                   Wed May 08 17:36:42 2024: cdo -P 12 --no_remap...
+    GDAL_AREA_OR_POINT:        Area
+    GDAL_DataType:             Generic
+    GDAL:                      GDAL 3.7.3, released 2023/10/30
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Band1' ()>
+array(0.) <xarray.DataArray 'Band1' ()>
+array(524.93408203)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:    (time: 1, bnds: 2, lon: 3600, lat: 1500)
+Coordinates:
+  * time       (time) datetime64[ns] 2011-12-29
+  * lon        (lon) float32 -179.9 -179.9 -179.8 -179.6 ... 179.8 179.9 179.9
+  * lat        (lat) float32 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] ...
+    tp         (time, lat, lon) float32 ...
+Attributes:
+    CDI:          Climate Data Interface version 1.9.9rc1 (https://mpimet.mpg...
+    Conventions:  CF-1.6
+    history:      Thu May 09 17:33:01 2024: cdo timmean PR_2003_2020_yr_0p1_m...
+    frequency:    year
+    CDO:          Climate Data Operators version 1.9.9rc1 (https://mpimet.mpg...
+<xarray.DataArray 'tp' ()>
+array(1.34357762) <xarray.DataArray 'tp' ()>
+array(16918.390625)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:    (time: 1, bnds: 2, lon: 3600, lat: 1500)
+Coordinates:
+  * time       (time) datetime64[ns] 2011-12-29
+  * lon        (lon) float32 -179.9 -179.9 -179.8 -179.6 ... 179.8 179.9 179.9
+  * lat        (lat) float32 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] ...
+    et         (time, lat, lon) float32 ...
+Attributes:
+    CDI:          Climate Data Interface version 1.9.9rc1 (https://mpimet.mpg...
+    Conventions:  CF-1.6
+    history:      Thu May 09 17:33:00 2024: cdo timmean ET_2003_2020_yr_0p1_m...
+    frequency:    year
+    CDO:          Climate Data Operators version 1.9.9rc1 (https://mpimet.mpg...
+<xarray.DataArray 'et' ()>
+array(0.) <xarray.DataArray 'et' ()>
+array(1790.33544922)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:    (time: 1, bnds: 2, lon: 3600, lat: 1500)
+Coordinates:
+  * time       (time) datetime64[ns] 2011-12-29
+  * lon        (lon) float32 -179.9 -179.9 -179.8 -179.6 ... 179.8 179.9 179.9
+  * lat        (lat) float32 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] ...
+    tp         (time, lat, lon) float32 ...
+Attributes:
+    CDI:          Climate Data Interface version 1.9.9rc1 (https://mpimet.mpg...
+    Conventions:  CF-1.6
+    history:      Fri Sep 13 20:00:44 2024: cdo sub PR.nc ET.nc Q.nc\nThu May...
+    frequency:    year
+    CDO:          Climate Data Operators version 1.9.9rc1 (https://mpimet.mpg...
+<xarray.DataArray 'tp' ()>
+array(-1123.32580566) <xarray.DataArray 'tp' ()>
+array(15832.38476562)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Ee       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:21 2024: cdo -expr,Ee=Sr*1000...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Ee' ()>
+array(-13.6846838) <xarray.DataArray 'Ee' ()>
+array(94.53914642)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:18 2024: cdo mul Proportion1_...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-4.11905414e+21) <xarray.DataArray 'Sr' ()>
+array(100.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:18 2024: cdo mul Proportion1_...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-4.11905414e+21) <xarray.DataArray 'Sr' ()>
+array(100.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:18 2024: cdo -mulc,100 -div S...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-1.7365182e+27) <xarray.DataArray 'Sr' ()>
+array(100.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:27
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:19 2024: cdo mul Proportion2_...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-65.93192291) <xarray.DataArray 'Sr' ()>
+array(121.9535141)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:19 2024: cdo mul Proportion2_...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-65.93192291) <xarray.DataArray 'Sr' ()>
+array(121.9535141)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:19 2024: cdo -mulc,100 -div S...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-333.81600952) <xarray.DataArray 'Sr' ()>
+array(1796.08959961)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:27
+
+<xarray.Dataset>
+Dimensions:    (time: 1, bnds: 2, lon: 3600, lat: 1500)
+Coordinates:
+  * time       (time) datetime64[ns] 2011-12-29
+  * lon        (lon) float32 -179.9 -179.9 -179.8 -179.6 ... 179.8 179.9 179.9
+  * lat        (lat) float32 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] ...
+    tp         (time, lat, lon) float32 ...
+Attributes:
+    CDI:          Climate Data Interface version 1.9.9rc1 (https://mpimet.mpg...
+    Conventions:  CF-1.6
+    history:      Thu Sep 19 01:12:20 2024: cdo mul Proportion3_temp1.nc mask...
+    frequency:    year
+    CDO:          Climate Data Operators version 1.9.9rc1 (https://mpimet.mpg...
+<xarray.DataArray 'tp' ()>
+array(-2.61901999) <xarray.DataArray 'tp' ()>
+array(100.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:    (time: 1, bnds: 2, lon: 3600, lat: 1500)
+Coordinates:
+  * time       (time) datetime64[ns] 2011-12-29
+  * lon        (lon) float32 -179.9 -179.9 -179.8 -179.6 ... 179.8 179.9 179.9
+  * lat        (lat) float32 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] ...
+    tp         (time, lat, lon) float32 ...
+Attributes:
+    CDI:          Climate Data Interface version 1.9.9rc1 (https://mpimet.mpg...
+    Conventions:  CF-1.6
+    history:      Thu Sep 19 01:12:20 2024: cdo mul Proportion3_temp1.nc mask...
+    frequency:    year
+    CDO:          Climate Data Operators version 1.9.9rc1 (https://mpimet.mpg...
+<xarray.DataArray 'tp' ()>
+array(-2.61901999) <xarray.DataArray 'tp' ()>
+array(100.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:    (time: 1, bnds: 2, lon: 3600, lat: 1500)
+Coordinates:
+  * time       (time) datetime64[ns] 2011-12-29
+  * lon        (lon) float32 -179.9 -179.9 -179.8 -179.6 ... 179.8 179.9 179.9
+  * lat        (lat) float32 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] ...
+    tp         (time, lat, lon) float32 ...
+Attributes:
+    CDI:          Climate Data Interface version 1.9.9rc1 (https://mpimet.mpg...
+    Conventions:  CF-1.6
+    history:      Thu Sep 19 01:12:20 2024: cdo -mulc,100 -div Q.nc PR.nc Pro...
+    frequency:    year
+    CDO:          Climate Data Operators version 1.9.9rc1 (https://mpimet.mpg...
+<xarray.DataArray 'tp' ()>
+array(-46027.93359375) <xarray.DataArray 'tp' ()>
+array(100.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float32 -179.9 -179.9 -179.8 -179.6 ... 179.8 179.9 179.9
+  * lat      (lat) float32 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    FD       (lat, lon) float64 ...
+Attributes:
+    CDI:          Climate Data Interface version 1.9.9rc1 (https://mpimet.mpg...
+    Conventions:  CF-1.6
+    history:      Thu Sep 19 01:20:37 2024: cdo mul FD_mean_temp1.nc mask123....
+    CDO:          Climate Data Operators version 1.9.9rc1 (https://mpimet.mpg...
+<xarray.DataArray 'FD' ()>
+array(-1.) <xarray.DataArray 'FD' ()>
+array(317.88888889)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Band1    (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.5
+    history:                   Thu May 09 17:12:06 2024: cdo -P 12 --no_remap...
+    GDAL_AREA_OR_POINT:        Area
+    GDAL_DataType:             Generic
+    GDAL:                      GDAL 3.7.3, released 2023/10/30
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Band1' ()>
+array(0.) <xarray.DataArray 'Band1' ()>
+array(5000.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Band1    (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.5
+    history:                   Wed May 08 16:53:11 2024: cdo -P 12 --no_remap...
+    GDAL_AREA_OR_POINT:        Area
+    GDAL_DataType:             Generic
+    GDAL:                      GDAL 3.7.3, released 2023/10/30
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+    cdo_openmp_thread_number:  12
+<xarray.DataArray 'Band1' ()>
+array(0.) <xarray.DataArray 'Band1' ()>
+array(2657.53808594)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Band1    (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.5
+    history:                   Wed May 08 16:53:11 2024: cdo -P 12 --no_remap...
+    GDAL_AREA_OR_POINT:        Area
+    GDAL_DataType:             Generic
+    GDAL:                      GDAL 3.7.3, released 2023/10/30
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+    cdo_openmp_thread_number:  12
+<xarray.DataArray 'Band1' ()>
+array(0.) <xarray.DataArray 'Band1' ()>
+array(1258.3215332)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (time: 1, lon: 3600, lat: 1500)
+Coordinates:
+  * time     (time) int32 1
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    LC       (time, lat, lon) float64 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Wed May 08 17:28:22 2024: cdo -P 12 --no_remap...
+    creation_date:             20231030
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'LC' ()>
+array(1.) <xarray.DataArray 'LC' ()>
+array(255.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:27
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Band1    (lat, lon) int32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.5
+    history:                   Wed May 08 17:28:29 2024: cdo -P 12 --no_remap...
+    GDAL_AREA_OR_POINT:        Area
+    GDAL_TIFFTAG_SOFTWARE:     MATLAB 9.2, Mapping Toolbox 4.5
+    GDAL:                      GDAL 3.7.3, released 2023/10/30
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Band1' ()>
+array(0.) <xarray.DataArray 'Band1' ()>
+array(30.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Band1    (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.5
+    history:                   Wed May 08 17:31:10 2024: cdo -P 12 --no_remap...
+    GDAL_AREA_OR_POINT:        Area
+    GDAL_DataType:             Generic
+    GDAL:                      GDAL 3.7.3, released 2023/10/30
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Band1' ()>
+array(1.) <xarray.DataArray 'Band1' ()>
+array(1.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Band1    (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.5
+    history:                   Wed May 08 17:30:45 2024: cdo -P 12 --no_remap...
+    GDAL_AREA_OR_POINT:        Area
+    GDAL_DataType:             Generic
+    GDAL:                      GDAL 3.7.3, released 2023/10/30
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Band1' ()>
+array(0.) <xarray.DataArray 'Band1' ()>
+array(1.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Band1    (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.5
+    history:                   Wed May 08 17:28:42 2024: cdo -P 12 --no_remap...
+    GDAL_AREA_OR_POINT:        Area
+    GDAL_DataType:             Generic
+    GDAL:                      GDAL 3.7.3, released 2023/10/30
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Band1' ()>
+array(1.) <xarray.DataArray 'Band1' ()>
+array(1.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:25
+
+<xarray.Dataset>
+Dimensions:  (time: 1, lon: 3600, lat: 1500)
+Coordinates:
+  * time     (time) int32 1
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    LC       (time, lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Wed May 08 17:31:31 2024: cdo -P 12 --no_remap...
+    creation_date:             20231030
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+    cdo_openmp_thread_number:  12
+<xarray.DataArray 'LC' ()>
+array(0.) <xarray.DataArray 'LC' ()>
+array(1.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+<xarray.Dataset>
+Dimensions:    (time: 1, bnds: 2, lon: 3600, lat: 1500)
+Coordinates:
+  * time       (time) datetime64[ns] 2011-12-29
+  * lon        (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat        (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] ...
+    et         (time, lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Wed May 08 17:31:32 2024: cdo -P 12 --no_remap...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'et' ()>
+array(1.) <xarray.DataArray 'et' ()>
+array(1.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2003 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:30 2024: cdo mul Dbedrock_200...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.21154785) <xarray.DataArray 'Dr' ()>
+array(687.60919189)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2004 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:30 2024: cdo mul Dbedrock_200...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.20965576) <xarray.DataArray 'Dr' ()>
+array(655.58337402)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2005 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:30 2024: cdo mul Dbedrock_200...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.21182251) <xarray.DataArray 'Dr' ()>
+array(653.47875977)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2006 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:30 2024: cdo mul Dbedrock_200...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.2118988) <xarray.DataArray 'Dr' ()>
+array(657.8092041)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2007 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:30 2024: cdo mul Dbedrock_200...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.21073914) <xarray.DataArray 'Dr' ()>
+array(609.52093506)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2008 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:30 2024: cdo mul Dbedrock_200...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.21147156) <xarray.DataArray 'Dr' ()>
+array(671.05639648)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2009 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:30 2024: cdo mul Dbedrock_200...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.85597229) <xarray.DataArray 'Dr' ()>
+array(648.72644043)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:25
+
+draw 2010 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:30 2024: cdo mul Dbedrock_201...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-199.54266357) <xarray.DataArray 'Dr' ()>
+array(636.88293457)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2011 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:30 2024: cdo mul Dbedrock_201...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.21052551) <xarray.DataArray 'Dr' ()>
+array(594.14135742)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2012 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:30 2024: cdo mul Dbedrock_201...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.21183777) <xarray.DataArray 'Dr' ()>
+array(619.06311035)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2013 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:31 2024: cdo mul Dbedrock_201...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.20973206) <xarray.DataArray 'Dr' ()>
+array(656.8326416)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2014 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:31 2024: cdo mul Dbedrock_201...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-192.54698181) <xarray.DataArray 'Dr' ()>
+array(673.1418457)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2015 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:31 2024: cdo mul Dbedrock_201...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-198.38078308) <xarray.DataArray 'Dr' ()>
+array(681.53527832)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2016 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:31 2024: cdo mul Dbedrock_201...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.21035767) <xarray.DataArray 'Dr' ()>
+array(658.75012207)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2017 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:31 2024: cdo mul Dbedrock_201...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.21022034) <xarray.DataArray 'Dr' ()>
+array(599.40454102)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2018 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:31 2024: cdo mul Dbedrock_201...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.2101593) <xarray.DataArray 'Dr' ()>
+array(703.76062012)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:25
+
+draw 2019 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:31 2024: cdo mul Dbedrock_201...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.21191406) <xarray.DataArray 'Dr' ()>
+array(701.28710938)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw 2020 Dbedrock
+<xarray.Dataset>
+Dimensions:  (lon: 3600, lat: 1500)
+Coordinates:
+  * lon      (lon) float64 -179.9 -179.8 -179.8 -179.6 ... 179.8 179.9 180.0
+  * lat      (lat) float64 -59.95 -59.85 -59.75 -59.65 ... 89.75 89.85 89.95
+Data variables:
+    Dr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:20:31 2024: cdo mul Dbedrock_202...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Dr' ()>
+array(-191.21127319) <xarray.DataArray 'Dr' ()>
+array(708.68334961)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:26
+
+draw_G cost time:  0:21: 5
+
+python draw_g1r1_DF.py
+Current file path:  /stu01/xuxh22/
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 4
+
+[-125, -75, 10, 40]
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+draw cost time:  0: 0: 2
+
+[-72, -35, -20, 7]
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+draw cost time:  0: 0: 1
+
+[-20, 50, -17, 13]
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+draw cost time:  0: 0: 2
+
+[70, 110, 8, 30]
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+draw cost time:  0: 0: 1
+
+python draw_g2_scatter.py
+Current file path:  /stu01/xuxh22/
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+    Unnamed: 0        lat         lon Measure  Sbedrock_field_min  \
+3            3  11.730000   76.450000       Y                 NaN   
+14          14  29.940000  -98.120000       Y               999.0   
+44          44  37.087900 -119.250500       Y                44.0   
+45          45  38.110000 -109.920000       Y                 NaN   
+51          51  39.574500 -123.477000       Y                37.0   
+58          58  42.500000 -123.200000       Y                 NaN   
+63          63  43.500000 -122.700000       Y                 NaN   
+65          65  43.936708    5.466161       Y                 NaN   
+68          68  45.740000   13.750000       Y                 NaN   
+
+    Sbedrock_field_max    Sbedrock       Ssoil  Soil_depth         DTB  mask1  \
+3                  NaN  221.497160   98.059810         NaN  100.000000    1.0   
+14               999.0  304.976400   82.507030         NaN  100.000000    1.0   
+44               270.0  370.554630   82.869640         NaN  100.000000    1.0   
+45                 NaN   -5.191021   53.297870        45.0   75.010790    1.0   
+51               173.0  324.213870   99.357370         NaN  100.000000    1.0   
+58                 NaN  399.776200   51.744442        55.0   49.999897    1.0   
+63                 NaN  347.138060  111.935930       300.0  100.000000    1.0   
+65                 NaN  174.644010   95.822136        35.0  100.000000    1.0   
+68                 NaN  235.138490  102.257360        30.0  100.000000    1.0   
+
+    mask2  mask3  mask  num  
+3     1.0    1.0   1.0    3  
+14    1.0    1.0   1.0   14  
+44    1.0    1.0   1.0   44  
+45    1.0    1.0   1.0   45  
+51    1.0    1.0   1.0   51  
+58    1.0    1.0   1.0   58  
+63    1.0    1.0   1.0   63  
+65    1.0    1.0   1.0   65  
+68    1.0    1.0   1.0   68  
+    Unnamed: 0        lat         lon Measure  Sbedrock_field_min  \
+3            3  11.730000   76.450000       Y                 NaN   
+4            4  20.815556  -89.245000       Y                 NaN   
+5            5  20.833333  -89.652778       Y                 NaN   
+6            6  20.879167  -89.653333       Y                 NaN   
+12          12  29.850000  -98.490000       Y               999.0   
+13          13  29.930000  -97.800000       Y                 NaN   
+14          14  29.940000  -98.120000       Y               999.0   
+15          15  30.000000  -98.570794       Y                 NaN   
+21          21  31.020000 -100.020000       Y                 NaN   
+32          32  33.451700 -117.173500       Y               120.0   
+34          34  33.699000 -111.231000       Y                 NaN   
+35          35  33.807800 -116.771700       Y                 NaN   
+36          36  33.810000 -116.680000       Y               394.0   
+37          37  34.237000 -116.972000       Y                 NaN   
+38          38  34.266000 -117.186000       Y                 NaN   
+39          39  34.287000 -117.677000       Y                 NaN   
+41          41  35.957000 -118.630000       Y               135.0   
+44          44  37.087900 -119.250500       Y                44.0   
+45          45  38.110000 -109.920000       Y                 NaN   
+46          46  38.533000   -8.017000       Y                 NaN   
+49          49  39.152400 -122.348700       Y                 NaN   
+51          51  39.574500 -123.477000       Y                37.0   
+52          52  39.680000    9.270000       Y                 NaN   
+53          53  39.686825    9.275094       Y                 NaN   
+54          54  39.727300 -123.643300       Y               140.0   
+58          58  42.500000 -123.200000       Y                 NaN   
+60          60  43.064300 -116.753584       Y                 NaN   
+61          61  43.084000 -116.743000       Y                 NaN   
+63          63  43.500000 -122.700000       Y                 NaN   
+64          64  43.683300    3.816670       Y                 NaN   
+65          65  43.936708    5.466161       Y                 NaN   
+66          66  44.178869    5.243569       Y                 NaN   
+68          68  45.740000   13.750000       Y                 NaN   
+
+    Sbedrock_field_max    Sbedrock       Ssoil  Soil_depth          DTB  \
+3                  NaN  221.497160   98.059810         NaN   100.000000   
+4                  NaN  230.041410  237.461880        30.0  5000.000000   
+5                  NaN  151.570760  235.072950        30.0  5000.000000   
+6                  NaN  151.570760  235.072950        30.0  5000.000000   
+12               999.0  317.721860  104.886410        32.0   124.976830   
+13                 NaN  211.726680  173.688870        20.0  4900.205600   
+14               999.0  304.976400   82.507030         NaN   100.000000   
+15                 NaN  221.676710  157.336470         NaN   275.089020   
+21                 NaN   68.454100  143.441880         NaN   200.214890   
+32               120.0  234.138340   40.271910        62.0    50.078670   
+34                 NaN  178.249850   39.852760         NaN    49.913944   
+35                 NaN  180.050600   78.941830         NaN   100.000000   
+36               406.0  110.861120   19.182775        35.0    24.929976   
+37                 NaN  391.019380    0.000000         NaN          NaN   
+38                 NaN  324.083680   74.950760         NaN   100.000000   
+39                 NaN  413.177860   42.750060        81.0    49.921955   
+41               380.0  585.824460   63.236490        75.0    74.929820   
+44               270.0  370.554630   82.869640         NaN   100.000000   
+45                 NaN   -5.191021   53.297870        45.0    75.010790   
+46                 NaN  199.614360   88.494800        30.0   100.000000   
+49                 NaN  234.680630   79.880260         NaN   100.000000   
+51               173.0  324.213870   99.357370         NaN   100.000000   
+52                 NaN  277.605900   90.569565        17.0   100.000000   
+53                 NaN  277.605900   90.569565         NaN   100.000000   
+54               420.0  300.912600  152.596080        45.0   124.930670   
+58                 NaN  399.776200   51.744442        55.0    49.999897   
+60                 NaN  192.955290   25.103310         NaN    25.003357   
+61                 NaN  192.955290   25.103310         NaN    25.003357   
+63                 NaN  347.138060  111.935930       300.0   100.000000   
+64                 NaN   17.446053  123.415580       400.0   548.583700   
+65                 NaN  174.644010   95.822136        35.0   100.000000   
+66                 NaN  113.665410  101.459710        35.0   100.000000   
+68                 NaN  235.138490  102.257360        30.0   100.000000   
+
+    mask1  mask2  mask3  mask  num  
+3     1.0    1.0    1.0   1.0    3  
+4     NaN    1.0    NaN   NaN    4  
+5     NaN    1.0    NaN   NaN    5  
+6     NaN    1.0    NaN   NaN    6  
+12    NaN    1.0    1.0   NaN   12  
+13    NaN    0.0    1.0   NaN   13  
+14    1.0    1.0    1.0   1.0   14  
+15    NaN    0.0    1.0   NaN   15  
+21    NaN    0.0    NaN   NaN   21  
+32    1.0    1.0    NaN   NaN   32  
+34    1.0    0.0    NaN   NaN   34  
+35    1.0    0.0    NaN   NaN   35  
+36    1.0    0.0    1.0   NaN   36  
+37    NaN    0.0    NaN   NaN   37  
+38    1.0    1.0    NaN   NaN   38  
+39    1.0    0.0    NaN   NaN   39  
+41    1.0    1.0    NaN   NaN   41  
+44    1.0    1.0    1.0   1.0   44  
+45    1.0    1.0    1.0   1.0   45  
+46    1.0    0.0    1.0   NaN   46  
+49    1.0    0.0    1.0   NaN   49  
+51    1.0    1.0    1.0   1.0   51  
+52    1.0    1.0    NaN   NaN   52  
+53    1.0    1.0    NaN   NaN   53  
+54    NaN    1.0    1.0   NaN   54  
+58    1.0    1.0    1.0   1.0   58  
+60    1.0    0.0    1.0   NaN   60  
+61    1.0    0.0    1.0   NaN   61  
+63    1.0    1.0    1.0   1.0   63  
+64    NaN    1.0    1.0   NaN   64  
+65    1.0    1.0    1.0   1.0   65  
+66    1.0    0.0    1.0   NaN   66  
+68    1.0    1.0    1.0   1.0   68  
+    Unnamed: 0        lat         lon Measure  Sbedrock_field_min  \
+9            9  24.716700  108.300000       N                 NaN   
+42          42  36.000000  -84.000000       N                 NaN   
+48          48  38.970437 -107.056213       N                 NaN   
+62          62  43.500000 -124.000000       N                 NaN   
+69          69  46.000000    4.500000       N                 NaN   
+70          70  48.666111   14.707778       N                 NaN   
+71          71  48.978611   13.811944       N                 NaN   
+72          72  49.359722   18.383333       N                 NaN   
+
+    Sbedrock_field_max    Sbedrock       Ssoil  Soil_depth         DTB  mask1  \
+9                  NaN   98.388535  100.254610        30.0  100.000000    1.0   
+42                 NaN  162.094420   94.133970         NaN  100.000000    1.0   
+48                 NaN   87.704660   76.675316         NaN   75.079200    1.0   
+62                 NaN  274.117580  120.436940        40.0  100.000000    1.0   
+69                 NaN  121.814690   72.950110       112.0   74.846405    1.0   
+70                 NaN  -14.662384  106.401955        75.0  100.000000    1.0   
+71                 NaN  -32.323708  111.845280        64.0  100.000000    1.0   
+72                 NaN   17.029121   87.260280        72.0   75.084230    1.0   
+
+    mask2  mask3  mask  num  
+9     1.0    1.0   1.0    9  
+42    1.0    1.0   1.0   42  
+48    1.0    1.0   1.0   48  
+62    1.0    1.0   1.0   62  
+69    1.0    1.0   1.0   69  
+70    1.0    1.0   1.0   70  
+71    1.0    1.0   1.0   71  
+72    1.0    1.0   1.0   72  
+    Unnamed: 0        lat         lon Measure  Sbedrock_field_min  \
+0            0 -34.300000   19.150000       N                 NaN   
+1            1 -32.338300  116.090400       N                 NaN   
+2            2 -30.412800   18.249700       N                 NaN   
+7            7  20.905000  -89.630000       N                 NaN   
+8            8  22.000000 -101.000000       N                 NaN   
+9            9  24.716700  108.300000       N                 NaN   
+10          10  29.697778  -98.347222       N                 NaN   
+11          11  29.836667  -98.520833       N                 NaN   
+16          16  30.223000  -97.872000       N                 NaN   
+17          17  30.261111  -97.796111       N                 NaN   
+18          18  30.371111  -97.771944       N                 NaN   
+19          19  30.673300  -99.362200       N                 NaN   
+20          20  30.935833  -99.925833       N                 NaN   
+22          22  31.038611  -98.510556       N                 NaN   
+23          23  31.043333  -98.488889       N                 NaN   
+24          24  31.043611  -98.490278       N                 NaN   
+25          25  31.047778  -98.508611       N                 NaN   
+26          26  31.048056  -98.489722       N                 NaN   
+27          27  31.051667  -98.493611       N                 NaN   
+28          28  31.056389  -98.506944       N                 NaN   
+29          29  31.916667  -99.900000       N                 NaN   
+30          30  31.916700  -99.900000       N                 NaN   
+31          31  32.220400 -111.006000       N                 NaN   
+33          33  33.634671  -84.170067       N                 NaN   
+40          40  34.900000  -95.900000       N                 NaN   
+42          42  36.000000  -84.000000       N                 NaN   
+43          43  36.010400  -84.269600       N                 NaN   
+47          47  38.860000 -104.310000       N                 NaN   
+48          48  38.970437 -107.056213       N                 NaN   
+50          50  39.200000  -84.500000       N                 NaN   
+55          55  40.011233 -105.489234       N                 NaN   
+56          56  40.650000  -77.900000       N                 NaN   
+57          57  40.667000  -77.903000       N                 NaN   
+59          59  42.582790  -88.467000       N                 NaN   
+62          62  43.500000 -124.000000       N                 NaN   
+69          69  46.000000    4.500000       N                 NaN   
+70          70  48.666111   14.707778       N                 NaN   
+71          71  48.978611   13.811944       N                 NaN   
+72          72  49.359722   18.383333       N                 NaN   
+73          73  55.500000 -132.700000       N                 NaN   
+
+    Sbedrock_field_max    Sbedrock       Ssoil  Soil_depth          DTB  \
+0                  NaN  178.934170   64.498314        60.0    74.887535   
+1                  NaN  314.498350   80.386980         NaN   100.000000   
+2                  NaN   76.674220   79.770880         0.3   100.000000   
+7                  NaN   44.144960  210.911300        15.0  5000.000000   
+8                  NaN  225.214650   69.584640         NaN    74.973625   
+9                  NaN   98.388535  100.254610        30.0   100.000000   
+10                 NaN  379.895400  120.707680        15.0   124.921160   
+11                 NaN  297.401460  120.626230        15.0   125.022995   
+16                 NaN  157.223200   78.365880        15.0   100.000000   
+17                 NaN   41.746185  174.172970        15.0  1173.794800   
+18                 NaN  136.624470   81.401276        15.0   100.000000   
+19                 NaN  222.537780   80.437744        15.0   100.000000   
+20                 NaN   66.854250  160.747760        15.0  1326.338000   
+22                 NaN  162.418180  115.945840        15.0   125.022240   
+23                 NaN  290.964570  132.655120        15.0   601.084500   
+24                 NaN  290.964570  132.655120        15.0   601.084500   
+25                 NaN  162.418180  115.945840        15.0   125.022240   
+26                 NaN  290.964570  132.655120        15.0   601.084500   
+27                 NaN  290.964570  132.655120        15.0   601.084500   
+28                 NaN  162.418180  115.945840        15.0   125.022240   
+29                 NaN  -42.836105  172.701230        20.0  4675.213400   
+30                 NaN  -42.836105  172.701230        10.0  4675.213400   
+31                 NaN -108.104744  185.199140         NaN  1099.855100   
+33                 NaN   71.644640  136.969090         NaN   175.210330   
+40                 NaN  222.520900   87.716270         NaN   100.000000   
+42                 NaN  162.094420   94.133970         NaN   100.000000   
+43                 NaN  102.282590  168.876860         NaN   150.000150   
+47                 NaN -127.097435  196.193660        20.0  3924.713400   
+48                 NaN   87.704660   76.675316         NaN    75.079200   
+50                 NaN -175.401600  226.522540        43.0   848.707500   
+55                 NaN   23.586548   81.912735         NaN   100.000000   
+56                 NaN   72.076485  124.267330         NaN   125.098630   
+57                 NaN   72.076485  124.267330         NaN   125.098630   
+59                 NaN   23.850769  218.178440         NaN  2501.592300   
+62                 NaN  274.117580  120.436940        40.0   100.000000   
+69                 NaN  121.814690   72.950110       112.0    74.846405   
+70                 NaN  -14.662384  106.401955        75.0   100.000000   
+71                 NaN  -32.323708  111.845280        64.0   100.000000   
+72                 NaN   17.029121   87.260280        72.0    75.084230   
+73                 NaN  -97.472200  166.578490         NaN   124.926570   
+
+    mask1  mask2  mask3  mask  num  
+0     1.0    1.0    NaN   NaN    0  
+1     1.0    1.0    NaN   NaN    1  
+2     1.0    0.0    NaN   NaN    2  
+7     NaN    0.0    NaN   NaN    7  
+8     1.0    0.0    NaN   NaN    8  
+9     1.0    1.0    1.0   1.0    9  
+10    NaN    1.0    NaN   NaN   10  
+11    NaN    1.0    1.0   NaN   11  
+16    1.0    1.0    1.0   NaN   16  
+17    NaN    0.0    1.0   NaN   17  
+18    1.0    0.0    1.0   NaN   18  
+19    1.0    1.0    NaN   NaN   19  
+20    NaN    0.0    NaN   NaN   20  
+22    NaN    0.0    1.0   NaN   22  
+23    NaN    1.0    NaN   NaN   23  
+24    NaN    1.0    NaN   NaN   24  
+25    NaN    0.0    1.0   NaN   25  
+26    NaN    1.0    NaN   NaN   26  
+27    NaN    1.0    NaN   NaN   27  
+28    NaN    0.0    1.0   NaN   28  
+29    NaN    0.0    1.0   NaN   29  
+30    NaN    0.0    1.0   NaN   30  
+31    NaN    0.0    1.0   NaN   31  
+33    NaN    1.0    1.0   NaN   33  
+40    1.0    0.0    1.0   NaN   40  
+42    1.0    1.0    1.0   1.0   42  
+43    NaN    1.0    1.0   NaN   43  
+47    NaN    0.0    1.0   NaN   47  
+48    1.0    1.0    1.0   1.0   48  
+50    NaN    0.0    1.0   NaN   50  
+55    1.0    0.0    1.0   NaN   55  
+56    NaN    1.0    1.0   NaN   56  
+57    NaN    1.0    1.0   NaN   57  
+59    NaN    0.0    1.0   NaN   59  
+62    1.0    1.0    1.0   1.0   62  
+69    1.0    1.0    1.0   1.0   69  
+70    1.0    1.0    1.0   1.0   70  
+71    1.0    1.0    1.0   1.0   71  
+72    1.0    1.0    1.0   1.0   72  
+73    NaN    1.0    1.0   NaN   73  
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0:10
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 2
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 3
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 3
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 2
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 3
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 3
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 2
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 2
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 3
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 2
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 2
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 3
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 3
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 3
+
+data_process cost time:  0: 0: 0
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+set_other cost time:  0: 0: 0
+
+draw cost time:  0: 0: 3
+
+draw_G cost time:  0: 0:56
+
+python draw_h1_field.py
+    number        lat         lon  Field  gNATSGO  SoilGrids250m  \
+0      1.0  39.727300 -123.643300   45.0     90.0           1260   
+1      2.0  33.451700 -117.173500   62.0     51.0            743   
+2      3.0  34.287000 -117.677000   81.0      0.0           1304   
+3      4.0  33.810000 -116.680000   25.0     29.0           1637   
+4      5.0  29.850000  -98.490000   32.0     23.0           1136   
+5      6.0  29.930000  -97.800000   20.0    201.0            908   
+6      7.0  31.916700  -99.900000   10.0    201.0           1726   
+7      8.0  34.287000 -117.677000   81.0      0.0           1304   
+8      9.0  33.810000 -116.680000   35.0     29.0           1637   
+9     10.0  38.860000 -104.310000   13.0    201.0           3193   
+10    11.0  39.200000  -84.500000   43.0     41.0           1179   
+11    12.0  42.500000 -123.200000   55.0     75.0            934   
+12    13.0  43.500000 -122.700000  300.0     86.0           1173   
+13    14.0  31.916667  -99.900000   20.0    201.0           1726   
+14    15.0  31.043333  -98.488889   15.0    201.0            555   
+15    16.0  31.051667  -98.493611   15.0    179.0            557   
+16    17.0  30.371111  -97.771944   15.0      9.0           1085   
+17    18.0  31.048056  -98.489722   15.0    175.0            646   
+18    19.0  30.371111  -97.771944   15.0      9.0           1085   
+19    20.0  30.223000  -97.872000   15.0     55.0            603   
+20    21.0  30.261111  -97.796111   15.0     57.0            624   
+21    22.0  31.048056  -98.489722   15.0    175.0            646   
+22    23.0  29.697778  -98.347222   15.0     22.0            914   
+23    24.0  31.043611  -98.490278   15.0    175.0            555   
+24    25.0  31.056389  -98.506944   15.0    110.0            569   
+25    26.0  30.935833  -99.925833   15.0     34.0           1170   
+26    27.0  29.836667  -98.520833   15.0     27.0            391   
+27    28.0  31.051667  -98.493611   15.0    179.0            557   
+28    29.0  30.673300  -99.362200   15.0     22.0            446   
+29    30.0  31.038611  -98.510556   15.0     60.0            473   
+30    31.0  31.047778  -98.508611   15.0     64.0            475   
+31    32.0  38.110000 -109.920000   45.0     48.0           6160   
+
+    SoilGrids250m_rev   Pelletier  
+0           40.378757   100.00000  
+1           19.083172   100.00000  
+2           37.092320   100.00000  
+3           50.862713     0.00000  
+4           33.726030   100.00000  
+5           26.072554  4101.50200  
+6           58.232480  5000.00000  
+7           37.092320   100.00000  
+8           50.862713     0.00000  
+9          112.300280  1700.00000  
+10          35.849228   400.37552  
+11          24.008268     0.00000  
+12          40.643333   100.00000  
+13          64.913070  5000.00000  
+14          16.758265   100.00000  
+15          15.642765   100.00000  
+16          33.680350   100.00000  
+17          17.793137   100.00000  
+18          33.680350   100.00000  
+19          18.881754   100.00000  
+20          18.855923   100.00000  
+21          17.793137   100.00000  
+22          26.576078   100.18777  
+23          16.758265   100.00000  
+24          16.420797   100.00000  
+25          27.405617   100.00000  
+26           9.895261   100.00000  
+27          15.642765   100.00000  
+28          11.643073   100.00000  
+29          14.281775   100.00000  
+30          13.930302   100.00000  
+31         237.045230     0.00000  
+    number  Field  gNATSGO  SoilGrids250m  SoilGrids250m_rev   Pelletier  Name
+0      1.0   45.0     90.0           1260          40.378757   100.00000   1.0
+1      2.0   62.0     51.0            743          19.083172   100.00000   2.0
+2      3.0   81.0      0.0           1304          37.092320   100.00000   3.0
+3      4.0   25.0     29.0           1637          50.862713     0.00000   4.0
+4      5.0   32.0     23.0           1136          33.726030   100.00000   5.0
+5      6.0   20.0    201.0            908          26.072554  4101.50200   6.0
+6      7.0   10.0    201.0           1726          58.232480  5000.00000   7.0
+7      8.0   81.0      0.0           1304          37.092320   100.00000   8.0
+8      9.0   35.0     29.0           1637          50.862713     0.00000   9.0
+9     10.0   13.0    201.0           3193         112.300280  1700.00000  10.0
+10    11.0   43.0     41.0           1179          35.849228   400.37552  11.0
+11    12.0   55.0     75.0            934          24.008268     0.00000  12.0
+12    13.0  300.0     86.0           1173          40.643333   100.00000  13.0
+13    14.0   20.0    201.0           1726          64.913070  5000.00000  14.0
+14    15.0   15.0    201.0            555          16.758265   100.00000  15.0
+15    16.0   15.0    179.0            557          15.642765   100.00000  16.0
+16    17.0   15.0      9.0           1085          33.680350   100.00000  17.0
+17    18.0   15.0    175.0            646          17.793137   100.00000  18.0
+18    19.0   15.0      9.0           1085          33.680350   100.00000  19.0
+19    20.0   15.0     55.0            603          18.881754   100.00000  20.0
+    Unnamed: 0        lat         lon Measure  Sbedrock_field_min  \
+0            0 -34.300000   19.150000       N                 NaN   
+1            1 -32.338300  116.090400       N                 NaN   
+2            2 -30.412800   18.249700       N                 NaN   
+3            3  11.730000   76.450000       Y                 NaN   
+4            4  20.815556  -89.245000       Y                 NaN   
+..         ...        ...         ...     ...                 ...   
+69          69  46.000000    4.500000       N                 NaN   
+70          70  48.666111   14.707778       N                 NaN   
+71          71  48.978611   13.811944       N                 NaN   
+72          72  49.359722   18.383333       N                 NaN   
+73          73  55.500000 -132.700000       N                 NaN   
+
+    Sbedrock_field_max    Sbedrock       Ssoil  Soil_depth          DTB  \
+0                  NaN  178.934170   64.498314        60.0    74.887535   
+1                  NaN  314.498350   80.386980         NaN   100.000000   
+2                  NaN   76.674220   79.770880         0.3   100.000000   
+3                  NaN  221.497160   98.059810         NaN   100.000000   
+4                  NaN  230.041410  237.461880        30.0  5000.000000   
+..                 ...         ...         ...         ...          ...   
+69                 NaN  121.814690   72.950110       112.0    74.846405   
+70                 NaN  -14.662384  106.401955        75.0   100.000000   
+71                 NaN  -32.323708  111.845280        64.0   100.000000   
+72                 NaN   17.029121   87.260280        72.0    75.084230   
+73                 NaN  -97.472200  166.578490         NaN   124.926570   
+
+    mask1  mask2  mask3  mask  num  
+0     1.0    1.0    NaN   NaN    0  
+1     1.0    1.0    NaN   NaN    1  
+2     1.0    0.0    NaN   NaN    2  
+3     1.0    1.0    1.0   1.0    3  
+4     NaN    1.0    NaN   NaN    4  
+..    ...    ...    ...   ...  ...  
+69    1.0    1.0    1.0   1.0   69  
+70    1.0    1.0    1.0   1.0   70  
+71    1.0    1.0    1.0   1.0   71  
+72    1.0    1.0    1.0   1.0   72  
+73    NaN    1.0    1.0   NaN   73  
+
+[74 rows x 15 columns]
+   Unnamed: 0      lat       lon Measure  Sbedrock_field_min  \
+0          54  39.7273 -123.6433       Y               140.0   
+1          51  39.5745 -123.4770       Y                37.0   
+2          44  37.0879 -119.2505       Y                44.0   
+3          41  35.9570 -118.6300       Y               135.0   
+4          32  33.4517 -117.1735       Y               120.0   
+5          36  33.8100 -116.6800       Y               394.0   
+6          12  29.8500  -98.4900       Y               999.0   
+7          14  29.9400  -98.1200       Y               999.0   
+
+   Sbedrock_field_max   Sbedrock       Ssoil  Soil_depth         DTB  mask1  \
+0               420.0  300.91260  152.596080        45.0  124.930670    NaN   
+1               173.0  324.21387   99.357370         NaN  100.000000    1.0   
+2               270.0  370.55463   82.869640         NaN  100.000000    1.0   
+3               380.0  585.82446   63.236490        75.0   74.929820    1.0   
+4               120.0  234.13834   40.271910        62.0   50.078670    1.0   
+5               406.0  110.86112   19.182775        35.0   24.929976    1.0   
+6               999.0  317.72186  104.886410        32.0  124.976830    NaN   
+7               999.0  304.97640   82.507030         NaN  100.000000    1.0   
+
+   mask2  mask3  mask  num  
+0    1.0    1.0   NaN   54  
+1    1.0    1.0   1.0   51  
+2    1.0    1.0   1.0   44  
+3    1.0    NaN   NaN   41  
+4    1.0    NaN   NaN   32  
+5    0.0    1.0   NaN   36  
+6    1.0    1.0   NaN   12  
+7    1.0    1.0   1.0   14  
+   Unnamed: 0      lat       lon Measure  Sbedrock_field_min  \
+0          54  39.7273 -123.6433       Y               140.0   
+1          51  39.5745 -123.4770       Y                37.0   
+2          44  37.0879 -119.2505       Y                44.0   
+3          41  35.9570 -118.6300       Y               135.0   
+4          32  33.4517 -117.1735       Y               120.0   
+5          36  33.8100 -116.6800       Y               394.0   
+6          12  29.8500  -98.4900       Y               999.0   
+7          14  29.9400  -98.1200       Y               999.0   
+
+   Sbedrock_field_max   Sbedrock       Ssoil  Soil_depth         DTB  mask1  \
+0               420.0  300.91260 -152.596080        45.0  124.930670    NaN   
+1               173.0  324.21387  -99.357370         NaN  100.000000    1.0   
+2               270.0  370.55463  -82.869640         NaN  100.000000    1.0   
+3               380.0  585.82446  -63.236490        75.0   74.929820    1.0   
+4               120.0  234.13834  -40.271910        62.0   50.078670    1.0   
+5               406.0  110.86112  -19.182775        35.0   24.929976    1.0   
+6               999.0  317.72186 -104.886410        32.0  124.976830    NaN   
+7               999.0  304.97640  -82.507030         NaN  100.000000    1.0   
+
+   mask2  mask3  mask  num  Name  
+0    1.0    1.0   NaN   54     1  
+1    1.0    1.0   1.0   51     2  
+2    1.0    1.0   1.0   44     3  
+3    1.0    NaN   NaN   41     4  
+4    1.0    NaN   NaN   32     5  
+5    0.0    1.0   NaN   36     6  
+6    1.0    1.0   NaN   12     7  
+7    1.0    1.0   1.0   14     8  
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 5 x 5 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1//h2_Africa.png
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 5 x 5 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1//h2_Asia.png
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 5 x 5 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1//h2_Australia.png
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 5 x 5 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1//h2_Europe.png
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 5 x 5 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1//h2_North America.png
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 5 x 5 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1//h2_Oceania.png
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 5 x 5 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1//h2_South America.png
+python draw_h2_historgram.py
+                       Sr    Sbedrock       Ssoil      Continent
+Continent                                                       
+Africa         387.169711  302.300457   84.869254         Africa
+Asia           195.522983  102.883734   92.639249           Asia
+Australia      194.398041  118.977113   75.420928      Australia
+Europe         192.472555   94.101911   98.370644         Europe
+North America  236.585423  152.968515   83.616909  North America
+Oceania        219.757653  113.278538  106.479114        Oceania
+South America  369.634311  281.016077   88.618234  South America
+Continent      Africa        Asia  ...     Oceania  South America
+Sr         387.169711  195.522983  ...  219.757653     369.634311
+Sbedrock   302.300457  102.883734  ...  113.278538     281.016077
+Ssoil       84.869254   92.639249  ...  106.479114      88.618234
+
+[3 rows x 7 columns]
+Africa
+Sr          387.169711
+Sbedrock    302.300457
+Ssoil        84.869254
+Name: Africa, dtype: float64
+Asia
+Sr          195.522983
+Sbedrock    102.883734
+Ssoil        92.639249
+Name: Asia, dtype: float64
+Australia
+Sr          194.398041
+Sbedrock    118.977113
+Ssoil        75.420928
+Name: Australia, dtype: float64
+Europe
+Sr          192.472555
+Sbedrock     94.101911
+Ssoil        98.370644
+Name: Europe, dtype: float64
+North America
+Sr          236.585423
+Sbedrock    152.968515
+Ssoil        83.616909
+Name: North America, dtype: float64
+Oceania
+Sr          219.757653
+Sbedrock    113.278538
+Ssoil       106.479114
+Name: Oceania, dtype: float64
+South America
+Sr          369.634311
+Sbedrock    281.016077
+Ssoil        88.618234
+Name: South America, dtype: float64
+python draw_l1_change.py
+python draw_l2_latlon.py
+Index([           -55.25,            -54.95,            -54.85,
+                  -54.75,            -54.65,            -54.45,
+                  -54.35,            -53.95,            -53.75,
+                  -51.65,
+       ...
+                   73.45, 73.65000000000002, 73.75000000000001,
+       73.85000000000001,             74.05, 74.15000000000002,
+                   74.45, 74.65000000000002, 74.75000000000001,
+       75.35000000000001],
+      dtype='float64', name='lat', length=1240)
+Index([ -90.0, -89.99, -89.98, -89.97, -89.96, -89.95, -89.94, -89.93, -89.92,
+       -89.91,
+       ...
+         89.9,  89.91,  89.92,  89.93,  89.94,  89.95,  89.96,  89.97,  89.98,
+        89.99],
+      dtype='float64', length=18000)
+-90.00    0.0
+-89.99    0.0
+-89.98    0.0
+-89.97    0.0
+-89.96    0.0
+         ... 
+ 89.95    0.0
+ 89.96    0.0
+ 89.97    0.0
+ 89.98    0.0
+ 89.99    0.0
+Name: Area, Length: 18000, dtype: float64
+-90.00    0.0
+-89.99    0.0
+-89.98    0.0
+-89.97    0.0
+-89.96    0.0
+         ... 
+ 89.95    0.0
+ 89.96    0.0
+ 89.97    0.0
+ 89.98    0.0
+ 89.99    0.0
+Name: Sbedrock, Length: 18000, dtype: float64
+python draw_r1_imshow.py
+Current file path:  /stu01/xuxh22/
+[-125, -75, 10, 40]
+<xarray.Dataset>
+Dimensions:  (lon: 500, lat: 300)
+Coordinates:
+  * lon      (lon) float64 -124.9 -124.8 -124.7 -124.6 ... -75.25 -75.15 -75.05
+  * lat      (lat) float64 10.05 10.15 10.25 10.35 ... 39.65 39.75 39.85 39.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:17 2024: cdo mul Sbedrock_tem...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-107.32318878) <xarray.DataArray 'Sr' ()>
+array(1031.30505371)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+draw cost time:  0: 0:23
+
+[-72, -35, -20, 7]
+<xarray.Dataset>
+Dimensions:  (lon: 370, lat: 270)
+Coordinates:
+  * lon      (lon) float64 -71.95 -71.85 -71.75 -71.65 ... -35.25 -35.15 -35.05
+  * lat      (lat) float64 -19.95 -19.85 -19.75 -19.65 ... 6.65 6.75 6.85 6.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:17 2024: cdo mul Sbedrock_tem...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-93.00565338) <xarray.DataArray 'Sr' ()>
+array(1086.15039062)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+draw cost time:  0: 0:22
+
+[-20, 50, -17, 13]
+<xarray.Dataset>
+Dimensions:  (lon: 700, lat: 300)
+Coordinates:
+  * lon      (lon) float64 -19.95 -19.85 -19.75 -19.65 ... 49.75 49.85 49.95
+  * lat      (lat) float64 -16.95 -16.85 -16.75 -16.65 ... 12.75 12.85 12.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:17 2024: cdo mul Sbedrock_tem...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-113.35900116) <xarray.DataArray 'Sr' ()>
+array(1203.09301758)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+draw cost time:  0: 0:24
+
+[70, 110, 8, 30]
+<xarray.Dataset>
+Dimensions:  (lon: 400, lat: 220)
+Coordinates:
+  * lon      (lon) float64 70.05 70.15 70.25 70.35 ... 109.7 109.8 109.9 110.0
+  * lat      (lat) float64 8.05 8.15 8.25 8.35 8.45 ... 29.65 29.75 29.85 29.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:17 2024: cdo mul Sbedrock_tem...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-119.4181366) <xarray.DataArray 'Sr' ()>
+array(1320.9510498)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+draw cost time:  0: 0:23
+
+[-125, -75, 10, 40]
+<xarray.Dataset>
+Dimensions:  (lon: 500, lat: 300)
+Coordinates:
+  * lon      (lon) float64 -124.9 -124.8 -124.7 -124.6 ... -75.25 -75.15 -75.05
+  * lat      (lat) float64 10.05 10.15 10.25 10.35 ... 39.65 39.75 39.85 39.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:18 2024: cdo mul Proportion1_...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-1.33693964e+11) <xarray.DataArray 'Sr' ()>
+array(100.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+draw cost time:  0: 0:23
+
+[-72, -35, -20, 7]
+<xarray.Dataset>
+Dimensions:  (lon: 370, lat: 270)
+Coordinates:
+  * lon      (lon) float64 -71.95 -71.85 -71.75 -71.65 ... -35.25 -35.15 -35.05
+  * lat      (lat) float64 -19.95 -19.85 -19.75 -19.65 ... 6.65 6.75 6.85 6.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:18 2024: cdo mul Proportion1_...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-45068052.) <xarray.DataArray 'Sr' ()>
+array(100.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+draw cost time:  0: 0:22
+
+[-20, 50, -17, 13]
+<xarray.Dataset>
+Dimensions:  (lon: 700, lat: 300)
+Coordinates:
+  * lon      (lon) float64 -19.95 -19.85 -19.75 -19.65 ... 49.75 49.85 49.95
+  * lat      (lat) float64 -16.95 -16.85 -16.75 -16.65 ... 12.75 12.85 12.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:18 2024: cdo mul Proportion1_...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-2.75492818e+12) <xarray.DataArray 'Sr' ()>
+array(100.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+draw cost time:  0: 0:24
+
+[70, 110, 8, 30]
+<xarray.Dataset>
+Dimensions:  (lon: 400, lat: 220)
+Coordinates:
+  * lon      (lon) float64 70.05 70.15 70.25 70.35 ... 109.7 109.8 109.9 110.0
+  * lat      (lat) float64 8.05 8.15 8.25 8.35 8.45 ... 29.65 29.75 29.85 29.95
+Data variables:
+    Sr       (lat, lon) float32 ...
+Attributes:
+    CDI:                       Climate Data Interface version 1.9.9rc1 (https...
+    Conventions:               CF-1.6
+    history:                   Thu Sep 19 01:12:18 2024: cdo mul Proportion1_...
+    cdo_openmp_thread_number:  12
+    CDO:                       Climate Data Operators version 1.9.9rc1 (https...
+<xarray.DataArray 'Sr' ()>
+array(-4056509.25) <xarray.DataArray 'Sr' ()>
+array(100.)
+data_process cost time:  0: 0:20
+
+set_fig cost time:  0: 0: 0
+
+set_ax cost time:  0: 0: 0
+
+draw cost time:  0: 0:23
+
+draw_R cost time:  0: 3: 9
+
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 16 x 8 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1/v1_con.pdf
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 16 x 8 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1/v1_con.png
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 16 x 8 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1/v1_sub.pdf
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 16 x 8 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1/v1_sub.png
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 16 x 8 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1/v1_sov.pdf
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 16 x 8 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1/v1_sov.png
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 16 x 8 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1/v1_koppen.pdf
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:587: PlotnineWarning: Saving 16 x 8 in image.
+/home/xuxh22/anaconda3/lib/python3.10/site-packages/plotnine/ggplot.py:588: PlotnineWarning: Filename: /home/xuxh22/stu01/Bedrock/fig/0p1_exp1/v1_koppen.png
+python draw_v1_class.py
+Entered /tera11/zhwei/students/Xionghui/data/run/0p1_exp1/
+Current file path:  /tera11/zhwei/students/Xionghui/data/run/0p1_exp1/
+  Continent_Together  Continent_area
+0               Asia     6612.189785
+1             Africa     3228.404090
+2    North \nAmerica     2574.872983
+3    South \nAmerica     2531.836194
+4             Europe     1508.124348
+5          Australia     1021.827531
+6            Oceania       71.355713
+        Unnamed: 0    lat  ...  Continent_Together  Continent_area
+0           190017  75.35  ...                Asia     6612.189785
+1            78532  24.85  ...                Asia     6612.189785
+2            78556  24.85  ...                Asia     6612.189785
+3            78555  24.85  ...                Asia     6612.189785
+4            78554  24.85  ...                Asia     6612.189785
+...            ...    ...  ...                 ...             ...
+189981        2082 -37.45  ...             Oceania       71.355713
+189982        2513 -35.95  ...             Oceania       71.355713
+189983        2083 -37.45  ...             Oceania       71.355713
+189984        2084 -37.45  ...             Oceania       71.355713
+189985        1895 -37.85  ...             Oceania       71.355713
+
+[189986 rows x 28 columns]
+plot_Con cost time:  0: 0:23
+
+             Subregion_Together  Subregion_area
+0              Eastern \nEurope     3795.199988
+1               South \nAmerica     2494.332719
+2            Northern \nAmerica     1846.156634
+3               Middle \nAfrica     1580.965152
+4                Eastern \nAsia     1573.785376
+5          South-Eastern \nAsia     1301.799164
+6   Australia and \nNew Zealand     1064.534965
+7              Eastern \nAfrica      988.470607
+8             Central \nAmerica      709.763737
+9               Southern \nAsia      519.746747
+10             Western \nAfrica      485.132180
+11            Southern \nEurope      328.170531
+        Unnamed: 0    lat  ...  Subregion_Together  Subregion_area
+0           190017  75.35  ...    Eastern \nEurope     3795.199988
+1           140188  57.45  ...    Eastern \nEurope     3795.199988
+2           140200  57.45  ...    Eastern \nEurope     3795.199988
+3           140199  57.45  ...    Eastern \nEurope     3795.199988
+4           140198  57.45  ...    Eastern \nEurope     3795.199988
+...            ...    ...  ...                 ...             ...
+179848      103009  41.25  ...   Southern \nEurope      328.170531
+179849      103125  41.35  ...   Southern \nEurope      328.170531
+179850      103126  41.35  ...   Southern \nEurope      328.170531
+179851      103127  41.35  ...   Southern \nEurope      328.170531
+179852      105762  43.05  ...   Southern \nEurope      328.170531
+
+[179853 rows x 28 columns]
+plot_Sub cost time:  0: 0:18
+
+                  Sovereignt_Together  Sovereignt_area
+0                              Russia      3605.522225
+1                              Brazil      1480.213042
+2                               China      1409.870570
+3          United States of \nAmerica      1295.704374
+4                           Australia      1021.827531
+5  Democratic Republic of \nthe Congo       732.479673
+6                              Canada       552.567614
+7                              Mexico       470.991518
+8                           Indonesia       365.618720
+9                               India       318.748889
+        Unnamed: 0    lat  ...  Sovereignt_Together  Sovereignt_area
+0           190017  75.35  ...               Russia      3605.522225
+1           128089  53.95  ...               Russia      3605.522225
+2           128087  53.95  ...               Russia      3605.522225
+3           128086  53.95  ...               Russia      3605.522225
+4           128085  53.95  ...               Russia      3605.522225
+...            ...    ...  ...                  ...              ...
+132195       89947  32.75  ...                India       318.748889
+132196       89946  32.75  ...                India       318.748889
+132197       89945  32.75  ...                India       318.748889
+132198       89944  32.75  ...                India       318.748889
+132199       87831  30.55  ...                India       318.748889
+
+[132200 rows x 28 columns]
+                           Koppen_short  Koppen_area
+0   Humid Continental &\nSubarctic (Df)  4283.522718
+1                 Tropical Savanna (Aw)  3379.707993
+2     Humid Subtropical &\nOceanic (Cf)  1953.819122
+3     Humid Subtropical &\nOceanic (Cw)  1849.511337
+4                 Tropical Monsoon (Am)  1293.706218
+5              Tropical Rainforest (Af)  1206.483156
+6   Humid Continental &\nSubarctic (Dw)  1143.254844
+7                    Desert & Arid (BW)   926.544942
+8                        Semi Arid (BS)   554.395626
+9                    Mediterranean (Cs)   504.980315
+10  Humid Continental &\nSubarctic (Ds)   345.495109
+11                          Tundra (ET)   109.769731
+        Unnamed: 0    lat  ...                         Koppen_short  Koppen_area
+0           148829  59.25  ...  Humid Continental &\nSubarctic (Df)  4283.522718
+1           142853  58.05  ...  Humid Continental &\nSubarctic (Df)  4283.522718
+2           142846  58.05  ...  Humid Continental &\nSubarctic (Df)  4283.522718
+3           142847  58.05  ...  Humid Continental &\nSubarctic (Df)  4283.522718
+4           142848  58.05  ...  Humid Continental &\nSubarctic (Df)  4283.522718
+...            ...    ...  ...                                  ...          ...
+190013      184558  67.45  ...                          Tundra (ET)   109.769731
+190014      184562  67.45  ...                          Tundra (ET)   109.769731
+190015      184563  67.45  ...                          Tundra (ET)   109.769731
+190016      184564  67.55  ...                          Tundra (ET)   109.769731
+190017      190017  75.35  ...                          Tundra (ET)   109.769731
+
+[190018 rows x 29 columns]
+Traceback (most recent call last):
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Landcover'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_v1_class.py", line 310, in <module>
+    draw_violin()
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_v1_class.py", line 307, in draw_violin
+    plot_Landcover()
+  File "/home/xuxh22/stu01/Bedrock/draw/draw_v1_class.py", line 255, in plot_Landcover
+    df2['Landcover_short'] = df2['Landcover'].map(mapping).fillna(df2['Landcover'])
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/core/frame.py", line 4090, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/xuxh22/anaconda3/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Landcover'

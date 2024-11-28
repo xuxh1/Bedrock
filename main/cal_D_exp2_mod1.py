@@ -24,8 +24,13 @@ def Dr():
     data_var = ds['et']
     ds2 = xr.open_dataset('SnowCover.nc')
     snowf = ds2['snowf']
-    ds3 = xr.open_dataset('Ssoil.nc')
+    ds3 = xr.open_dataset(f'{data_path}../0p1/Ssoil.nc')
     ssoil = ds3['Band1']
+
+    shape = data_var.isel(time=0).shape
+    time_len = len(ds.time)
+
+    deficit_acc = np.zeros((time_len, *shape))
 
     for j in range(18):
         print(j+2003)
@@ -67,6 +72,7 @@ def Dr():
             # Update all time maximum positive accumulation
             all_max_pos_acc = np.maximum(all_max_pos_acc, max_pos_acc + net_pos_acc)
             
+            deficit_acc[i, :, :] = all_max_pos_acc
             last_data_mask = current_data_mask
 
         # Save the results to a new NetCDF file
@@ -77,6 +83,10 @@ def Dr():
         output_ds2 = xr.Dataset({'FD': (('lat', 'lon'), first_day)},
                     coords={'lat': ds['lat'], 'lon': ds['lon']})
         output_ds2.to_netcdf(f'FD_{2003+j}_temp1.nc')
+
+    output_ds1 = xr.Dataset({'Deficit': (('time', 'lat', 'lon'), deficit_acc)},
+                        coords={'time': ds['time'], 'lat': ds['lat'], 'lon': ds['lon']})
+    output_ds1.to_netcdf('Deficit_D.nc')
 
     # Close datasets
     ds.close()
@@ -173,7 +183,8 @@ def cal_FD():
         name_list = name_list+name
     name_list = name_list+'FD_mean_temp1.nc'
     os.system(name_list)
-    os.system('cdo mul FD_mean_temp1.nc mask123.nc FD_mean.nc')
+    os.system('cdo -b F32 -P 12 --no_remap_weights remapbil,mask1.nc FD_mean_temp1.nc FD_mean_temp2.nc')
+    os.system('cdo mul FD_mean_temp2.nc mask123.nc FD_mean.nc')
 
 # Execute all program
 def cal_D():        
@@ -183,11 +194,11 @@ def cal_D():
     path = os.getcwd()+'/'
     print("Current file path: ", path)
 
-    Dr()
-    Dr_mask()
-    Db()
-    delete()
-    cal_DbF()
+    # Dr()
+    # Dr_mask()
+    # Db()
+    # delete()
+    # cal_DbF()
     cal_FD()
     
     # Transfer from the calculation path to the later path 

@@ -17,8 +17,8 @@ post_data_path = config.post_data_path
 shp_path       = config.shp_path
 fig_path       = config.fig_path
 
-def load_and_flatten_data(file_name, variable_name, index=None):
-    with nc.Dataset(f"{file_name}.nc") as dataset:
+def load_and_flatten_data(file_path, variable_name, index=None):
+    with nc.Dataset(file_path) as dataset:
         if index is not None:
             data = dataset[variable_name][index, :, :].flatten()
         else:
@@ -26,6 +26,7 @@ def load_and_flatten_data(file_name, variable_name, index=None):
     return data
 
 # Collect the global calculated data
+@timer
 def count_G():
     df = pd.DataFrame()
 
@@ -35,31 +36,44 @@ def count_G():
         df['lat'] = np.repeat(lat, len(lon))
         df['lon'] = np.tile(lon, len(lat))
 
-    file_variable_list = [
-        ('Sbedrock', 'Sr'),
-        ('mask123', 'Band1'),
+    file_variable_map = {
+        'Area.nc': ('Area', 'area'),
+        'IGBP.nc': ('IGBP', 'LC', 0),
+        'Koppen.nc': ('Koppen', 'Band1'),
+        'DTB.nc': ('DTB', 'Band1'),
+        'ET.nc': ('ET', 'et', 0),
+        'PR.nc': ('PR', 'tp', 0),
+        'Q.nc': ('Q', 'tp', 0),
+        'LH.nc': ('LH', 'Ee'),
+        'FD_mean.nc': ('FD_mean', 'FD'),
+        'Aboveground.nc': ('Aboveground', 'Band1'),
+        'Belowground.nc': ('Belowground', 'Band1'),
+        'Sbedrock.nc': ('Sbedrock', 'Sr'),
+        'Sr.nc': ('Sr', 'Sr'),
+        'Ssoil.nc': ('Ssoil', 'Band1'),
+        'Proportion1.nc': ('Proportion1', 'Sr'),
+        'Proportion2.nc': ('Proportion2', 'Sr'),
+        'Proportion3.nc': ('Proportion3', 'tp', 0)
+    }
 
-        ('Sr', 'Sr'),
-        ('Ssoil', 'Band1'),
-        ('Proportion1', 'Sr'),
-        ('Proportion2', 'Sr'),
-        ('Proportion3', 'tp', 0)
-    ]
-
-    for entry in file_variable_list:
-        file = entry[0]
-        variable_name = entry[1]  
-        index = entry[2:] if len(entry) > 2 else None  
-
-        # print(f"File: {file}, Variable: {variable_name}, Index: {index}")
+    for file, (column_name, variable_name, *index) in file_variable_map.items():
         if index:
-            df[file] = load_and_flatten_data(file, variable_name, index[0])
+            df[column_name] = load_and_flatten_data(file, variable_name, index[0])
         else:
-            df[file] = load_and_flatten_data(file, variable_name)
+            df[column_name] = load_and_flatten_data(file, variable_name)
+    
+    print(df['Aboveground'].sum())
+    print(df['Belowground'].sum())
+    print(df['Area'].sum()/(1e12))
     
     df = df.dropna()
     df = df[df['Sbedrock'] > 0]
-    df = df[df['mask123'] == 1]
+    df = df[df['IGBP']<10]
+    df = df[df['IGBP']>0]
+    df = df[df['Koppen'] != 0]
+    
+    print(df['Aboveground'].sum())
+    print(df['Belowground'].sum())
     
     shp1 = gpd.read_file(shp_path+'continent/continent.shp')
     shp2 = gpd.read_file(shp_path+'World_CN/ne_10m_admin_0_countries_chn.shp')
@@ -95,6 +109,22 @@ def count_G():
 
     print(df['Area'].sum()/(1e12))
 
+    df1 = df[df['DTB'] <= 150]
+    print(df1['Area'].sum()/(1e12)) 
+    
+    df1 = df1[df1['IGBP']<10]
+    df1 = df1[df1['IGBP']>0]   
+    print(df1['Area'].sum()/(1e12)) 
+
+    # df1 = df[df['Koppen'] != 0]
+    # print(df1.groupby('Continent')['Area'].sum().div(1e12))
+    # print(df1.groupby('Continent')['Area'].sum().sum()/(1e12))
+    
+    # df1 = df1[df1['Sbedrock']>=0]
+    # print(df1.groupby('Continent')['Area'].sum().div(1e12))
+    # print(df1.groupby('Continent')['Area'].sum().sum()/(1e12))
+    
+    # exit(0)
     with open('Global.csv','w') as f:
         df.to_csv(f)
         
@@ -103,9 +133,44 @@ def count_G():
 
     with open('US.csv','w') as f:
         df1.to_csv(f)
+    
+@timer
+def count_G_Db():
+    lat = nc.Dataset(f'Dbedrock_2003.nc')['lat'][:].flatten()
+    lon = nc.Dataset(f'Dbedrock_2003.nc')['lon'][:].flatten()
+    latf = np.repeat(lat, len(lon))
+    lonf = np.tile(lon, len(lat))
+
+    mask = nc.Dataset(f'mask123.nc')['Band1'][:,:].flatten()
+    
+    df = pd.DataFrame()
+    
+    df['lat'] = latf
+    df['lon'] = lonf
+    df['mask'] = mask
+    for year in range(2003, 2021):
+        # Construct the filename dynamically using the current year
+        filename = f'Dbedrock_{year}.nc'
+        
+        # Open the netCDF file and read the 'Dr' variable
+        with nc.Dataset(filename) as dataset:
+            data = dataset['Dr'][:,:].flatten()  # Flatten the 2D array into 1D
+            
+            # Append the flattened data to the data_list
+            df[f'Dbedrock_{year}'] = data
+    
+    df = df.dropna()
+    df = df[df['mask'] == 1]
+    
+    df = df.reset_index(drop=True)
+    
+    # exit(0)
+    with open('Global_Db.csv','w') as f:
+        df.to_csv(f)
 
 # Reprocessing US statistical data(note:Save and reopen to remove zero values)
 # from Sovereignt to state, based on the previous function
+@timer
 def count_US():
     df = pd.read_csv('US.csv')
     print(df)
@@ -128,7 +193,7 @@ def count_US():
 def count_site():
     df = pd.read_csv(f'{post_data_path}/field/new_literature_compilation.csv', encoding='latin-1')
 
-    s1 = nc.Dataset('Sbedrock_temp1.nc', 'r')
+    s1 = nc.Dataset('Sbedrock_temp2.nc', 'r')
     s2 = nc.Dataset('Ssoil.nc', 'r')
     s3 = nc.Dataset('DTB.nc', 'r')
     s4 = nc.Dataset('mask1.nc', 'r')
@@ -188,6 +253,7 @@ def count_site():
 
 # Collect the field DTB from 5 different data
 # (Field,gNATSGO,SoilGrids250m,SoilGrids250m_rev,Pelletier)
+@timer
 def count_fDTB():
     file_path1 = f'{post_data_path}mask1/mask1_v1/BDTICM_M_1km_ll.tif'
     file_path2 = f'{post_data_path}DTB/gNATSGO/Bedrock_US_gNATSGO_90m-1.tif'
@@ -357,6 +423,7 @@ def count_data():
     print("Current file path: ", path)
     
     count_G()
+    count_G_Db()
     count_US()
     count_site()
     count_fDTB()

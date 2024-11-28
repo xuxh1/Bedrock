@@ -17,6 +17,8 @@ data_path  = config.data_path
 shp_path   = config.shp_path
 fig_path   = config.fig_path
 
+print('python draw_l2_latlon.py')
+
 font = {'family': 'Times New Roman'}
 matplotlib.rc('font', **font)
 
@@ -170,7 +172,7 @@ def lat():
     plot_line(["Area ($km^2$)","$S_{{bedrock}}$ (mm)"], ax, lat_area_df.index, lat_area_df, lat_Sb_df, color = ["#153aab","#fdcf41"])
 
     plt.tight_layout()
-    plt.savefig(f"{fig_path}/s6_lat.png",dpi=500, bbox_inches='tight')
+    plt.savefig(f"{fig_path}/l2_lat.png",dpi=500, bbox_inches='tight')
 
 def lon():
     df_area = df.copy()

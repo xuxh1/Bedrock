@@ -17,6 +17,8 @@ post_data_path = config.post_data_path
 shp_path       = config.shp_path
 fig_path       = config.fig_path
 
+print('python draw_v1_class.py')
+
 font = {'family': 'Times New Roman'}
 matplotlib.rc('font', **font)
 
@@ -240,7 +242,7 @@ def plot_Koppen():
    violin_plot.save(f'{fig_path}v1_koppen.pdf', transparent=True, bbox_inches='tight')
    violin_plot.save(f'{fig_path}v1_koppen.png')
    
-def plot_Landcover():
+def plot_IGBP():
    df2 = df.copy()
    
    list1 = np.arange(1,18,1)
@@ -250,34 +252,34 @@ def plot_Landcover():
             'Urban and Built-up Lands', 'Cropland/Natural Vegetation Mosaics', 'Permanent Snow and Ice', 
             'Barren', 'Water Bodies']
    mapping = dict(zip(list1, list2))
-   df2['Landcover_short'] = df2['Landcover'].map(mapping).fillna(df2['Landcover'])
+   df2['IGBP_short'] = df2['IGBP'].map(mapping).fillna(df2['IGBP'])
    
    df3 = pd.DataFrame()
-   df3['Landcover_area'] = df2.groupby('Landcover_short')['Area'].sum().div(1e9)
-   # df3 = df3[df3['Landcover_Together'] > 300]
-   df3 = df3.sort_values(by=['Landcover_area'], ascending=False).reset_index(drop=False)
+   df3['IGBP_area'] = df2.groupby('IGBP_short')['Area'].sum().div(1e9)
+   # df3 = df3[df3['IGBP_Together'] > 300]
+   df3 = df3.sort_values(by=['IGBP_area'], ascending=False).reset_index(drop=False)
    print(df3)
-   list1 = df3.loc[:,'Landcover_short']
-   list2 = df3.loc[:,'Landcover_area']
+   list1 = df3.loc[:,'IGBP_short']
+   list2 = df3.loc[:,'IGBP_area']
    mapping = dict(zip(list1, list2))
    
    
-   df2 = df2[df2.Landcover_short.isin(list1)]
-   df2 = df2[df2['Landcover_short'].notna()]
-   df2['Landcover_area'] = df2['Landcover_short'].map(mapping)
-   df2 = df2.sort_values(by=['Landcover_area'], ascending=False).reset_index(drop=True)
-   order = df2['Landcover_short'].unique()
-   df2['Landcover_short'] = pd.Categorical(df2['Landcover_short'], categories=order, ordered=True)
+   df2 = df2[df2.IGBP_short.isin(list1)]
+   df2 = df2[df2['IGBP_short'].notna()]
+   df2['IGBP_area'] = df2['IGBP_short'].map(mapping)
+   df2 = df2.sort_values(by=['IGBP_area'], ascending=False).reset_index(drop=True)
+   order = df2['IGBP_short'].unique()
+   df2['IGBP_short'] = pd.Categorical(df2['IGBP_short'], categories=order, ordered=True)
    print(df2)
    
    # exit(0)
-   violin_plot = (ggplot(df2, aes(x='Landcover_short', y="Sbedrock", fill='Landcover_short'))
+   violin_plot = (ggplot(df2, aes(x='IGBP_short', y="Sbedrock", fill='IGBP_short'))
             + geom_violin(show_legend=False)
             + geom_boxplot(fill="white", width=0.1, show_legend=False, outlier_alpha=0, outlier_size=1, outlier_color='#f6f2f4')
             + scale_fill_hue(s=0.90, l=0.65, h=0.0417, color_space='husl')
          #    + coord_flip()
             + theme_matplotlib()
-            + ggtitle("Landcover")
+            + ggtitle("IGBP")
             
             + theme(  # legend_position='none',
    text=element_text(size=20, colour="black"),
@@ -288,8 +290,8 @@ def plot_Landcover():
    dpi=400,
    figure_size=(16, 8))
             + labs(x="", y="$S_{{bedrock}}$ (mm)"))
-   violin_plot.save(f'{fig_path}v1_landcover.pdf', transparent=True, bbox_inches='tight')
-   violin_plot.save(f'{fig_path}v1_landcover.png')
+   violin_plot.save(f'{fig_path}v1_IGBP.pdf', transparent=True, bbox_inches='tight')
+   violin_plot.save(f'{fig_path}v1_IGBP.png')
    
 def draw_violin():
     # Transfer the current path to the calculation path
@@ -302,7 +304,7 @@ def draw_violin():
     plot_Sub()
     plot_Sov()
     plot_Koppen()
-    plot_Landcover()
+    plot_IGBP()
 
 if __name__=='__main__':
     draw_violin()
