@@ -26,7 +26,7 @@ def fDTB():
     #barplot = barplot.dropna()
     barplot['Name'] = (barplot['number']).astype(str) # make name column string
 
-    barplot = barplot[0:20]
+    # barplot = barplot[0:20]
     barplot = barplot.sort_values(by = 'number')
     barplot = barplot.dropna()
     print(barplot)
@@ -59,58 +59,6 @@ def fDTB():
     plt.rcParams['pdf.fonttype'] = 42
     plt.savefig(f"{fig_path}/h1_fDTB.pdf", transparent=True)
     # files.download("doublebar.pdf")
-    
-
-
-# def fSb():
-#     roots = pd.read_csv(f'{data_path}Sbedrock.csv', encoding='latin-1')
-#     roots = roots.sort_values(by=['lon', 'lat']).reset_index(drop=True)
-
-#     print(roots)
-#     ## Extract Columns for Barplot (NOTE: Must exclude first header row manually)
-#     barplot = pd.DataFrame()
-#     barplot = roots[['number','min','max','Ssoil','Sbedrock']].copy()
-#     print(barplot)
-#     #barplot = barplot.dropna()
-#     barplot['Ssoil'] = barplot['Ssoil'] * -1
-#     barplot['Name'] = (barplot['number']).astype(str) # make name column string
-
-#     barplot = barplot[0:20]
-#     barplot = barplot.sort_values(by = 'number')
-#     # barplot = barplot.dropna()
-#     print(barplot)
-
-#     # Make labels for X-axis to have accurate Ssoil and Dbedrock meanings
-#     soillabels = list(np.arange(300, -100, step=-100))
-#     dlabels = list(np.arange(100, 600, step=100))
-#     labels = soillabels + dlabels
-
-#     # Plot figure
-#     plt.figure(figsize = (3, 2.5), dpi=300)
-#     #plt.barh(barplot['Name'],barplot['Mean_D_bedrock_mm'], xerr = barplot['Stdev_D_bedrock_mm'], alpha=0.5, ecolor='black', capsize=3)
-#     plt.barh(barplot['Name'],barplot['Ssoil'], alpha=0.5, ecolor='black', capsize=3)
-#     plt.barh(barplot['Name'],barplot['Sbedrock'], color = '#91755a',alpha=0.5)
-
-#     plt.plot(barplot['min'],barplot['Name'], 'o', ms=5, markerfacecolor="black", markeredgecolor='black', markeredgewidth=0.5)
-#     plt.plot(barplot['max'],barplot['Name'],'o', ms=5, markerfacecolor="None", markeredgecolor='black', markeredgewidth=0.5)
-
-#     # plt.xticks(np.arange(-150, 2050, step=50), labels = labels)
-#     # plt.xticks(np.arange(0, 1600, step=200), labels = labels)
-#     yticks = ['1','$2^{{Δ}}$','3','$4^{{*}}$','$5^{{*}}$','$6^{{Δ}}$','7','8']
-#     plt.ylim(1, 9)
-#     plt.yticks(np.arange(2, 9, 1), labels = yticks)
-#     plt.xticks(np.arange(-300, 600, step=100), labels = labels)
-#     plt.xlim(-300, 500)
-#     plt.gca().invert_yaxis()
-#     plt.xticks(rotation=90)
-#     plt.tight_layout()
-#     ax = plt.gca()
-#     ax.yaxis.tick_right()
-#     ax.yaxis.set_label_position("right")
-    
-#     ## Uncomment for downloading fig
-#     plt.rcParams['pdf.fonttype'] = 42
-#     plt.savefig(f"{fig_path}/h1_fSb.pdf", transparent=True)
       
 def fSb():
     ## Extract Columns for Barplot (NOTE: Must exclude first header row manually)

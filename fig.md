@@ -16,70 +16,98 @@ The following Python scripts are used:
 - `draw_r1_imshow.py`: Generates regional distribution (imshow) maps for various parameters.
 - `draw_r2_scatter.py`: Generates regional distribution (scatter) maps for various parameters.
 - `draw_h1_field.py`: Draw the field data (DTB and Sbedrock) histogram map.
-- `draw_h2_histogram.py`: Draw the sum data (different Continent) histogram map.
+- `draw_h2_histogram.py`: Draw the sum data (different Continent and Subregion) histogram map.
 - `draw_l1_change.py`: Site change line chart plot.
 - `draw_l2_latlon.py`: Sum Area and Sbedrock Line chart plot.
 - `draw_l3_test.py`: .
-
-
-
-- ``
+- `draw_b1_box.py`: Boxplot of different Koppen and IGBP.
+- `draw_c1_DTB.py`: Combination of DTB in Iowa.
+- `draw_v1_class.py`: Violin plot in different class (Continent, Subregion, Sovereignt, IGBP and Koppen).
 
 ## Global Distribution Map
 
 ### draw_g1_imshow.py
 
-This script generates maps showing the distribution of the following parameters:
+#### Sbedrock
 
-#### Sbedrock:
 - `g1_Sb.png`
 - `g1_Sb_n2p.png`
 - `g1_Sb_n2p_nm.png`
 
-#### Sr:
-g1_Sr.png
-g1_Sr_nm.png
-#### Ssoil:
-g1_Ss.png
-#### PR:
-g1_PR.png
-#### ET:
-g1_ET.png
-#### Q:
-g1_Q.png
-#### LH(Latent Heat):
-g1_LH.png
-#### PET:
-#### Proportion1(Sbedrock/Sr):
-g1_P1.png
-g1_P1_n2p.png
-g1_P1_n2p_nm.png
-#### Proportion2(Sbedrock/ET):
-g1_P2.png
-g1_P2_n2p.png
-g1_P2_n2p_nm.png
-#### Proportion3(Q/PR):
-g1_P3.png
-g1_P3_n2p.png
-g1_P3_n2p_nm.png
-#### Proportion4(ET/PR):
-#### Proportion5(PET/PR):
-#### Proportion6(ASI):
-#### FD(first day):
-g1_FD.png
-g1_FD_mean.png
+#### Sr
+
+- `g1_Sr.png`
+- `g1_Sr_nm.png`
+
+#### Ssoil
+
+- `g1_Ss.png`
+
+#### PR
+
+- `g1_PR.png`
+
+#### ET
+
+- `g1_ET.png`
+
+#### Q
+
+- `g1_Q.png`
+
+#### LH(Latent Heat)
+
+- `g1_LH.png`
+
+#### PET
+
+#### Proportion1(Sbedrock/Sr)
+
+- `g1_P1.png`
+- `g1_P1_n2p.png`
+- `g1_P1_n2p_nm.png`
+
+#### Proportion2(Sbedrock/ET)
+
+- `g1_P2.png`
+- `g1_P2_n2p.png`
+- `g1_P2_n2p_nm.png`
+
+#### Proportion3(Q/PR)
+
+- `g1_P3.png`
+- `g1_P3_n2p.png`
+- `g1_P3_n2p_nm.png`
+
+#### Proportion4(ET/PR)
+
+#### Proportion5(PET/PR)
+
+#### Proportion6(ASI)
+
+#### FD(first day)
+
+- `g1_FD.png`
+- `g1_FD_mean.png`
     modify month
-#### DTB:
-g1_DTB.png
-g1_DTB_mask2.png
+
+#### DTB
+
+- `g1_DTB.png`
+- `g1_DTB_mask2.png`
     DTB and DTB with woody vegetation
-#### Biomass:
-g1_Ag.png
-g1_Ag_nm.png
-g1_Bg.png
-g1_Bg_nm.png
-### IGBP:
-g1_IGBP.png
+
+#### Biomass
+
+- `g1_Ag.png`
+- `g1_Ag_nm.png`
+- `g1_Bg.png`
+- `g1_Bg_nm.png`
+
+### IGBP
+
+- `g1_IGBP.png`
+
 ### Koppen:
 g1_Koppen.png
     global IGBP and Koppen

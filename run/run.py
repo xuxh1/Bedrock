@@ -13,9 +13,13 @@ def ini():
     os.system(f'python {path}iniprocess/ini_ln.py')
 
 def main():
-    os.system(f'python {path}main/cal_S_{name}.py')
-    os.system(f'python {path}main/cal_D_{name}.py')
-    os.system(f'python {path}main/count_data.py')
+    os.system(f'python {path}main/cal_S_exp1.py')
+    os.system(f'python {path}main/cal_D_exp1.py')
+    os.system(f'python {path}main/cal_D_mon.py')
+    os.system(f'python {path}main/count_data_G.py')
+    os.system(f'python {path}main/count_data_Db.py')
+    os.system(f'python {path}main/count_data_US.py')
+    os.system(f'python {path}main/count_data_field.py')
 
 
 def draw():

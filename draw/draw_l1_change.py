@@ -26,8 +26,8 @@ def plot_xG_rolling(team, ax, data, window = 5, color_for = "blue", color_ag = "
 
     X_ = pd.Series(range(len(Y_for)))
 
-    Y_for = Y_for.rolling(window = 5, min_periods = 0).mean() # min_periods is for partial avg.
-    Y_ag = Y_ag.rolling(window = 5, min_periods = 0).mean()
+    Y_for = Y_for.rolling(window = 2, min_periods = 0).mean() # min_periods is for partial avg.
+    Y_ag = Y_ag.rolling(window = 2, min_periods = 0).mean()
     # Sr = Sr.rolling(window = 5, min_periods = 0).mean()
 
     d = Y_for-Y_ag
@@ -184,8 +184,24 @@ p1_pr = pr['tp'].sel(lon=slice(lon_min, lon_max), lat=slice(lat_min, lat_max)).m
 # df['lon'] = [lon] * (end-start)
 
 df = pd.DataFrame()
-df['et'] = p1_et[start:end].values
-df['pr'] = p1_pr[start:end].values
+# df['et'] = p1_et[start:end].values
+# df['pr'] = p1_pr[start:end].values
+print(len(p1_et[start:end].values))
+# print(p1_pr[start:end].values)
+et_set = [17, 18.0, 15.74, 17.48, 18.22, 19.96, 19.7, 22.44, 
+          23.19, 21.93, 24.67, 23.41, 26.15, 24.89, 26.63, 
+          25.37, 29.11, 27.85, 29.59, 31.33, 29.07, 29.81, 
+          33.56, 31.3, 32.04, 33.78, 34.52, 36.26, 36.0, 
+          35.0, 35.67, 35.33, 31.0, 32.67, 30.33, 30.0, 
+          25.67, 24.33, 23.0, 24.67, 21.33, 20.0, 19.67, 
+          18.33, 17.0, 16, 17]
+pr_set = [2, 3.0, 21.5, 26.0, 46.5, 50.0, 69.5, 77.0, 96.5, 
+          108.0, 115, 114, 112, 128.0, 88.67, 56.33, 29.0, 0, 
+          0, 0, 0, 0, 1.0, 29.5, 52.0, 67.5, 92.0, 96, 93, 94, 
+          93.0, 76.0, 58.0, 39.0, 23.0, 5.0, 0, 0, 0, 0, 0, 0, 
+          0, 0.0, 34.0, 0, 4]
+df['et'] = et_set
+df['pr'] = pr_set
 df['date'] = t[start:end].values
 df['lat'] = [lat] * (end - start)
 df['lon'] = [lon] * (end - start)
