@@ -9,6 +9,7 @@ from joblib import Parallel, delayed
 from myfunc import timer
 from myfunc import DirMan
 import config
+import calendar
 
 
 resolution = config.resolution
@@ -103,6 +104,8 @@ def cdo_mul(filename1, filename2, filename3):
 def cdo_sub(filename1, filename2, filename3):
     subprocess.run(f"cdo sub {filename1} {filename2} {filename3}", shell=True, check=True)
     
+def cdo_expr(filename1, filename2, nday):
+    subprocess.run(f'cdo -expr,"Ee=Dr*1000*2257/(3600*24*{nday})" {filename1} {filename2}', shell=True, check=True)
 
 # Mask Dr
 @timer
@@ -122,6 +125,27 @@ def Db():
     
     Parallel(n_jobs=5)(delayed(cdo_mul)(f"Dbedrock_{2003+j}_temp1.nc", "mask123.nc", f"Dbedrock_{2003+j}.nc") for j in tqdm(range(18)))
 
+def LH_yr():
+    yearday = [366 if calendar.isleap(year) else 365 for year in range(2003, 2021)]    
+    Parallel(n_jobs=5)(delayed(cdo_expr)(f"Dbedrock_{2003+j}.nc", f"LH_{2003+j}_temp1.nc", f"{yearday[j]}") for j in tqdm(range(18)))
+    Parallel(n_jobs=5)(delayed(cdo_mul)(f"LH_{2003+j}_temp1.nc", "mask123.nc", f"LH_{2003+j}.nc") for j in tqdm(range(18)))
+
+def cal_LH_median():
+    name_list = []
+    for year in range(2003,2021):
+        name = f'LH/LH_{year}.nc'
+        name_list.append(name)
+
+    datasets = [xr.open_dataset(file) for file in name_list]
+    data_arrays = [ds['Ee'].values for ds in datasets]
+    median_data = np.median(data_arrays, axis=0)
+
+    output_file = f'LH/LH_median.nc'
+    median_ds = xr.Dataset(
+        {'Ee': (['lat', 'lon'], median_data)}, 
+        coords={'lat': datasets[0].lat, 'lon': datasets[0].lon} 
+    )
+    median_ds.to_netcdf(output_file)
 
 # Delete the intermediate data to save memory
 @timer
@@ -179,43 +203,64 @@ def cal_DbF():
 
         s_var[:,:] = new_s_data
 
-# def day2mon(day):
-#     # if year%4==0:
-#     #     days_in_month = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-#     # else:
-#     days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
-#     cumulative_days = np.cumsum([0] + days_in_month)
-#     for month in range(1, 13):
-#         if cumulative_days[month - 1] <= day < cumulative_days[month]:
-#             return month
-#     return 12 
-
 def cal_FD():
-    name_list = 'cdo ensmean '
     for year in range(2003,2021):
-        name = f'FD_{year}_temp1.nc '
+        os.system(f'cdo setrtoc,-1,0,0 FD_{year}_temp1.nc FD_{year}_temp2.nc')
+
+def cal_FM_mean():
+    name_list = 'cdo -O -ensmean '
+    for year in range(2003,2021):
+        name = f'FD_{year}_temp2.nc '
         name_list = name_list+name
     name_list = name_list+'FD_mean_temp1.nc'
     os.system(name_list)
-    os.system('cdo -b F32 -P 12 --no_remap_weights remapbil,mask1.nc FD_mean_temp1.nc FM_mean_temp2_0.nc')
-    # ds = xr.open_dataset('FD_mean_temp2.nc') 
-    # days = ds['FD'].values
-    # months = np.vectorize(day2mon)(days)
-    # ds["FM"] = (("time",), months)
-    # ds.to_netcdf('FD_mean_temp3.nc')
+    os.system('cdo -b F32 -P 12 --no_remap_weights remapbil,mask1.nc FD_mean_temp1.nc FD_mean_temp2.nc')
+    os.system('cdo mul FD_mean_temp2.nc mask123.nc FD_mean.nc')
 
     days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     sumday = 0
+    command_list = ''
     for i, day in enumerate(days_in_month):
         sumday += day  
-        input_file = f"FM_mean_temp2_{i}.nc"     
-        output_file = f"FM_mean_temp2_{i+1}.nc"  
-        command = f'cdo setrtoc,{sumday-day},{sumday},{i+1} {input_file} {output_file}'
-        print(f"Executing: {command}")  
-        os.system(command)
+        command_name = f"-setrtoc,{sumday-day},{sumday},{i+1} "
+        command_list = command_name + command_list
+    command = f'cdo {command_list}FD_mean.nc FM_mean_temp1.nc'
+    print(f"Executing: {command}")  
+    os.system(command)
 
-    os.system('cdo mul FM_mean_temp2_12.nc mask123.nc FM_mean.nc')
+    os.system('cdo mul FM_mean_temp1.nc mask123.nc FM_mean.nc')
+
+def cal_FM_median():
+    name_list = []
+    for year in range(2003,2021):
+        name = f'FD_{year}_temp2.nc'
+        name_list.append(name)
+
+    datasets = [xr.open_dataset(file) for file in name_list]
+    data_arrays = [ds['FD'].values for ds in datasets]
+    median_data = np.median(data_arrays, axis=0)
+
+    output_file = 'FD_median_temp1.nc'
+    median_ds = xr.Dataset(
+        {'FD': (['lat', 'lon'], median_data)}, 
+        coords={'lat': datasets[0].lat, 'lon': datasets[0].lon} 
+    )
+    median_ds.to_netcdf(output_file)
+    os.system('cdo -b F32 -P 12 --no_remap_weights remapbil,mask1.nc FD_median_temp1.nc FD_median_temp2.nc')
+    os.system('cdo mul FD_median_temp2.nc mask123.nc FD_median.nc')
+
+    days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    sumday = 0
+    command_list = ''
+    for i, day in enumerate(days_in_month):
+        sumday += day  
+        command_name = f"-setrtoc,{sumday-day},{sumday},{i+1} "
+        command_list = command_name + command_list
+    command = f'cdo {command_list}FD_median.nc FM_median_temp1.nc'
+    print(f"Executing: {command}")  
+    os.system(command)
+
+    os.system('cdo mul FM_median_temp1.nc mask123.nc FM_median.nc')
 
 # Execute all program
 def cal_D():        
@@ -225,12 +270,16 @@ def cal_D():
     path = os.getcwd()+'/'
     print("Current file path: ", path)
 
-    Dr()
-    Dr_mask()
-    Db()
-    delete()
-    cal_DbF()
-    cal_FD()
+    # Dr()
+    # Dr_mask()
+    # Db()
+    # LH_yr()
+    cal_LH_median()
+    # delete()
+    # cal_DbF()
+    # cal_FD()
+    # cal_FM_mean()
+    # cal_FM_median()
     
     # Transfer from the calculation path to the later path 
     dir_man.exit()

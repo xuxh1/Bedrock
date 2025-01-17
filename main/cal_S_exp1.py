@@ -135,8 +135,7 @@ def Sr():
     ds2.close()
 
 # Calculate Sbedrock(rock moisture) and Proportion1(Sbedrock/Sr)
-@timer
-def Sr_Sb_P1_P2_P3_LH():
+def cal_Sr_Sb():
     # Calculate Sr(root moisture)
     subprocess.run(f"cdo -b F32 -P 12 --no_remap_weights remapbil,{resolution}.txt Sr_temp1.nc Sr_temp2.nc", shell=True, check=True)
     subprocess.run(f"cdo mul Sr_temp2.nc mask123.nc Sr.nc", shell=True, check=True)
@@ -146,99 +145,24 @@ def Sr_Sb_P1_P2_P3_LH():
     subprocess.run(f"cdo sub Sr_temp2.nc Ssoil.nc Sbedrock_temp1.nc", shell=True, check=True)
     subprocess.run(f"cdo mul Sbedrock_temp1.nc mask123.nc Sbedrock.nc", shell=True, check=True)
     print(f'The Sbedrock has finished') 
-    
-    # Calculate Proportion1(Sbedrock/Sr)
-    subprocess.run(f"cdo -mulc,100 -div Sbedrock_temp1.nc Sr_temp2.nc Proportion1_temp1.nc", shell=True, check=True)
-    subprocess.run(f"cdo mul Proportion1_temp1.nc mask123.nc Proportion1.nc", shell=True, check=True)
-    # subprocess.run(f"cdo setrtomiss,-inf,0 Proportion1_temp1.nc Proportion1.nc", shell=True, check=True)
-    print(f'The Proportion1 has finished')
 
-    # Calculate Proportion2(Sbedrock/ET)
-    subprocess.run(f"cdo -mulc,100 -div Sbedrock_temp1.nc ET_median.nc Proportion2_temp1.nc", shell=True, check=True)
-    subprocess.run(f"cdo mul Proportion2_temp1.nc mask123.nc Proportion2.nc", shell=True, check=True)
-    # subprocess.run(f"cdo setrtomiss,-inf,0 Proportion2_temp1.nc Proportion2.nc", shell=True, check=True)
-    print(f'The Proportion2 has finished')
 
-    # Calculate Proportion3(Q/PR)
-    subprocess.run(f"cdo -mulc,100 -div Q_median.nc PR_median.nc Proportion3_temp1.nc", shell=True, check=True)
-    subprocess.run(f"cdo mul Proportion3_temp1.nc mask123.nc Proportion3.nc", shell=True, check=True)
-    # subprocess.run(f"cdo setrtomiss,-inf,0 Proportion3_temp1.nc Proportion3.nc", shell=True, check=True)
-    print(f'The Proportion3 has finished')
+def cal_FY():
+    os.system('cdo -b F32 -P 12 --no_remap_weights remapbil,mask1.nc FD_temp1.nc FD_temp2.nc')
+    os.system('cdo mul FD_temp2.nc mask123.nc FD.nc')
 
-    # Calculate Proportion4(ET/PR)
-    subprocess.run(f"cdo -mulc,100 -div ET_median.nc PR_median.nc Proportion4_temp1.nc", shell=True, check=True)
-    subprocess.run(f"cdo mul Proportion4_temp1.nc mask123.nc Proportion4.nc", shell=True, check=True)
-    # subprocess.run(f"cdo setrtomiss,-inf,0 Proportion4_temp1.nc Proportion4.nc", shell=True, check=True)
-    print(f'The Proportion4 has finished')
-
-    # Calculate Proportion5(Sbedrock/PR)
-    subprocess.run(f"cdo -mulc,100 -div Sbedrock_temp1.nc PR_median.nc Proportion5_temp1.nc", shell=True, check=True)
-    subprocess.run(f"cdo mul Proportion5_temp1.nc mask123.nc Proportion5.nc", shell=True, check=True)
-    # subprocess.run(f"cdo setrtomiss,-inf,0 Proportion5_temp1.nc Proportion5.nc", shell=True, check=True)
-    print(f'The Proportion5 has finished')
-
-    # Calculate Proportion6((ET-Sbedrock)/PR)
-    os.system('cdo -setrtoc2,-inf,0,0,1 Sbedrock_temp1.nc mask_sr.nc')
-    os.system('cdo -setrtoc2,-inf,0,1,0 Sbedrock_temp1.nc mask_ssoil.nc')
-    os.system('cdo sub Proportion4_temp1.nc Proportion5_temp1.nc Proportion6_sr_temp1.nc')
-    os.system('cdo mul Proportion6_sr_temp1.nc mask_sr.nc Proportion6_sr.nc')
-    os.system('cdo mul Proportion4_temp1.nc mask_ssoil.nc Proportion6_ssoil.nc')
-    os.system('cdo add Proportion6_sr.nc Proportion6_ssoil.nc Proportion6_temp1.nc')
-    subprocess.run(f"cdo mul Proportion6_temp1.nc mask123.nc Proportion6.nc", shell=True, check=True)
-    # subprocess.run(f"cdo setrtomiss,-inf,0 Proportion6_temp1.nc Proportion6.nc", shell=True, check=True)
-    print(f'The Proportion6 has finished')
-
-    # # Calculate Latent Heat(Ee=Sbedrock*1000*2257/(3600*24*365))
-    # subprocess.run(f'cdo -expr,"Ee=Sr*1000*2257/(3600*24*365)" Sbedrock.nc LH.nc', shell=True, check=True)
-    # print(f'The Latent Heat has finished')
-
-# def day2mon(day):
-#     """
-#     将从2003年1月1日开始的累计天数转换为对应的年份和月份。
-    
-#     参数：
-#     - day: 从2003年1月1日开始的总天数(整数)
-
-#     返回：
-#     - (year, month): 对应的年份和月份
-#     """
-#     year = 2003  
-
-#     while True:
-#         if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
-#             days_in_year = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]  
-#         else:
-#             days_in_year = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]  
-
-#         total_days = sum(days_in_year)
-
-#         if day < total_days:
-#             cumulative_days = np.cumsum([0] + days_in_year)
-#             for month in range(1, 13):
-#                 if cumulative_days[month - 1] <= day < cumulative_days[month]:
-#                     return year, month
-#         else:
-#             day -= total_days
-#             year += 1
-
-def cal_FD():
-    os.system('cdo -b F32 -P 12 --no_remap_weights remapbil,mask1.nc FD_temp1.nc FY_temp2_2002.nc')
-    # ds = xr.open_dataset('FD_temp2.nc') 
-    # days = ds['FD'].values
-    # year,month = np.vectorize(day2mon)(days)
-    # year_month = np.array([f"{y}-{m:02d}" for y, m in zip(year, month)])
-    # ds["FM"] = (("time",), year_month)
-    # ds.to_netcdf('FD_temp2.nc')
     days_in_year = [365, 366, 365, 365, 365, 366, 365, 365, 365, 366, 365, 365, 365, 366, 365, 365, 365, 366]
     sumday = 0
+    command_list = ''
     for i, day in enumerate(days_in_year):
         sumday += day  
-        input_file = f"FY_temp2_{i+2002}.nc"     
-        output_file = f"FY_temp2_{i+2003}.nc"  
-        command = f'cdo setrtoc,{sumday-day},{sumday},{i+1} {input_file} {output_file}'
-        print(f"Executing: {command}")  
-        os.system(command)
-    os.system('cdo mul FY_temp2_2020.nc mask123.nc FY.nc')
+        command_name = f"-setrtoc,{sumday-day},{sumday},{i+1} "
+        command_list = command_name + command_list
+
+    command = f'cdo {command_list}-setrtoc,-1,0,0 FD.nc FY_temp1.nc'
+    print(f"Executing: {command}")  
+    os.system(command)
+    os.system('cdo mul FY_temp1.nc mask123.nc FY.nc')
 
 # Delete the intermediate data to save memory
 # @timer
@@ -247,7 +171,6 @@ def cal_FD():
 #     os.system('rm -rf Sr_temp2.nc')
 #     os.system('rm -rf Sbedrock_temp1.nc')
 #     os.system('rm -rf Proportion1_temp1.nc')    
-
 
 # Execute all program
 @timer
@@ -258,9 +181,11 @@ def cal_S():
     path = os.getcwd()+'/'
     print("Current file path: ", path)
 
-    Sr()
-    Sr_Sb_P1_P2_P3_LH()
-    cal_FD()
+    # Sr()
+    cal_Sr_Sb()
+    cal_FY()
+
+
     # Transfer from the calculation path to the later path 
     dir_man.exit()
     path = os.getcwd()+'/'

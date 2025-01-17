@@ -32,6 +32,8 @@ def cp_500():
     os.system(f'cp {post_data_path}diff/PR_2003_2020_median_500_mmyr_nn.nc {path}PR_median.nc')
     os.system(f'cp {post_data_path}diff/Q_2003_2020_median_500_mmyr_nn.nc {path}Q_median.nc')
 
+    os.system(f'cp {post_data_path}PET/PET_500.nc {path}PET.nc')
+
     os.system(f'cp {post_data_path}SC/SnowCover_0p1.nc {path}SnowCover.nc')
     os.system(f'cp {post_data_path}mask3/mask3.nc {path}mask3.nc')
     
@@ -70,6 +72,8 @@ def ln():
     os.system(f'ln -sf {path1}ET_median.nc {path2}ET_median.nc')
     os.system(f'ln -sf {path1}PR_median.nc {path2}PR_median.nc')
     os.system(f'ln -sf {path1}Q_median.nc {path2}Q_median.nc')
+
+    os.system(f'ln -sf {path1}PET.nc {path2}PET.nc')
 
     os.system(f'ln -sf {path1}SnowCover.nc {path2}SnowCover.nc')
     os.system(f'ln -sf {path1}mask3.nc {path2}mask3.nc')

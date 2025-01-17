@@ -2,14 +2,12 @@ import os
 import cmaps
 import salem
 import numpy as np
-import pandas as pd
 import xarray as xr
 import geopandas as gpd
 from pylab import rcParams
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
-import matplotlib.patches as mpatches
 from matplotlib.gridspec import GridSpec
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
@@ -21,17 +19,18 @@ import config
 
 resolution = config.resolution
 name       = config.name
-region     = config.region
+# region     = config.region
 data_path  = config.data_path
 shp_path   = config.shp_path
 fig_path   = config.fig_path
 size       = config.size
 
-print('python draw_g2_scatter.py')
+print('python draw_r2_scatter_US.py')
 
-shp = gpd.GeoDataFrame.from_file(shp_path+'World_CN/ne_10m_admin_0_countries_chn.shp')
+# shp = gpd.GeoDataFrame.from_file('/tera11/zhwei/students/Xionghui/data/Shp/Conus/Conus.shp')
+shp = gpd.GeoDataFrame.from_file(shp_path+'US/USA_adm0.shp')
 
-pd.set_option('display.max_columns', None)
+
 font = {'family': 'Times New Roman'}
 matplotlib.rc('font', **font)
 
@@ -53,19 +52,26 @@ params = {'backend': 'ps',
           'text.usetex': False}
 rcParams.update(params)
 
-def data_process(name):
-    df = pd.read_csv(f'{data_path}Global.csv')
+def data_process(name,region):
+    image = xr.open_dataset(f'{data_path}/{name[0]}.nc').sel(lon=slice(region[0],region[1]),lat=slice(region[2],region[3]))
+    s = image[f'{name[1]}']
+    s = s.salem.roi(shape=shp)
+    lon = image['lon'].flatten()
+    lat = image['lat'].flatten()
 
-    df_s = pd.read_csv(f'{data_path}site.csv')
+    image.close()
 
-    df1 = df.copy()
-    df2 = df_s.copy()
+    if ((name[1]=='LC') or (name[1]=='tp') or (name[1]=='et')):
+        s = s[0,:,:]
 
-    df1 = df1[df1[name[0]] > 0]
-    return df1,df2
+    if (name[2]=='Sb') or (name[2]=='Sp') or (name[1]=='FD') or (name[1]=='Dr'):
+        s = np.where(s<=0, np.nan, s)   
+    s = np.where(s==0, np.nan, s)    
+    s = np.ma.masked_where(np.isnan(s), s)  
+    return s,lon,lat
 
 def set_fig():
-    fig = plt.figure(figsize=(12, 6), dpi=500)
+    fig = plt.figure(figsize=(12, 7), dpi=500)
 
     fig.subplots_adjust(left=0.05, right=0.98, 
                     bottom=0.14, top=0.95, hspace=0.25) 
@@ -75,45 +81,46 @@ def set_fig():
     ax = fig.add_subplot(gs[:, :], projection=ccrs.PlateCarree())
     return fig,ax
 
-def set_ax(ax,df1,df2,name,cmap,level):
-    if name[2] == 'Sb':
-        df3 = df2[(df2['mask'] == 1) & (df2['Measure'] == 'Y')]
-        print(df3)
-        ax.scatter(df3['lon'], df3['lat'], marker='o',
-                        s=20, linewidths=1, edgecolors="#153aab", facecolors="#153aab", label='Report of roots \npenetrating bedrock, unmask', zorder=2)
-        
-        df3 = df2[(df2['mask'] != 0) & (df2['Measure'] == 'Y')]
-        print(df3)
-        ax.scatter(df3['lon'], df3['lat'], marker='o',
-                        s=20, linewidths=1, edgecolors="#153aab", facecolors='none', label='Report of roots \npenetrating bedrock, mask', zorder=2)
-
-        df3 = df2[(df2['mask'] == 1) & (df2['Measure'] == 'N')]
-        print(df3)
-        ax.scatter(df3['lon'], df3['lat'], marker='o',
-                        s=20, linewidths=1, edgecolors="red", facecolors="red", label='Report of bedrock water contribution \nto ET from unsaturated zone, unmask', zorder=2)
-        
-        df3 = df2[(df2['mask'] != 0) & (df2['Measure'] == 'N')]
-        print(df3)
-        ax.scatter(df3['lon'], df3['lat'], marker='o',
-                        s=20, linewidths=1, edgecolors="red", facecolors='none', label='Report of bedrock water contribution \nto ET from unsaturated zone, mask', zorder=2)
-        
-        ax.legend(fontsize=12 ,bbox_to_anchor=(0.29, 0.379))
-
+def set_ax(ax,lon,lat,s,cmap,region,level):
     # Set drawing mode(note:extent's lat from positive to negative)
-    img = ax.scatter(df1['lon'], df1['lat'], c=df1[name[0]], 
+    lat_new = np.repeat(lat, len(lon))
+    lon_new = np.tile(lon, len(lat))
+    
+    img = ax.scatter(lat_new, lon_new, c=s.values.flatten(), 
                     s=size, linewidths=0, edgecolors="k", 
                     cmap=cmap, zorder=1, vmin=level[0], vmax=level[-1])
-
     
+    shp.boundary.plot(ax=ax, edgecolor='black', linewidth=0.75, alpha=1)
+
+    arr_x = np.arange(region[0]+4.8, region[1], 10)
+    arr_y = np.arange(region[2]+0.5, region[3]+1, 10)
+
     ax.set_xlim(region[0], region[1])
     ax.set_ylim(region[2], region[3])
-    ax.add_feature(cfeature.COASTLINE)
-    ax.set_extent(region)
+    ax.set_xticks(arr_x)
+    ax.set_xticklabels(arr_x,fontsize=24)
+    ax.set_yticks(arr_y)
+    ax.set_yticklabels(arr_y,fontsize=24)
+    
+    # ax.add_feature(cfeature.COASTLINE)
+    # ax.add_feature(cfeature.BORDERS, linestyle=':')
+    # ax.add_feature(cfeature.LAND, facecolor='gray')
+    # ax.add_feature(cfeature.LAND, edgecolor='black', facecolor='lightgray')
+    # ax.add_feature(cfeature.LAKES, edgecolor='black', facecolor='lightblue')
+
+    # ax.set_extent(region)
+    # ax.set_global()
+    
+    # ax.gridlines(draw_labels=True)
+
     ax.xaxis.set_major_formatter(LongitudeFormatter())
     ax.yaxis.set_major_formatter(LatitudeFormatter())
+    ax.set_aspect('equal')
+    for spine in ax.spines.values():
+        spine.set_linewidth(1.5)
     return img
 
-def set_colorbar(name,img,level,fig):
+def set_other(name,img,level,fig):
     # From the bottom left corner x, y, width, height
     cbar_ax = fig.add_axes([0.1, 0.1, 0.8, 0.04], frameon = False) 
     cb = fig.colorbar(img, 
@@ -122,16 +129,26 @@ def set_colorbar(name,img,level,fig):
                     cax=cbar_ax, 
                     orientation='horizontal',
                     spacing='uniform')
-    cb.ax.tick_params(labelsize=12)
+    cb.ax.tick_params(labelsize=24)
     cb.set_label(f'{name[3]}', fontsize=30, fontweight='bold')
+    for spine in cb.ax.spines.values():
+        spine.set_linewidth(1.5)
+        spine.set_color('black')
 
-def draw(name,level,cmap):
-    df1,df2 = data_process(name)
+@timer
+def draw(name,region,level,cmap):
+    legend_list = ['mask1', 'mask2', 'mask3', 'mask12', 'mask123']
+
+    s,lon,lat = data_process(name,region)
     fig,ax = set_fig()
-    img = set_ax(ax,df1,df2,name,cmap,level)
-    set_colorbar(name,img,level,fig)
+    img = set_ax(ax,lon,lat,s,cmap,region,level)
 
-    plt.savefig(f"{fig_path}/g2_{name[2]}.png")
+    if name[2] in legend_list:
+        print('no use colorbar')
+    else:
+        set_other(name,img,level,fig)
+
+    plt.savefig(f"{fig_path}/r2_{name[2]}_US.png")
     plt.close(fig)
 
 level1 = np.arange(0,500,50)
@@ -148,60 +165,61 @@ rgb_list = ['#403990','#80a6e2','#fbdd85', '#f46f43', '#cf3d3e']
 cmap3 = colors.ListedColormap(rgb_list)
 cmap4 = "bwr"
 
+region = [-124.8,-66.95,24.5,49.4]
+
+
 def Sb():
     name = ['Sbedrock', 'Sr', 'Sb', '$S_{{bedrock}}$ (mm)']
     level = level1
     cmap = cmap1
-    draw(name,level,cmap)
-
+    draw(name,region,level,cmap)
+    
 def Sr():
     name = ['Sr', 'Sr', 'Sr', '$S_{{r}}$ (mm)']
     level = level1
     cmap = cmap1
-    draw(name,level,cmap)
+    draw(name,region,level,cmap)
     
 def Ss():
     name = ['Ssoil', 'Band1', 'Ss', '$S_{{soil}}$ (mm)']
     level = level1
     cmap = cmap1
-    draw(name,level,cmap)
+    draw(name,region,level,cmap)
+
+def mask():
+    name = ['mask123', 'Band1', 'mask123', 'masks_all_combined']
+    level = np.arange(0,2,1)
+    cmap = cmap1
+    draw(name,region,level,cmap)
+    name = ['mask1', 'Band1', 'mask1', 'mask_shallowBedrock']
+    level = np.arange(0,2,1)
+    cmap = cmap1
+    draw(name,region,level,cmap)
+    name = ['mask2', 'LC', 'mask2', 'mask_woodyVeg']
+    level = np.arange(0,2,1)
+    cmap = cmap1
+    draw(name,region,level,cmap)
+    name = ['mask3', 'et', 'mask3', 'mask_ET_gt_P']
+    level = np.arange(0,2,1)
+    cmap = cmap1
+    draw(name,region,level,cmap)
 
 def P1():
     name = ['Proportion1', 'Sr', 'P1', '$S_{{bedrock}}$/$S_{{r}}$ (%)']
     level = level3
-    cmap = cmap3
-    draw(name,level,cmap)
-        
-def P2():
-    name = ['Proportion2', 'Sr', 'P2', '$S_{{bedrock}}$/ET (%)']
-    level = level3
-    cmap = cmap3
-    draw(name,level,cmap)
-
-def P3():
-    name = ['Proportion3', 'tp', 'P3', 'Q/PR (%)']
-    level = level3
-    cmap = cmap3
-    draw(name,level,cmap)
-    
-def FD():
-    name = ['FD_mean', 'FD', 'FD_mean', 'First Day']
-    level = level5
     cmap = cmaps.StepSeq25_r
-    draw(name,level,cmap)
+    draw(name,region,level,cmap)
 
 @timer
-def draw_G():
+def draw_R():
     path = os.getcwd()+'/'
     print("Current file path: ", path)
 
     Sb()
     Sr()
     Ss()
+    mask()
     P1()
-    P2()
-    P3()
-    FD()
 
 if __name__=='__main__':
-    draw_G()
+    draw_R()

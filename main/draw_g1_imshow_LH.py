@@ -226,157 +226,8 @@ rgb_list = ['#403990','#80a6e2','#fbdd85', '#f46f43', '#cf3d3e']
 cmap3 = colors.ListedColormap(rgb_list)
 cmap4 = "bwr"
 
-def Sb():
-    name = ['Sbedrock', 'Sr', 'Sb', '$S_{{bedrock}}$ (mm)']
-    level = level1
-    cmap = cmap1
-    draw(name,level,cmap)
-    name = ['Sbedrock', 'Sr', 'Sb_n2p', '$S_{{bedrock}}$ (mm)']
-    level = level2
-    cmap = cmap2
-    draw(name,level,cmap)
-    name = ['Sbedrock_temp1', 'Sr', 'Sb_n2p_nm', '$S_{{bedrock}}$ (mm)']
-    level = level2
-    cmap = cmap2
-    draw(name,level,cmap)
 
-def Sr():
-    name = ['Sr', 'Sr', 'Sr', '$S_{{r}}$ (mm)']
-    level = level1
-    cmap = cmap1
-    draw(name,level,cmap)
-    name = ['Sr_temp1', 'Sr', 'Sr_nm', '$S_{{r}}$ (mm)']
-    level = level1
-    cmap = cmap1
-    draw(name,level,cmap)
-    
-def Ss():
-    name = ['Ssoil', 'Band1', 'Ss', '$S_{{soil}}$ (mm)']
-    level = level1
-    cmap = cmap1
-    draw(name,level,cmap)
-
-def PR_ET_Q_LH():
-    name = ['PR', 'tp', 'PR', 'Precipitation (mm)']
-    level = np.arange(0,1600,400)
-    cmap = cmaps.WhiteBlue
-    draw(name,level,cmap)
-    name = ['ET', 'et', 'ET', 'Evapotranspiration (mm)']
-    level = np.arange(0,1600,400)
-    cmap = cmaps.WhiteBlue
-    draw(name,level,cmap)
-    name = ['Q', 'tp', 'Q', 'Streamflow (mm)']
-    level = np.arange(0,1600,400)
-    cmap = cmaps.WhiteBlue
-    draw(name,level,cmap)
-    name = ['LH', 'Ee', 'LH', 'Latent Heat (W/$m^{{2}}$)']
-    level = np.arange(0,100,10)
-    cmap = cmaps.WhiteBlue
-    draw(name,level,cmap)
-    name = ['LH_temp1', 'Ee', 'LH_nm', 'Latent Heat (W/$m^{{2}}$)']
-    level = np.arange(0,100,10)
-    cmap = cmaps.WhiteBlue
-    draw(name,level,cmap)
-    
-def FD():
-    name = ['FD', 'FD', 'FD', 'First Day']
-    level = np.arange(0,900,150)
-    cmap = cmaps.StepSeq25_r
-    draw(name,level,cmap)
-    name = ['FD_mean', 'FD', 'FD_mean', 'First Day']
-    level = level5
-    cmap = cmaps.StepSeq25_r
-    draw(name,level,cmap)
-
-def DTB():
-    name = ['DTB', 'Band1', 'DTB', 'DTB (cm)']
-    level = np.arange(0,300,25)
-    # rgb_list = ['#ed4a69', '#6c7bbc', '#65677e']
-    # cmap = colors.ListedColormap(rgb_list)
-    cmap = cmaps.CBR_drywet
-    draw(name,level,cmap)
-    name = ['DTB_mask2', 'Band1', 'DTB_mask2', 'DTB (cm)']
-    level = np.arange(0,300,25)
-    # rgb_list = ['#ed4a69', '#6c7bbc', '#65677e']
-    # cmap = colors.ListedColormap(rgb_list)
-    cmap = cmaps.CBR_drywet
-    draw(name,level,cmap)
-
-def Biomass():
-    name = ['Aboveground', 'Band1', 'Ag_nm', 'Aboveground Carbon Density (MgC/ha)']
-    level = np.arange(0,1600,400)
-    cmap = cmaps.cmocean_speed[:200]
-    draw(name,level,cmap)
-    name = ['Aboveground_mask123', 'Band1', 'Ag', 'Aboveground Carbon Density (MgC/ha)']
-    level = np.arange(0,1600,400)
-    cmap = cmaps.cmocean_speed[:200]
-    draw(name,level,cmap)
-    name = ['Belowground', 'Band1', 'Bg_nm', 'Belowground Carbon Density (MgC/ha)']
-    level = np.arange(0,400,100)
-    cmap = cmaps.cmocean_speed[:200]
-    draw(name,level,cmap)
-    name = ['Belowground_mask123', 'Band1', 'Bg', 'Belowground Carbon Density (MgC/ha)']
-    level = np.arange(0,400,100)
-    cmap = cmaps.cmocean_speed[:200]
-    draw(name,level,cmap)
-    
-def IGBP():
-    name = ['IGBP', 'LC', 'IGBP', 'IGBP']
-    level = np.arange(0.5,18.5,1)
-    rgb_list = ['#05450a', '#086a10', '#54a708', '#78d203', '#009900', '#c6b044', '#dcd159', '#dade48', '#fbff13', '#b6ff05', '#27ff87',
-            '#c24f44', '#a5a5a5', '#ff6d4c', '#69fff8', '#f9ffa4', '#1c0dff']
-    cmap = colors.ListedColormap(rgb_list)
-    draw(name,level,cmap)
-    
-def Koppen():
-    name = ['Koppen', 'Band1', 'Koppen', 'Koppen']
-    level = np.arange(0,31,1)
-    rgb_list = ['#ffffff','#0000FE','#0077FF','#46A9FA','#FE0000',
-                '#FE9695','#F5A301','#FFDB63','#FDFD45','#C6C700',
-                '#96FF96','#63C764','#329633','#C6FF4E','#66FF33',
-                '#33C701','#FF00FE','#C600C7','#963295','#966495',
-                '#ABB1FF','#5A77DB','#4C51B5','#320087','#18DCDC',
-                '#38C7FF','#007E7D','#00455E','#B2B2B2','#686868']
-    cmap = colors.ListedColormap(rgb_list)
-    draw(name,level,cmap)
-    
-def mask():
-    name = ['mask1', 'Band1', 'mask1', 'mask1']
-    level = np.arange(0,2,1)
-    cmap = cmap1
-    draw(name,level,cmap)
-    name = ['mask12','Band1','mask12','mask12']
-    level = np.arange(0,2,1)
-    cmap = cmap1
-    draw(name,level,cmap)
-    name = ['mask123','Band1','mask123','mask123']
-    level = np.arange(0,2,1)
-    cmap = cmap1
-    draw(name,level,cmap)
-    name = ['mask2','LC','mask2','mask2']
-    level = np.arange(0,2,1)
-    cmap = cmap1
-    draw(name,level,cmap)
-    name = ['mask3','et','mask3','mask3']
-    level = np.arange(0,2,1)
-    cmap = cmap1
-    draw(name,level,cmap)
-
-def Db():
-    # for year in range(2003,2021):
-    #     print(f'draw {year} Dr')
-    #     name = [f'Dr_{year}', 'Dr', f'Dr_{year}', f'Dr {year} (mm)']
-    #     level = level1
-    #     cmap = cmap1
-    #     draw(name, level, cmap)
-    for year in range(2003,2021):
-        print(f'draw {year} Dbedrock')
-        name = [f'Dbedrock_{year}', 'Dr', f'Db_{year}', f'$D_{{bedrock}}$ {year} (mm)']
-        level = level1
-        cmap = cmap1
-        draw(name, level, cmap)
-
-def LH():
+def LH_mon():
     for year in range(2003,2021):
         for mon in range(1,13):
             name = [f'LH_{year}_{mon}_temp1', 'Ee', f'LH_{year}_{mon}', 'Latent Heat (W/$m^{{2}}$)']
@@ -384,26 +235,28 @@ def LH():
             cmap = cmaps.WhiteBlue
             draw(name,level,cmap)
 
+def LH_mon_median():
+    for mon in range(1,13):
+        name = [f'LH_{mon}_median_temp1', 'Ee', f'LH_{mon}_median', 'Latent Heat (W/$m^{{2}}$)']
+        level = np.arange(0,50,5)
+        cmap = cmaps.WhiteBlue
+        draw(name,level,cmap)
+
+def LH_yr():
+    for year in range(2003,2021):
+        name = [f'LH_{year}_temp1', 'Ee', f'LH_{year}_median', 'Latent Heat (W/$m^{{2}}$)']
+        level = np.arange(0,50,5)
+        cmap = cmaps.WhiteBlue
+        draw(name,level,cmap)
+
 @timer
 def draw_G():
     path = os.getcwd()+'/'
     print("Current file path: ", path)
 
-    # Sb()
-    # Sr()
-    # Ss()
-    # PR_ET_Q_LH()
-    # P1()
-    # P2()
-    # P3()
-    # FD()
-    # DTB()
-    # Biomass()
-    # IGBP()
-    # Koppen()
-    # mask()
-    # Db()
-    LH()
+    # LH_mon()
+    LH_mon_median()
+
 
 if __name__=='__main__':
     draw_G()

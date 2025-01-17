@@ -24,7 +24,7 @@ def et():
                            coords={'lat': ds['lat'], 'lon': ds['lon']})
     output_ds.to_netcdf(f'{et_path}ET_2003_2020_median_{resolution}_mmyr_nn.nc')
 
-    os.system('cdo remapbil,../500.txt ET_2003_2020_median_0p1_mmyr_nn.nc ET_2003_2020_median_500_mmyr_nn.nc')
+    os.system('cdo -b F32 -P 12 --no_remap_weights -remapbil,../500.txt ET_2003_2020_median_0p1_mmyr_nn.nc ET_2003_2020_median_500_mmyr_nn.nc')
 
 
 def pr():
@@ -40,7 +40,7 @@ def pr():
                            coords={'lat': ds['lat'], 'lon': ds['lon']})
     output_ds.to_netcdf(f'{pr_path}PR_2003_2020_median_{resolution}_mmyr_nn.nc')
 
-    os.system('cdo remapbil,../500.txt PR_2003_2020_median_0p1_mmyr_nn.nc PR_2003_2020_median_500_mmyr_nn.nc')
+    os.system('cdo -b F32 -P 12 --no_remap_weights -remapbil,../500.txt PR_2003_2020_median_0p1_mmyr_nn.nc PR_2003_2020_median_500_mmyr_nn.nc')
 
 
 def q():
@@ -56,10 +56,7 @@ def q():
                            coords={'lat': ds['lat'], 'lon': ds['lon']})
     output_ds.to_netcdf(f'{q_path}Q_2003_2020_median_{resolution}_mmyr_nn.nc')
 
-    os.system('cdo remapbil,../500.txt Q_2003_2020_median_0p1_mmyr_nn.nc Q_2003_2020_median_500_mmyr_nn.nc')
-
-def mask_sr_soil():
-    os.system('cdo -setrtoc2,-inf,0,0,1 Sbedrock_temp1.nc mask_sr_soil.nc')
+    os.system('cdo -b F32 -P 12 --no_remap_weights -remapbil,../500.txt Q_2003_2020_median_0p1_mmyr_nn.nc Q_2003_2020_median_500_mmyr_nn.nc')
     
 et()
 pr()
