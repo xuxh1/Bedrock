@@ -18,9 +18,9 @@ from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 from myfunc import timer
 from myfunc import DirMan
 import config
+import matplotlib.font_manager as fm
 
 resolution = config.resolution
-name       = config.name
 region     = config.region
 data_path  = config.data_path
 shp_path   = config.shp_path
@@ -28,6 +28,9 @@ fig_path   = config.fig_path
 size       = config.size
 
 print('python draw_g2_scatter_statistics.py')
+dir_man = DirMan(data_path)
+dir_man.enter()
+os.makedirs(f'{fig_path}/global_map_2', exist_ok=True)
 
 shp = gpd.GeoDataFrame.from_file(shp_path+'World_CN/ne_10m_admin_0_countries_chn.shp')
 
@@ -37,6 +40,7 @@ matplotlib.rc('font', **font)
 
 params = {'backend': 'ps',
           'axes.labelsize': 25,
+          'axes.linewidth': 1.2,
           'grid.linewidth': 0.2,
           'font.size': 25,
           'legend.fontsize': 18,
@@ -54,9 +58,10 @@ params = {'backend': 'ps',
 rcParams.update(params)
 
 legend_list = ['IGBP', 'Koppen']
+font_properties = fm.FontProperties(weight='bold')
 
 def data_process(name):
-    df = pd.read_csv(f'{data_path}Global_statistics.csv')
+    df = pd.read_csv(f'{data_path}csv/Global_statistics.csv')
 
     df1 = df.copy()
     df1 = df1[df1[name[0]] > 0]
@@ -78,9 +83,22 @@ def set_ax(ax,df1,name,cmap,level):
     img = ax.scatter(df1['lon'], df1['lat'], c=df1[name[0]], 
                     s=size, linewidths=0, edgecolors="k", 
                     cmap=cmap, zorder=1, vmin=level[0], vmax=level[-1])
+
+    for spine in ax.spines.values():
+        spine.set_edgecolor('black')  
+        spine.set_linewidth(2)  
+
+    # coastline = cfeature.NaturalEarthFeature('physical', 'coastline', '50m', edgecolor='0.6', facecolor='none')
+    rivers = cfeature.NaturalEarthFeature('physical', 'rivers_lake_centerlines', '110m', edgecolor='0.6', facecolor='none')
+    ax.add_feature(cfeature.LAND, facecolor='0.95')
+    # ax.add_feature(coastline, linewidth=0.6)
+    ax.add_feature(cfeature.LAKES, alpha=1, facecolor='white', edgecolor='white')
+    ax.add_feature(rivers, linewidth=0.8)
+    # ax.gridlines(draw_labels=False, linestyle=':', linewidth=0.7, color='grey', alpha=0.8)
+
+    ax.add_feature(cfeature.COASTLINE)
     ax.set_xlim(region[0], region[1])
     ax.set_ylim(region[2], region[3])
-    ax.add_feature(cfeature.COASTLINE)
     ax.set_extent(region)
     ax.xaxis.set_major_formatter(LongitudeFormatter())
     ax.yaxis.set_major_formatter(LatitudeFormatter())
@@ -95,7 +113,10 @@ def set_colorbar(name,img,level,fig):
                     cax=cbar_ax, 
                     orientation='horizontal',
                     spacing='uniform')
-    cb.ax.tick_params(labelsize=12)
+    cb.ax.tick_params(labelsize=20)
+    cb.ax.yaxis.set_tick_params(direction='out', width=1.5)
+    for label in cb.ax.get_xticklabels() + cb.ax.get_yticklabels():
+        label.set_fontproperties(font_properties)
     cb.set_label(f'{name[3]}', fontsize=30, fontweight='bold')
 
 def set_legend(fig,name):
@@ -140,7 +161,7 @@ def set_legend(fig,name):
 
 def draw(name,level,cmap):
     df1 = data_process(name)
-    fig,ax = set_fig(name)
+    fig,ax = set_fig()
     img = set_ax(ax,df1,name,cmap,level)
     if name[2] in legend_list:
         set_legend(fig,name)
@@ -184,14 +205,7 @@ def Biomass():
     cmap = cmaps.cmocean_speed[:200]
     draw(name,level,cmap)
 
-@timer
-def draw_G():
-    path = os.getcwd()+'/'
-    print("Current file path: ", path)
-
+if __name__=='__main__':
     IGBP()
     Koppen()
     Biomass()
-
-if __name__=='__main__':
-    draw_G()

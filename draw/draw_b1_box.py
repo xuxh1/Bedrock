@@ -8,7 +8,7 @@ from myfunc import DirMan
 import config
 
 resolution = config.resolution
-name       = config.name
+# name       = config.name
 region     = config.region
 data_path  = config.data_path
 shp_path   = config.shp_path
@@ -16,7 +16,7 @@ fig_path   = config.fig_path
 
 print('python draw_b1_box.py')
 
-df = pd.read_csv(f'{data_path}Global_statistics.csv')
+df = pd.read_csv(f'{data_path}csv/Global_igbp_koppen.csv')
 
 def koppen():
     ## group together Koppen first and second letter groups

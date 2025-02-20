@@ -11,7 +11,6 @@ from myfunc import DirMan
 import config
 
 resolution = config.resolution
-name       = config.name
 region     = config.region
 data_path  = config.data_path
 shp_path   = config.shp_path
@@ -40,7 +39,7 @@ params = {'backend': 'ps',
           'text.usetex': False}
 rcParams.update(params)
 
-df = pd.read_csv(f'{data_path}Global.csv')
+df = pd.read_csv(f'{data_path}csv/Global.csv')
 
 def plot_line(title, ax, x, y1, y2, color):
     ax.spines["left"].set_visible(False)

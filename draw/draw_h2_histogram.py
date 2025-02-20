@@ -8,7 +8,6 @@ from myfunc import DirMan
 import config
 
 resolution = config.resolution
-name       = config.name
 region     = config.region
 data_path  = config.data_path
 shp_path   = config.shp_path
@@ -37,7 +36,7 @@ params = {'backend': 'ps',
           'text.usetex': False}
 rcParams.update(params)
 
-df = pd.read_csv(f'{data_path}/Global.csv')
+df = pd.read_csv(f'{data_path}/csv/Global.csv')
 rgb_list = ['#ed4a69', '#6c7bbc', '#65677e']
 cmap = colors.ListedColormap(rgb_list)
 

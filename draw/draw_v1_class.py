@@ -10,7 +10,6 @@ from myfunc import DirMan
 import config
 
 resolution     = config.resolution
-name           = config.name
 region         = config.region
 data_path      = config.data_path
 post_data_path = config.post_data_path
@@ -40,51 +39,48 @@ params = {'backend': 'ps',
           'text.usetex': False}
 rcParams.update(params)
 
-df = pd.read_csv(f'{data_path}Global.csv')
+df = pd.read_csv(f'{data_path}csv/Global.csv')
 shp = gpd.read_file(shp_path+'World_CN/ne_10m_admin_0_countries_chn.shp')
 
 @timer
 def plot_Con():
-   df2 = df.copy()
-   
-   df2['Continent_Together'] = df2['Continent'].replace(to_replace=['South America','North America'], value=['South \nAmerica','North \nAmerica']) 
-   
-   df3 = pd.DataFrame()
-   df3['Continent_area'] = df2.groupby('Continent_Together')['Area'].sum().div(1e9)
-   # df3 = df3[df3['Continent_Together'] > 300]
-   df3 = df3.sort_values(by=['Continent_area'], ascending=False).reset_index(drop=False)
-   print(df3)
-   
-   list1 = df3.loc[:,'Continent_Together']
-   list2 = df3.loc[:,'Continent_area']
-   mapping = dict(zip(list1, list2))
-   
-   df2 = df2[df2.Continent_Together.isin(list1)]
-   df2 = df2[df2['Continent_Together'].notna()]
-   df2['Continent_area'] = df2['Continent_Together'].map(mapping)
-   df2 = df2.sort_values(by=['Continent_area'], ascending=False).reset_index(drop=True)
-   order = df2['Continent_Together'].unique()
-   df2['Continent_Together'] = pd.Categorical(df2['Continent_Together'], categories=order, ordered=True)
-   print(df2)
-      
-   violin_plot = (ggplot(df2, aes(x='Continent_Together', y="Sbedrock", fill="Continent_Together"))
-            + geom_violin(show_legend=False)
-            + geom_boxplot(fill="white", width=0.1, show_legend=False, outlier_alpha=0, outlier_size=1, outlier_color='#f6f2f4')
-            + scale_fill_hue(s=0.90, l=0.65, h=0.0417, color_space='husl')
-         #    + coord_flip()
-            + theme_matplotlib()
-            + ggtitle("Continent")
-            + theme(  # legend_position='none',
-   text=element_text(size=20, colour="black"),
-   axis_text_x=element_text(angle=90, hjust=0.5),
-   axis_title_x=element_text(vjust=1),
-   plot_title=element_text(vjust=1, hjust = 0.5),
-   aspect_ratio=0.8,
-   dpi=400,
-   figure_size=(16, 8))
-            + labs(x='', y="$S_{{bedrock}}$ (mm)"))
-   violin_plot.save(f'{fig_path}v1_con.pdf', transparent=True, bbox_inches='tight')
+   df = pd.read_csv(f'{data_path}csv/Global.csv')
+   shp = gpd.read_file(shp_path+'World_CN/ne_10m_admin_0_countries_chn.shp')
+
+   # Group by Continent and calculate sum of Area
+   df['Continent_Together'] = df['Continent'].replace(to_replace=['South America', 'North America'], value=['South \nAmerica', 'North \nAmerica'])
+   continent_area = df.groupby('Continent_Together')['Area'].sum().div(1e9)
+
+   # Filter continents with sufficient area
+   continent_area = continent_area[continent_area > 300].sort_values(ascending=False)
+
+   # Map the calculated areas back to the dataframe and sort it
+   df['Continent_area'] = df['Continent_Together'].map(continent_area)
+   df = df[df['Continent_Together'].isin(continent_area.index)]
+
+   # Ensure Continent_Together is an ordered category for proper sorting
+   df['Continent_Together'] = pd.Categorical(df['Continent_Together'], categories=continent_area.index, ordered=True)
+
+   # Create the violin plot
+   violin_plot = (ggplot(df, aes(x='Continent_Together', y="Sbedrock", fill="Continent_Together"))
+      + geom_violin(show_legend=False)
+      + geom_boxplot(fill="white", width=0.1, show_legend=False, outlier_alpha=0, outlier_size=1, outlier_color='#f6f2f4')
+      + scale_fill_hue(s=0.90, l=0.65, h=0.0417, color_space='husl')
+      + theme_matplotlib()
+      + ggtitle("Continent")
+      + theme(
+         text=element_text(size=20, colour="black"),
+         axis_text_x=element_text(angle=90, hjust=0.5),
+         axis_title_x=element_text(vjust=1),
+         plot_title=element_text(vjust=1, hjust=0.5),
+         aspect_ratio=0.8,
+         dpi=400,
+         figure_size=(16, 8))
+      + labs(x='', y="$S_{{bedrock}}$ (mm)"))
+
+   # Save the plot
    violin_plot.save(f'{fig_path}v1_con.png')
+
 
 @timer
 def plot_Sub():
@@ -138,7 +134,7 @@ def plot_Sub():
    dpi=400,
    figure_size=(16, 8))
             + labs(x='', y="$S_{{bedrock}}$ (mm)"))
-   violin_plot.save(f'{fig_path}v1_sub.pdf', transparent=True, bbox_inches='tight')
+   # violin_plot.save(f'{fig_path}v1_sub.pdf', transparent=True, bbox_inches='tight')
    violin_plot.save(f'{fig_path}v1_sub.png')
         
 def plot_Sov():
@@ -184,7 +180,7 @@ def plot_Sov():
    dpi=400,
    figure_size=(16, 8))
             + labs(x='', y="$S_{{bedrock}}$ (mm)", title='Sovereignt'))
-   violin_plot.save(f'{fig_path}v1_sov.pdf', transparent=True, bbox_inches='tight')
+   # violin_plot.save(f'{fig_path}v1_sov.pdf', transparent=True, bbox_inches='tight')
    violin_plot.save(f'{fig_path}v1_sov.png')
     
     
@@ -239,7 +235,7 @@ def plot_Koppen():
    dpi=400,
    figure_size=(16, 8))
             + labs(x="", y="$S_{{bedrock}}$ (mm)"))
-   violin_plot.save(f'{fig_path}v1_koppen.pdf', transparent=True, bbox_inches='tight')
+   # violin_plot.save(f'{fig_path}v1_koppen.pdf', transparent=True, bbox_inches='tight')
    violin_plot.save(f'{fig_path}v1_koppen.png')
    
 def plot_IGBP():
@@ -290,21 +286,21 @@ def plot_IGBP():
    dpi=400,
    figure_size=(16, 8))
             + labs(x="", y="$S_{{bedrock}}$ (mm)"))
-   violin_plot.save(f'{fig_path}v1_IGBP.pdf', transparent=True, bbox_inches='tight')
+   # violin_plot.save(f'{fig_path}v1_IGBP.pdf', transparent=True, bbox_inches='tight')
    violin_plot.save(f'{fig_path}v1_IGBP.png')
    
 def draw_violin():
-    # Transfer the current path to the calculation path
-    dir_man = DirMan(data_path)
-    dir_man.enter()
-    path = os.getcwd()+'/'
-    print("Current file path: ", path)
+   # Transfer the current path to the calculation path
+   dir_man = DirMan(data_path)
+   dir_man.enter()
+   path = os.getcwd()+'/'
+   print("Current file path: ", path)
 
-    plot_Con()
-    plot_Sub()
-    plot_Sov()
-    plot_Koppen()
-    plot_IGBP()
+   plot_Con()
+   #  plot_Sub()
+   #  plot_Sov()
+   #  plot_Koppen()
+   #  plot_IGBP()
 
 if __name__=='__main__':
-    draw_violin()
+   draw_violin()

@@ -6,7 +6,7 @@ import numpy as np
 import os
 from joblib import Parallel, delayed
 
-path1 = '/tera06/zhwei/CoLM_Forcing/'
+path1 = '/shr03/CoLM_Forcing/'
 path2 = '/tera11/zhwei/students/Xionghui/data/PR/'
 months = [str(i).zfill(2) for i in range(1, 13)]
 yearday = [365,366,365,365,365,366,365,365,365,366,365,365,365,366,365,365,365,366]

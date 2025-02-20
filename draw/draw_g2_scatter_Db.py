@@ -9,6 +9,7 @@ from pylab import rcParams
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
+import matplotlib.patches as mpatches
 from matplotlib.gridspec import GridSpec
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
@@ -17,9 +18,9 @@ from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 from myfunc import timer
 from myfunc import DirMan
 import config
+import matplotlib.font_manager as fm
 
 resolution = config.resolution
-name       = config.name
 region     = config.region
 data_path  = config.data_path
 shp_path   = config.shp_path
@@ -51,19 +52,21 @@ params = {'backend': 'ps',
           "mathtext.default":"regular",
           'text.usetex': False}
 rcParams.update(params)
+font_properties = fm.FontProperties(weight='bold')
 
-def data_process(name,year):
-    df = pd.read_csv(f'{data_path}Global_Db_{year}.csv')
+def data_process(name):
+    df = pd.read_csv(f'{data_path}csv/Global_Db.csv')
+
     df1 = df.copy()
     df1 = df1[df1[name[0]] > 0]
     return df1
 
-def set_fig():
+def set_fig(name):
     fig = plt.figure(figsize=(12, 6), dpi=500)
 
     fig.subplots_adjust(left=0.05, right=0.98, 
                     bottom=0.14, top=0.95, hspace=0.25) 
-        
+    
     #Create a subgraph grid with 2 rows and 3 columns
     gs = GridSpec(2, 6)
     ax = fig.add_subplot(gs[:, :], projection=ccrs.PlateCarree())
@@ -72,11 +75,23 @@ def set_fig():
 def set_ax(ax,df1,name,cmap,level):
     # Set drawing mode(note:extent's lat from positive to negative)
     img = ax.scatter(df1['lon'], df1['lat'], c=df1[name[0]], 
-                    s=0.1, linewidths=0, edgecolors="k", 
+                    s=size, linewidths=0, edgecolors="k", 
                     cmap=cmap, zorder=1, vmin=level[0], vmax=level[-1])
-    
+
+    for spine in ax.spines.values():
+        spine.set_edgecolor('black')  
+        spine.set_linewidth(2) 
+
     ax.set_xlim(region[0], region[1])
     ax.set_ylim(region[2], region[3])
+    # coastline = cfeature.NaturalEarthFeature('physical', 'coastline', '50m', edgecolor='0.6', facecolor='none')
+    rivers = cfeature.NaturalEarthFeature('physical', 'rivers_lake_centerlines', '110m', edgecolor='0.6', facecolor='none')
+    ax.add_feature(cfeature.LAND, facecolor='0.95')
+    # ax.add_feature(coastline, linewidth=0.6)
+    ax.add_feature(cfeature.LAKES, alpha=1, facecolor='white', edgecolor='white')
+    ax.add_feature(rivers, linewidth=0.8)
+    # ax.gridlines(draw_labels=False, linestyle=':', linewidth=0.7, color='grey', alpha=0.8)
+
     ax.add_feature(cfeature.COASTLINE)
     ax.set_extent(region)
     ax.xaxis.set_major_formatter(LongitudeFormatter())
@@ -92,17 +107,43 @@ def set_colorbar(name,img,level,fig):
                     cax=cbar_ax, 
                     orientation='horizontal',
                     spacing='uniform')
-    cb.ax.tick_params(labelsize=12)
+
+    cb.ax.tick_params(labelsize=20)
+    cb.ax.yaxis.set_tick_params(direction='out', width=1.5)
+    for label in cb.ax.get_xticklabels() + cb.ax.get_yticklabels():
+        label.set_fontproperties(font_properties)
     cb.set_label(f'{name[3]}', fontsize=30, fontweight='bold')
 
-def draw(name,level,cmap,year):
-    df1 = data_process(name,year)
-    fig,ax = set_fig()
+# def set_legend(ax,name):
+#     FM_list = ['FM_mean', 'FM_mean_nm']
+#     FY_list = ['FY', 'FY_nm']
+#     if name[2] in FM_list:
+#         RGBs = ['#4B74B2', '#90BEE0', '#E6F1F3', '#FFDF92', '#FC8C5A', '#DB3124']
+#         labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', '≥Jun']
+#         legend_patches = [mpatches.Patch(color=color, label=label) 
+#                         for color, label in zip(RGBs, labels)]
+#         ax.legend(handles=legend_patches, loc='lower left', bbox_to_anchor=(0, 0.01),
+#                 fontsize=16, title="First Month" ,title_fontsize=20,
+#                 frameon=False, edgecolor='black', ncol=3, columnspacing=1)
+#     elif name[2] in FY_list:
+#         RGBs = ['#4B74B2', '#90BEE0', '#E6F1F3', '#FFDF92', '#FC8C5A', '#DB3124']
+#         labels = ['2003', '2004', '2005', '2006', '2007', '≥2008']
+#         legend_patches = [mpatches.Patch(color=color, label=label) 
+#                         for color, label in zip(RGBs, labels)]
+#         ax.legend(handles=legend_patches, loc='lower left', bbox_to_anchor=(0, 0.01),
+#                 fontsize=16, title="First Year" ,title_fontsize=20,
+#                 frameon=False, edgecolor='black', ncol=3, columnspacing=1)  
+
+def draw(name,level,cmap):
+    df1 = data_process(name)
+    fig,ax = set_fig(name)
     img = set_ax(ax,df1,name,cmap,level)
+
     set_colorbar(name,img,level,fig)
 
-    plt.savefig(f"{fig_path}/g2_{name[2]}.png")
+    plt.savefig(f"{fig_path}/global_map_2/g2_{name[2]}.png")
     plt.close(fig)
+
 
 level1 = np.arange(0,500,50)
 level2 = np.arange(-300,350,50)
@@ -118,6 +159,36 @@ rgb_list = ['#403990','#80a6e2','#fbdd85', '#f46f43', '#cf3d3e']
 cmap3 = colors.ListedColormap(rgb_list)
 cmap4 = "bwr"
 
+def Dbedrock_median():
+    name = ['Dbedrock_median', 'Dbedrock', 'Dbedrock_median', 'the median $D_{{bedrock}}$ (mm) from 2003 to 2020']
+    level = level1
+    cmap = cmap1
+    draw(name,level,cmap)
+        
+def Dbedrock_2011():
+    name = ['D/Dbedrock_2011', 'Dbedrock', 'Dbedrock_2011', '$D_{{bedrock}}$ 2011 (mm)']
+    level = level1
+    cmap = cmap1
+    draw(name,level,cmap)
+
+def Dbedrock_2014():
+    name = ['D/Dbedrock_2014', 'Dbedrock', 'Dbedrock_2014', '$D_{{bedrock}}$ 2014 (mm)']
+    level = level1
+    cmap = cmap1
+    draw(name,level,cmap)
+
+def Dbedrock_2015():
+    name = ['D/Dbedrock_2015', 'Dbedrock', 'Dbedrock_2015', '$D_{{bedrock}}$ 2015 (mm)']
+    level = level1
+    cmap = cmap1
+    draw(name,level,cmap)
+
+def Dbedrock_2017():
+    name = ['D/Dbedrock_2017', 'Dbedrock', 'Dbedrock_2017', '$D_{{bedrock}}$ 2017 (mm)']
+    level = level1
+    cmap = cmap1
+    draw(name,level,cmap)
+
 def Db():
     for year in range(2003,2021):
         print(f'draw {year} Dbedrock')
@@ -126,12 +197,9 @@ def Db():
         cmap = cmap1
         draw(name, level, cmap, year)
 
-@timer
-def draw_G():
-    path = os.getcwd()+'/'
-    print("Current file path: ", path)
-
-    Db()
-
 if __name__=='__main__':
-    draw_G()
+    Dbedrock_median()
+    Dbedrock_2011()
+    Dbedrock_2014()
+    Dbedrock_2015()
+    Dbedrock_2017()

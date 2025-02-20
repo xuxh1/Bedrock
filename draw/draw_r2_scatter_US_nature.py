@@ -66,6 +66,8 @@ def data_process(name,region):
 
     if (name[2]=='Sb') or (name[2]=='Sp') or (name[1]=='FD') or (name[1]=='Dr'):
         s = np.where(s<=0, np.nan, s)   
+    if (name[2]=='P1'):
+        s = s*100
     s = np.where(s==0, np.nan, s)    
     s = np.ma.masked_where(np.isnan(s), s)  
     return s,lon,lat
@@ -218,10 +220,10 @@ def draw_R():
     path = os.getcwd()+'/'
     print("Current file path: ", path)
 
-    Sb()
-    Sr()
-    Ss()
-    mask()
+    # Sb()
+    # Sr()
+    # Ss()
+    # mask()
     P1()
 
 if __name__=='__main__':

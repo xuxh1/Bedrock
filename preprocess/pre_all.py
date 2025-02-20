@@ -45,7 +45,7 @@ def mask2():
 def mask3():
     dir_path = path1+'mask3/'
     os.chdir(dir_path)
-    os.system(f"cdo timsum {path1}diff.nc reduce.nc")
+    os.system(f"cdo timsum {path1}diff/diff.nc reduce.nc")
     os.system(f'cdo -b F32 -P 12 --no_remap_weights -remapbil,{path1}500.txt reduce.nc mask3_temp1.nc')
     os.system(f"cdo -setrtoc2,-inf,0,1,nan mask3_temp1.nc mask3.nc")
     print("mask3已完成")
