@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -J dp_S
 #SBATCH -p second
-#SBATCH -w tms12
+#SBATCH -w tms13
 #SBATCH -N 1 
 #SBATCH -n 48
 #SBATCH --ntasks-per-node=48
@@ -13,6 +13,6 @@
 
 ulimit -s unlimited
 
-# python main/dp_S.py
+python main/dp_S.py
 # python main/dp_index.py
-python run/run.py
+# python run/run.py

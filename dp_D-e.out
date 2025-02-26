@@ -1,0 +1,24 @@
+cdo    ensmean: Processed 18 variables over 18 timesteps [4.90s 1108MB].
+cdo    remapbil: Bilinear remapping from lonlat (3600x1800) to lonlat (86400x43200) grid
+cdo    remapbil: Processed 1 variable over 1 timestep [637.23s 83GB].
+cdo    mul: Processed 2 variables over 2 timesteps [202.78s 69GB].
+cdo    ensmean: Processed 18 variables over 18 timesteps [5.28s 1108MB].
+cdo    remapbil: Bilinear remapping from lonlat (3600x1800) to lonlat (86400x43200) grid
+cdo    remapbil: Processed 1 variable over 1 timestep [544.74s 83GB].
+cdo    mul: Processed 2 variables over 2 timesteps [182.76s 69GB].
+cdo    ensmean: Processed 18 variables over 18 timesteps [5.13s 1108MB].
+cdo    remapbil: Bilinear remapping from lonlat (3600x1800) to lonlat (86400x43200) grid
+cdo    remapbil: Processed 1 variable over 1 timestep [648.56s 83GB].
+cdo    mul: Processed 2 variables over 2 timesteps [213.36s 69GB].
+cdo    ensmean: Processed 18 variables over 18 timesteps [6.36s 1108MB].
+cdo    remapbil: Bilinear remapping from lonlat (3600x1800) to lonlat (86400x43200) grid
+cdo    remapbil: Processed 1 variable over 1 timestep [684.50s 83GB].
+cdo    mul: Processed 2 variables over 2 timesteps [194.77s 69GB].
+cdo    ensmean: Processed 18 variables over 18 timesteps [5.84s 1108MB].
+cdo    remapbil: Bilinear remapping from lonlat (3600x1800) to lonlat (86400x43200) grid
+cdo    remapbil: Processed 1 variable over 1 timestep [717.90s 83GB].
+cdo    mul: Processed 2 variables over 2 timesteps [209.73s 69GB].
+cdo    ensmean: Processed 18 variables over 18 timesteps [6.09s 1108MB].
+cdo    remapbil: Bilinear remapping from lonlat (3600x1800) to lonlat (86400x43200) grid
+cdo    remapbil: Processed 1 variable over 1 timestep [574.46s 83GB].
+cdo    mul: Processed 2 variables over 2 timesteps [186.24s 69GB].

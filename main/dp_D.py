@@ -29,6 +29,9 @@ def cdo_sub(filename1, filename2, filename3):
 def cdo_expr(filename1, filename2, nday):
     subprocess.run(f'cdo -expr,"Ee=Dr*1000*2257/(3600*24*{nday})" {filename1} {filename2}', shell=True, check=True)
 
+def cdo_setvals(filename1, filename2):
+    subprocess.run(f'cdo setvals,0,nan {filename1} {filename2}', shell=True, check=True)
+
 def dp_Dr():
     # remap the 0p1 resolution to 0p1 resolution(no need, but for the sake of formatting consistency)
     for j in range(18):
@@ -219,13 +222,64 @@ def dp_D_Duration_mean():
     subprocess.run(f"cdo -b F32 -P 48 --no_remap_weights remapbil,mask1.nc4 D_Duration_mean_tmp1.nc4 D_Duration_mean_tmp2.nc4", shell=True, check=True)
     cdo_mul("D_Duration_mean_tmp2.nc4", "mask123.nc4", "D_Duration_mean.nc4")
 
+def dp_D_Duration_set0_to_nan():
+    Parallel(n_jobs=5)(delayed(cdo_setvals)(f"D/D_Duration_{2003+j}_tmp1.nc4", f"D/D_Duration_{2003+j}_set0_to_nan_tmp1.nc4") for j in tqdm(range(18)))
+
+def dp_D_Duration_set0_to_nan_median():
+    name_list = []
+    for year in range(2003,2021):
+        name = f'D/D_Duration_set0_to_nan_{year}_tmp1.nc4'
+        name_list.append(name)
+
+    datasets = [xr.open_dataset(file) for file in name_list]
+    data_arrays = [ds['Duration'].values for ds in datasets]
+    median_data = np.median(data_arrays, axis=0)
+
+    output_file = 'D_Duration_set0_to_nan_median_tmp1.nc4'
+    median_ds = xr.Dataset(
+        {'Duration': (['lat', 'lon'], median_data)}, 
+        coords={'lat': datasets[0].lat, 'lon': datasets[0].lon} 
+    )
+    median_ds.to_netcdf(output_file)
+
+    subprocess.run(f"cdo -b F32 -P 48 --no_remap_weights remapbil,mask1.nc4 D_Duration_set0_to_nan_median_tmp1.nc4 D_Duration_set0_to_nan_median_tmp2.nc4", shell=True, check=True)
+    cdo_mul("D_Duration_set0_to_nan_median_tmp2.nc4", "mask123.nc4", "D_Duration_set0_to_nan_median.nc4")
+
+def dp_D_Duration_set0_to_nan_mean():
+    name_list = 'cdo -O -ensmean '
+    for year in range(2003,2021):
+        name = f'D/D_Duration_set0_to_nan_{year}_tmp1.nc4'
+        name_list = name_list+' '+name
+
+    output_file = 'D_Duration_set0_to_nan_mean_tmp1.nc4'
+    os.system(name_list+' '+output_file)
+
+    subprocess.run(f"cdo -b F32 -P 48 --no_remap_weights remapbil,mask1.nc4 D_Duration_set0_to_nan_mean_tmp1.nc4 D_Duration_set0_to_nan_mean_tmp2.nc4", shell=True, check=True)
+    cdo_mul("D_Duration_set0_to_nan_mean_tmp2.nc4", "mask123.nc4", "D_Duration_set0_to_nan_mean.nc4")
+
+def dp_D_Duration_set0_to_nan_max():
+    name_list = 'cdo -O -ensmax '
+    for year in range(2003,2021):
+        name = f'D/D_Duration_set0_to_nan_{year}_tmp1.nc4'
+        name_list = name_list+' '+name
+
+    output_file = 'D_Duration_set0_to_nan_max_tmp1.nc4'
+    os.system(name_list+' '+output_file)
+
+    subprocess.run(f"cdo -b F32 -P 48 --no_remap_weights remapbil,mask1.nc4 D_Duration_set0_to_nan_max_tmp1.nc4 D_Duration_set0_to_nan_max_tmp2.nc4", shell=True, check=True)
+    cdo_mul("D_Duration_set0_to_nan_max_tmp2.nc4", "mask123.nc4", "D_Duration_set0_to_nan_max.nc4")
+
 if __name__=='__main__':
-    dp_Dbedrock()
-    dp_Dr()
-    dp_Dbedrock_median()
+    # dp_Dbedrock()
+    # dp_Dr()
+    # dp_Dbedrock_median()
     # dp_Dbedrock_mean()
-    dp_Dbedrock_Frequency()
-    dp_FD_median_to_FM_median()
+    # dp_Dbedrock_Frequency()
+    # dp_FD_median_to_FM_median()
     # dp_FD_mean_to_FM_mean()
-    dp_D_Duration_median()
+    # dp_D_Duration_median()
     # dp_D_Duration_mean()
+    dp_D_Duration_set0_to_nan()
+    dp_D_Duration_set0_to_nan_median()
+    dp_D_Duration_set0_to_nan_mean()
+    dp_D_Duration_set0_to_nan_max()

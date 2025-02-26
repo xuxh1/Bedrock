@@ -46,19 +46,43 @@ def dp_S_Duration():
     os.system(f"cdo mul S_Duration_tmp2.nc4 mask123.nc4 S_Duration.nc4")
     print(f'The S_Duration has finished')  
 
+# def dp_S_Drought():
+#     os.system('cdo yearmax Drought_Period_tmp1.nc4 Drought_Period_yearmax_tmp1.nc4')
+#     os.system('cdo timmean Drought_Period_yearmax_tmp1.nc4 Drought_Period_yearmax_timmean_tmp1.nc4')
+#     os.system('cdo timmax Drought_Period_tmp1.nc4 Drought_Period_timmax_tmp1.nc4')
+
+#     os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt Drought_Period_yearmax_timmean_tmp1.nc4 Drought_Period_yearmax_timmean_tmp2.nc4')
+#     os.system('cdo mul Drought_Period_yearmax_timmean_tmp2.nc4 mask123.nc4 Drought_Period_yearmax_timmean.nc4')
+
+#     os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt Drought_Period_timmax_tmp1.nc4 Drought_Period_timmax_tmp2.nc4')
+#     os.system('cdo mul Drought_Period_timmax_tmp2.nc4 mask123.nc4 Drought_Period_timmax.nc4')
+
+#     os.system('cdo sub Drought_Period_timmax.nc4 Drought_Period_yearmax_timmean.nc4 Drought_Period_sub.nc4')
+
 def dp_S_Drought():
     # os.system('cdo yearmax Drought_Period_tmp1.nc4 Drought_Period_yearmax_tmp1.nc4')
-    # os.system('cdo timmean Drought_Period_yearmax_tmp1.nc4 Drought_Period_yearmax_timmean_tmp1.nc4')
-    # os.system('cdo timmax Drought_Period_tmp1.nc4 Drought_Period_timmax_tmp1.nc4')
+    # os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt Drought_Period_timmax_tmp1.nc4 Drought_Period_timmax_tmp2.nc4')
+    # os.system('cdo mul Drought_Period_timmax_tmp2.nc4 mask123.nc4 Drought_Period_timmax.nc4')
 
+    os.system('cdo timmean Drought_Period_yearmax_tmp1.nc4 Drought_Period_yearmax_timmean_tmp1.nc4')
     os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt Drought_Period_yearmax_timmean_tmp1.nc4 Drought_Period_yearmax_timmean_tmp2.nc4')
     os.system('cdo mul Drought_Period_yearmax_timmean_tmp2.nc4 mask123.nc4 Drought_Period_yearmax_timmean.nc4')
 
-    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt Drought_Period_timmax_tmp1.nc4 Drought_Period_timmax_tmp2.nc4')
-    os.system('cdo mul Drought_Period_timmax_tmp2.nc4 mask123.nc4 Drought_Period_timmax.nc4')
+    # os.system('cdo yearmax Drought_Period_tmp1.nc4 Drought_Period_yearmax_tmp1.nc4')
+    # ds = xr.open_dataset(f'{data_path}Drought_Period_yearmax_tmp1.nc4')
+    # drought_duration_yearmax = ds['Drought_Period'].load()
+    # drought_duration_yearmax_median = np.median(drought_duration_yearmax, axis=0)
 
-    os.system('cdo sub Drought_Period_timmax.nc4 Drought_Period_yearmax_timmean.nc4 Drought_Period_sub.nc4')
+    # output_file = 'Drought_Period_yearmax_median_tmp1.nc4'
+    # median_ds = xr.Dataset(
+    #                 {'Dbedrock': (['lat', 'lon'], drought_duration_yearmax_median)}, 
+    #                 coords={'lat': drought_duration_yearmax.lat, 'lon': drought_duration_yearmax.lon} 
+    #                 )
+    # median_ds.to_netcdf(output_file)    
+    # os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt Drought_Period_yearmax_median_tmp1.nc4 Drought_Period_yearmax_median_tmp2.nc4')
+    # os.system('cdo mul Drought_Period_yearmax_median_tmp2.nc4 mask123.nc4 Drought_Period_yearmax_median.nc4')
 
+    # os.system('cdo sub Drought_Period_timmax.nc4 Drought_Period_yearmax_median.nc4 Drought_Period_max_sub_median.nc4')
 
 if __name__=='__main__':
     # dp_Sbedrock_mask123()
