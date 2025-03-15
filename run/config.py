@@ -1,6 +1,6 @@
 # configuration
-# resolution = "0p1"
-resolution = "500"
+resolution = "0p1"
+# resolution = "500"
 # name = "exp1"
 # name = "exp2"
 region = [-180,180,-60,90]

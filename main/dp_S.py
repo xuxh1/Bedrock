@@ -41,10 +41,72 @@ def dp_FD2FY():
     os.system(command)
     os.system('cdo mul S_FY_tmp1.nc4 mask123.nc4 S_FY.nc4')
 
-def dp_S_Duration():
-    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_Duration_tmp1.nc4 S_Duration_tmp2.nc4')
-    os.system(f"cdo mul S_Duration_tmp2.nc4 mask123.nc4 S_Duration.nc4")
-    print(f'The S_Duration has finished')  
+def dp_S_year_Frequency():
+    os.system(f'cdo setvals,0,nan S_Frequency_tmp1.nc4 S_Frequency_set0_to_nan_tmp1.nc4')
+    os.system(f'cdo timmean S_Frequency_set0_to_nan_tmp1.nc4 S_Frequency_mean_tmp1.nc4')
+    os.system(f'cdo timmax S_Frequency_set0_to_nan_tmp1.nc4 S_Frequency_max_tmp1.nc4')
+    os.system(f'cdo sub S_Frequency_max_tmp1.nc4 S_Frequency_mean_tmp1.nc4 S_Frequency_max_sub_mean_tmp1.nc4')
+
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_Frequency_mean_tmp1.nc4 S_Frequency_mean_tmp2.nc4')
+    os.system(f"cdo mul S_Frequency_mean_tmp2.nc4 mask123.nc4 S_Frequency_mean.nc4")
+
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_Frequency_max_tmp1.nc4 S_Frequency_max_tmp2.nc4')
+    os.system(f"cdo mul S_Frequency_max_tmp2.nc4 mask123.nc4 S_Frequency_max.nc4")
+
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_Frequency_max_sub_mean_tmp1.nc4 S_Frequency_max_sub_mean_tmp2.nc4')
+    os.system(f"cdo mul S_Frequency_max_sub_mean_tmp2.nc4 mask123.nc4 S_Frequency_max_sub_mean.nc4")
+
+def dp_S_time():
+    os.system(f'cdo setvals,0,nan S_time_max_duration_tmp1.nc4 S_time_max_duration_tmp2.nc4')
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_time_max_duration_tmp2.nc4 S_time_max_duration_tmp3.nc4')
+    os.system(f"cdo mul S_time_max_duration_tmp3.nc4 mask123.nc4 S_time_max_duration.nc4")
+
+    os.system(f'cdo setvals,0,nan S_time_mean_duration_tmp1.nc4 S_time_mean_duration_tmp2.nc4')
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_time_mean_duration_tmp2.nc4 S_time_mean_duration_tmp3.nc4')
+    os.system(f"cdo mul S_time_mean_duration_tmp3.nc4 mask123.nc4 S_time_mean_duration.nc4")
+
+    os.system(f'cdo setvals,0,nan S_sum_Frequency_tmp1.nc4 S_sum_Frequency_tmp2.nc4')
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_sum_Frequency_tmp2.nc4 S_sum_Frequency_tmp3.nc4')
+    os.system(f"cdo mul S_sum_Frequency_tmp3.nc4 mask123.nc4 S_sum_Frequency.nc4")
+
+    os.system(f'cdo setvals,0,nan S_sum_duration_tmp1.nc4 S_sum_duration_tmp2.nc4')
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_sum_duration_tmp2.nc4 S_sum_duration_tmp3.nc4')
+    os.system(f"cdo mul S_sum_duration_tmp3.nc4 mask123.nc4 S_sum_duration.nc4")
+
+def dp_S_CY():
+    os.system(f'cdo setvals,0,nan S_CY_tmp1.nc4 S_CY_tmp2.nc4')
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_CY_tmp2.nc4 S_CY_tmp3.nc4')
+    os.system(f"cdo mul S_CY_tmp3.nc4 mask123.nc4 S_CY.nc4")
+
+def dp_S_year_Duration():
+    os.system(f'cdo setvals,0,nan S_Duration_tmp1.nc4 S_Duration_set0_to_nan_tmp1.nc4')
+    os.system(f'cdo timmean S_Duration_set0_to_nan_tmp1.nc4 S_Duration_mean_tmp1.nc4')
+    os.system(f'cdo timmax S_Duration_set0_to_nan_tmp1.nc4 S_Duration_max_tmp1.nc4')
+    os.system(f'cdo sub S_Duration_max_tmp1.nc4 S_Duration_mean_tmp1.nc4 S_Duration_max_sub_mean_tmp1.nc4')
+
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_Duration_mean_tmp1.nc4 S_Duration_mean_tmp2.nc4')
+    os.system(f"cdo mul S_Duration_mean_tmp2.nc4 mask123.nc4 S_Duration_mean.nc4")
+
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_Duration_max_tmp1.nc4 S_Duration_max_tmp2.nc4')
+    os.system(f"cdo mul S_Duration_max_tmp2.nc4 mask123.nc4 S_Duration_max.nc4")
+
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_Duration_max_sub_mean_tmp1.nc4 S_Duration_max_sub_mean_tmp2.nc4')
+    os.system(f"cdo mul S_Duration_max_sub_mean_tmp2.nc4 mask123.nc4 S_Duration_max_sub_mean.nc4")
+
+def dp_S_year_FD():
+    os.system(f'cdo setvals,0,nan S_FD_tmp1.nc4 S_FD_set0_to_nan_tmp1.nc4')
+    os.system(f'cdo timmean S_FD_set0_to_nan_tmp1.nc4 S_FD_mean_tmp1.nc4')
+    os.system(f'cdo timmax S_FD_set0_to_nan_tmp1.nc4 S_FD_max_tmp1.nc4')
+    os.system(f'cdo sub S_FD_max_tmp1.nc4 S_FD_mean_tmp1.nc4 S_FD_max_sub_mean_tmp1.nc4')
+
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_FD_mean_tmp1.nc4 S_FD_mean_tmp2.nc4')
+    os.system(f"cdo mul S_FD_mean_tmp2.nc4 mask123.nc4 S_FD_mean.nc4")
+
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_FD_max_tmp1.nc4 S_FD_max_tmp2.nc4')
+    os.system(f"cdo mul S_FD_max_tmp2.nc4 mask123.nc4 S_FD_max.nc4")
+
+    os.system(f'cdo -b F32 -P 48 --no_remap_weights remapbil,{resolution}.txt S_FD_max_sub_mean_tmp1.nc4 S_FD_max_sub_mean_tmp2.nc4')
+    os.system(f"cdo mul S_FD_max_sub_mean_tmp2.nc4 mask123.nc4 S_FD_max_sub_mean.nc4")
 
 # def dp_S_Drought():
 #     os.system('cdo yearmax Drought_Period_tmp1.nc4 Drought_Period_yearmax_tmp1.nc4')
@@ -88,5 +150,9 @@ if __name__=='__main__':
     # dp_Sbedrock_mask123()
     # dp_Sr()
     # dp_FD2FY()
-    # dp_S_Duration()
-    dp_S_Drought()
+    # dp_S_Drought()
+    dp_S_year_Frequency()
+    dp_S_time()
+    dp_S_CY()
+    dp_S_year_Duration()
+    dp_S_year_FD()

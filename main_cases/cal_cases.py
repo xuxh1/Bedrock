@@ -43,18 +43,39 @@ def DTB_saws_to_Ssoil(casename):
     dtb = np.where(dtb>150,0,dtb)
     shape = dtb.shape
     for year in range(2003,2021):
-        print(f'Sr data process year is {year}')
-        sr = np.zeros(shape)
+        print(f'Ssoil data process year is {year}')
+        ssoil = np.zeros(shape)
         ds2 = xr.open_dataset(f'{path2}tmp/saws_{year}.nc4')
         saws = ds2['f_h2osoi'].load()
         saws = saws[0,::-1,:,:]
         # soil_layer = [0, 1.75, 4.51, 9.06, 16.55, 28.91, 49.29, 82.89, 138.28, 229.61, 343.31]
         soil_layer = [0, 1.75, 4.51, 9.06, 16.55, 28.91, 49.29, 82.89, 138.28, 150]
         for i in range(9):
-            sr = np.where((dtb>=soil_layer[i])&(dtb<=soil_layer[i+1]),sr+dtb*saws[:,:,i],np.where(dtb>=soil_layer[i+1],sr+(soil_layer[i+1]-soil_layer[i])*saws[:,:,i],sr))
+            ssoil = np.where((dtb>=soil_layer[i])&(dtb<=soil_layer[i+1]),ssoil+(dtb-soil_layer[i])*saws[:,:,i],np.where(dtb>=soil_layer[i+1],ssoil+(soil_layer[i+1]-soil_layer[i])*saws[:,:,i],ssoil))
+        ssoil = ssoil*10
+
+        output_ds = xr.Dataset({'Sr': (('lat', 'lon'), ssoil)},
+                        coords={'lat': ds['lat'], 'lon': ds['lon']})
+        output_ds.to_netcdf(f'{path2}Ssoil_{year}_tmp1.nc4')
+
+def saws_to_Sr(casename):
+    path1 = f'/tera11/zhwei/students/Xionghui/data/run/0p1/'
+    path2 = f'/tera11/zhwei/students/Xionghui/data/run/{resolution}/cases/{casename}/'
+    ds = xr.open_dataset(f'{path1}DTB.nc4')
+    dtb = ds['Band1'].load()
+    shape = dtb.shape
+    for year in range(2003,2021):
+        print(f'Sr data process year is {year}')
+        sr = np.zeros(shape)
+        ds2 = xr.open_dataset(f'{path2}tmp/saws_{year}.nc4')
+        saws = ds2['f_h2osoi'].load()
+        saws = saws[0,::-1,:,:]
+        soil_layer = [0, 1.75, 4.51, 9.06, 16.55, 28.91, 49.29, 82.89, 138.28, 150]
+        for i in range(9):
+            sr = sr+(soil_layer[i+1]-soil_layer[i])*saws[:,:,i]
         sr = sr*10
 
-        output_ds = xr.Dataset({'Sr': (('lat', 'lon'), sr)},
+        output_ds = xr.Dataset({'Sr': (('lat', 'lon'), sr.data)},
                         coords={'lat': ds['lat'], 'lon': ds['lon']})
         output_ds.to_netcdf(f'{path2}Sr_{year}_tmp1.nc4')
 
@@ -134,8 +155,9 @@ casename_list = ['bedrock_1','bedrock_2','bedrock_3']
 for casename in casename_list:
     os.makedirs(f'{data_path}/cases/{casename}/tmp', exist_ok=True)
     # saws(casename)
-    # DTB_saws_to_Ssoil(casename)
-    rnof(casename)
-    fevpa(casename)
+    DTB_saws_to_Ssoil(casename)
+    saws_to_Sr(casename)
+    # rnof(casename)
+    # fevpa(casename)
     # Sr(casename)
     # PSr(casename)
