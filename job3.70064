@@ -1,0 +1,10 @@
+Entered /tera04/zhwei/xionghui/bedrock/run/500/
+Traceback (most recent call last):
+  File "/stu01/xuxh22/Bedrock/main/cmp_G.py", line 177, in <module>
+    DF()
+  File "/stu01/xuxh22/Bedrock/main/cmp_G.py", line 63, in DF
+    df[file] = load_and_flatten_data(file, variable_name)
+  File "/home/xuxh22/anaconda3/lib/mylib/myfunc.py", line 27, in load_and_flatten_data
+    data = dataset[variable_name][:, :].flatten()
+  File "src/netCDF4/_netCDF4.pyx", line 2519, in netCDF4._netCDF4.Dataset.__getitem__
+IndexError: Band1 not found in /

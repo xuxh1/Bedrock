@@ -28,11 +28,11 @@ def main(input_path,name):
             ncdata_invertlat = ncdata[:,::-1,:]
             
             if year%4==0:
-                print(f"{year}年是闰年")
+                print(f"{year} is a leap year")
                 outdata_all[:,:,:] = ncdata_invertlat[:,:,:]
                 interval_8d[-1] = 6
             else:
-                print(f"{year}年是平年")
+                print(f"{year} is a normal year")
                 outdata_all[:-1,:,:] = ncdata_invertlat[:,:,:]
                 interval_8d[-1] = 5
 
@@ -112,9 +112,9 @@ print(output_path)
 namelist = ['EB_ET','ERA5LAND','ERA5','ET_3T','FLUXCOM_9km','FLUXCOM','GLDAS_CLSM_2.2','GLDAS_Noah_2.1','GLEAM_hybrid','GLEAM_v3.6a','GLEAM_v3.6b','PMLV2','REA']
 # namelist = ['EB_ET']
 for name in namelist:
-    print(f"{name}数据处理已经开始了")
+    print(f"{name} data processing has already begun")
     
     data = main(input_path,name)
     wrtieout2netcdf(data,f'ET_{name}_2003_2020_8D_0p1_mm8d.nc')
     
-    print(f"{name}数据处理已经结束了")
+    print(f"{name} data processing has already ended")

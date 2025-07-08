@@ -34,7 +34,7 @@ def area():
     for i in range(len(lat)):
         area[i, :] = result[i]
         print(area[i,0])
-    print(f'地球总面积为：{np.sum(area):.3f} $m^2$')
+    print(f'The total area of the earth: {np.sum(area):.3f} $m^2$')
             
     output_ds = xr.Dataset({'area': (('lat', 'lon'), area)},
                         coords={'lat': lat, 'lon': lon})
@@ -56,8 +56,8 @@ def area():
     with Dataset('Area_0p5.nc', 'r+', format='NETCDF4') as nc:
         nc.setncattr('gridtype', 'lonlat')
     print(area)
-    print(f'地球总面积为：{np.sum(area)/1e12:.3f} 百万$km^2$')
+    print(f'The total area of the earth: {np.sum(area)/1e12:.3f} million $km^2$')
     # output_ds.to_netcdf('Area.nc')
-    print("Area已完成")
+    print("Area completed")
 
 area()

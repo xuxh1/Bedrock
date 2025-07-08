@@ -4,9 +4,9 @@ resolution = "0p1"
 # name = "exp1"
 # name = "exp2"
 region = [-180,180,-60,90]
-data_path = f'/tera11/zhwei/students/Xionghui/data/run/{resolution}/'
-post_data_path = '/tera11/zhwei/students/Xionghui/data/'
-shp_path = '/tera11/zhwei/students/Xionghui/data/Shp/'
+data_path = f'/tera04/zhwei/xionghui/bedrock/run/{resolution}/'
+post_data_path = '/tera04/zhwei/xionghui/bedrock/'
+shp_path = '/tera04/zhwei/xionghui/bedrock/Shp/'
 fig_path = f'/home/xuxh22/stu01/Bedrock/fig/{resolution}/'
 path = '/home/xuxh22/stu01/Bedrock/'
 

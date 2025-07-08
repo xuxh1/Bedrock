@@ -9,7 +9,7 @@ import config
 
 resolution = config.resolution
 
-path1 = '/tera11/zhwei/students/Xionghui/data/'
+path1 = '/tera04/zhwei/xionghui/bedrock/'
 os.chdir(path1)
 
 dir_path = path1+'PET/'

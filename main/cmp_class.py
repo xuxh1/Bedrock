@@ -10,19 +10,29 @@ from myfunc import DirMan
 from myfunc import load_and_flatten_data
 import config
 
-resolution     = config.resolution
-region         = config.region
-data_path      = config.data_path
-post_data_path = config.post_data_path
-shp_path       = config.shp_path
-fig_path       = config.fig_path
+# pd.set_option('display.max_rows', None)
+# pd.set_option('display.max_columns', None)
+
+# configuration
+# resolution = "0p1"
+resolution = "500"
+region = [-180,180,-60,90]
+data_path = f'/tera04/zhwei/xionghui/bedrock/run/{resolution}/'
+post_data_path = '/tera04/zhwei/xionghui/bedrock/'
+shp_path = '/tera04/zhwei/xionghui/bedrock/Shp/'
+fig_path = f'/home/xuxh22/stu01/Bedrock/fig/{resolution}/'
+path = '/home/xuxh22/stu01/Bedrock/'
+if resolution == "0p1":
+    size = 0.1
+elif resolution == "500":
+    size = 0.0005
 
 dir_man = DirMan(data_path)
 dir_man.enter()
 
 os.makedirs(f'{data_path}/csv', exist_ok=True)
 
-def cmp_class():
+def Global():
     df = pd.DataFrame()
 
     with nc.Dataset('Sbedrock.nc4') as dataset:
@@ -32,10 +42,17 @@ def cmp_class():
         df['lon'] = np.tile(lon, len(lat))
 
     file_variable_list = [
-        ('Sbedrock', 'Sbedrock'),
-        ('Sr', 'Sr'),
-        ('Ssoil', 'Band1'),
-        ('mask123', 'Band1'),
+        # ('Sbedrock', 'Sbedrock'),
+        # ('Sr', 'Sr'),
+
+        ('Sbedrock', 'Band1'),
+        ('PR_mean', 'tp', 0),
+        ('ET_mean', 'et', 0),
+        # ('Dbedrock_Frequency', 'Band1'),
+        ('Dbedrock_Frequency', 'Dbedrock'),
+        ('Sr', 'Band1'),
+        # ('Ssoil', 'Band1'),
+        ('mask1234', 'Band1'),
         ('Area', 'area'),
         ('Koppen', 'Band1'),
         ('IGBP', 'LC', 0),
@@ -45,17 +62,16 @@ def cmp_class():
         file = entry[0]
         variable_name = entry[1]  
         index = entry[2:] if len(entry) > 2 else None  
-
-        # print(f"File: {file}, Variable: {variable_name}, Index: {index}")
         if index:
             df[file] = load_and_flatten_data(file, variable_name, index[0])
         else:
             df[file] = load_and_flatten_data(file, variable_name)
 
-    df = df.dropna()
-    df = df[df['Sbedrock'] > 0]
-    df = df[df['mask123'] == 1]
-    df.drop(labels='mask123',axis=1,inplace=True)
+    # df = df.dropna()
+    # df = df[df['Sbedrock'] > 0]
+    df = df[df['mask1234'] == 1]
+
+    df.drop(labels='mask1234',axis=1,inplace=True)
 
     # df['Area'] = df['Area'].sum()/(1e12)
 
@@ -70,6 +86,8 @@ def cmp_class():
     df['Continent'] = result1['CONTINENT']
     df['Subregion'] = result2['SUBREGION']
     df['Sovereignt'] = result2['SOVEREIGNT']
+
+    df['Continent'] = df['Continent'].replace('Australia', 'Oceania')
 
     list1 = ['Asia','South America','Africa','Europe','North America','Oceania','Antarctica','Seven seas (open ocean)']
     list2 = ['AS','SA','AF','EU','NA','OC','AN','Seven seas (open ocean)']
@@ -95,11 +113,10 @@ def cmp_class():
 
     with open('csv/Global.csv','w') as f:
         df.to_csv(f)
-        
+
     df1 = df[df['Sovereignt_short'] == 'USA']
-    print(df1)
 
     with open('csv/US.csv','w') as f:
         df1.to_csv(f)
 
-cmp_class()
+Global()    

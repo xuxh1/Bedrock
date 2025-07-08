@@ -10,232 +10,209 @@ from shapely.geometry import Point, LineString, Polygon
 import glob
 from joblib import Parallel, delayed
 from tqdm import tqdm, trange
-import sys
-sys.path.append('/home/xuxh22/anaconda3/lib/mylib/')
-from myfunc import timer
+from myfunc import timer, run_command
 import math
 
-path1 = '/tera11/zhwei/students/Xionghui/data/'
-os.chdir(path1)
+path = '/tera04/zhwei/xionghui/bedrock/'
 
-# ---------------------------------------------------------------------------------- Calculate mask1,2,3,all -------------------------------------------------------------------------------------------------
-# -------------------------------- mask1 ------------------------------------------------
-def mask1():
-    dir_path = path1+'mask1/mask1_v3/'
-    os.chdir(dir_path)
-    os.system(f'cdo -b F32 -P 12 --no_remap_weights -remapbil,{path1}500.txt average_soil_and_sedimentary-deposit_thickness_remap_cm.nc DTB_temp1.nc')
-    os.system(f'cdo -setrtoc2,0,150,1,nan DTB_temp1.nc mask1.nc')
-    print("mask1_v2已完成")
-# -------------------------------- mask1 ------------------------------------------------
-
-
-# -------------------------------- mask2 ------------------------------------------------
-def mask2():
-    dir_path = path1+'mask2/'
-    os.chdir(dir_path)
-    os.system(f'cp /stu01/linwy20/LCdata/MODIS/global_igbp_15s_2020.nc {dir_path}/global_igbp_15s_2020.nc')
-    os.system('cdo -invertlat global_igbp_15s_2020.nc mask2_temp1.nc')
-    # setrtoc2无法正确修改数据
-    os.system('cdo -setrtoc2,1,9,1,nan mask2_temp1.nc mask2.nc')
-    print("mask2已完成")
-# -------------------------------- mask2 ------------------------------------------------
-
-
-# -------------------------------- mask3 ------------------------------------------------
-def mask3():
-    dir_path = path1+'mask3/'
-    os.chdir(dir_path)
-    os.system(f"cdo timsum {path1}diff/diff.nc reduce.nc")
-    os.system(f'cdo -b F32 -P 12 --no_remap_weights -remapbil,{path1}500.txt reduce.nc mask3_temp1.nc')
-    os.system(f"cdo -setrtoc2,-inf,0,1,nan mask3_temp1.nc mask3.nc")
-    print("mask3已完成")
-# -------------------------------- mask3 ------------------------------------------------
-
-
-# -------------------------------- mask all ------------------------------------------------
+"""
+Calculate the mask procedure include: 
+1. mask area without adequate water (sum ET>P from 2003 to 2020)
+2. mask area without woody vegetation (IGBP=1~9)
+3. mask area without shallow bedrock (DTB<150cm)
+the mask procedure4 need to calculate after the Dbedrock calculation.
+"""
 def mask():
-    dir_path = path1+'mask/mask_v3/'
-    mask1_path = path1+'mask1/mask1_v3/'
-    mask2_path = path1+'mask2/'
-    mask3_path = path1+'mask3/'
-    os.chdir(dir_path)
-    subprocess.run(f"cdo mul {mask1_path}mask1.nc {mask2_path}mask2.nc mask12.nc", shell=True, check=True)
-    subprocess.run(f"cdo mul mask12.nc {mask3_path}mask3.nc mask123_temp1.nc", shell=True, check=True)
-    os.system(f"cdo -setrtoc2,1,1,1,nan mask123_temp1.nc mask123.nc")
-    os.system('rm mask123_temp1.nc')
-# -------------------------------- mask all ------------------------------------------------
-# ---------------------------------------------------------------------------------- Calculate mask1,2,3,all -------------------------------------------------------------------------------------------------
+    def mask_adequatewater() -> None:
+        diff_file = os.path.join(path, 'diff', 'diff.nc')
+        dir_path = os.path.join(path, 'mask_all', 'mask_adequatewater')
+        os.makedirs(dir_path, exist_ok=True)
+        output_sum = os.path.join(dir_path, 'diff_sum.nc4')
+        output_interp = os.path.join(dir_path, 'diff_sum_interp.nc4')
+        mask_file = os.path.join(dir_path, 'mask_adequatewater.nc4')
+        run_command(f"cdo -f nc4 -P 48 timsum {diff_file} {output_sum}")
+        run_command(f"gdalwarp -multi -wo NUM_THREADS=48 -ot Float32 -of netCDF -co FORMAT=NC4 -r bilinear -ts 86400 43200 -overwrite {output_sum} {output_interp}")
+        run_command(f"cdo -f nc4 -z zip -setrtoc2,0,inf,nan,1 {output_interp} {mask_file}")
+        print("mask_adequatewater completed")
+
+    def mask_woodyveg() -> None:
+        dir_path = os.path.join(path, 'mask_all', 'mask_woodyveg')
+        os.makedirs(dir_path, exist_ok=True)
+        igbp_file = os.path.join(dir_path, 'global_igbp_15s_2020.nc')
+        mask_file = os.path.join(dir_path, 'mask_woodyveg.nc4')
+        run_command(f"cdo -f nc4 -z zip -setrtoc2,1,9,1,nan {igbp_file} {mask_file}")
+        print("mask_woodyveg completed")
+
+    def mask_shallowbedrock() -> None:
+        dir_path = os.path.join(path, 'mask_all', 'mask_shallowbedrock')
+        os.makedirs(dir_path, exist_ok=True)
+        dtb_file = os.path.join(dir_path, 'average_soil_and_sedimentary-deposit_thickness_remap_cm.nc')
+        output_interp = os.path.join(dir_path, 'dtb_interp.nc4')
+        mask_file = os.path.join(dir_path, 'mask_shallowbedrock.nc4')
+        run_command(f"gdalwarp -multi -wo NUM_THREADS=48 -ot Float32 -of netCDF -co FORMAT=NC4 -r bilinear -ts 86400 43200 -overwrite {dtb_file} {output_interp}")
+        run_command(f"cdo -f nc4 -z zip -setrtoc2,0,150,1,nan {output_interp} {mask_file}")
+        print("mask_shallowbedrock completed")
+    
+    mask_adequatewater()
+    mask_woodyveg()
+    mask_shallowbedrock()
 
 
-# ---------------------------------------------------------------------------------- Calculate Ssoil -------------------------------------------------------------------------------------------------
-# -------------------------------- DTB layer ------------------------------------------------
-def DTB_layer():
-    dir_path = path1+'mask1/mask1_v3/'
+"""
+Calculate the Ssoil:
+1. calculate the DTB stratification (0~5~15~30~60~100~150 cm) to align the SAWS stratification (0~5~15~30~60~100~200 cm)
+2. use the vertical stratification (DTB and SAWS) to calculate the Ssoil
+""" 
+def Ssoil() -> None:
+    layer = [0, 5, 15, 30, 60, 100, 150]
+    dir_path = os.path.join(path, 'Ssoil')
     os.makedirs(dir_path, exist_ok=True)
-    os.chdir(dir_path)
-    image = xr.open_dataset(f'DTB_temp1.nc')
-    s = image['Band1']
-    print(s.min(),s.max())
-    
-    layer = [0, 5, 15, 30, 60, 100, 150, float('inf')]
-    for i in range(7):
-        s1 = np.where((s>layer[i]) & (s<=layer[i+1]), (s-layer[i])*10, 0)
-        print(s1.min(),s1.max())
-        
-        shutil.copyfile('DTB_temp1.nc', f'DTB_{layer[i]}_{layer[i+1]}.nc')
-        with nc.Dataset(f'DTB_{layer[i]}_{layer[i+1]}.nc', 'a') as file:
-            s_var = file.variables['Band1']
-            new_s_data = s1 
-            s_var[:,:] = new_s_data
+    saws_path = os.path.join(dir_path, 'SAWS_Kosugi')
+    ssoil_file = os.path.join(dir_path, f'Ssoil.nc4')
+
+    def DTB_layer() -> None:
+        dtb_file = os.path.join(dir_path, 'average_soil_and_sedimentary-deposit_thickness_remap_cm.nc')
+        image = xr.open_dataset(dtb_file)
+        s = image['Band1']
+        for i in range(len(layer)-1):
+            dtb_layer_file = os.path.join(dir_path, f'DTB_layer{i+1}.nc')
+            delta_s = s - layer[i]
+            delta_s = np.where(delta_s>(layer[i+1]-layer[i]), (layer[i+1]-layer[i]), delta_s)
+            delta_s = np.where(delta_s<0, 0, delta_s)
             
-        s1 = np.where((s>layer[i]) & (s<=layer[i+1]), 1, 0)
-        print(s1.min(),s1.max())
+            shutil.copyfile(f'{saws_path}/saws{i+1}.nc', dtb_layer_file)
+            with nc.Dataset(dtb_layer_file, 'a') as file:
+                s_var = file.variables['Band1']
+                s_var[:,:] = delta_s      
+        print("DTB_layer completed")
+
+    DTB_layer()
+    for i in range(len(layer)-1):
+        dtb_layer_file = os.path.join(dir_path, f'DTB_layer{i+1}.nc')
+        saws_layer_file = os.path.join(dir_path, f'saws{i+1}.nc')
+        ssoil_layer_file = os.path.join(dir_path, f'Ssoil_layer{i+1}.nc4')
+        run_command(f'ln -sf {saws_path}/saws{i+1}.nc {saws_layer_file}')
+        run_command(f'cdo -f nc4 -z zip -mulc,10 -mul {saws_layer_file} {dtb_layer_file} {ssoil_layer_file}')
+    filelist = [f'{dir_path}/Ssoil_layer{i+1}.nc4' for i in range(len(layer)-1)]
+    filelistname = ' '.join(filelist)
+    run_command(f'cdo -f nc4 -z zip -enssum {filelistname} {ssoil_file}')
+    print("Ssoil completed")
+
+"""
+Calculate some other variables include:
+1. SnowCover: convert the snowcover(%) to if snow(0 and 1)
+2. IGBP: sel the time
+3. Koppen: translate the tif to nc4, and remaplaf from 1km to 500m
+4. area: calculate the area for 500m and 0p1
+5. DTB: calculate some DTB for different sources
+wrong!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+"""
+def other():
+    def SnowCover():
+        # py_file = os.path.join('/stu01/xuxh22/Bedrock/preprocess/', 'pre_SC.py')
+        # run_command(f'python {py_file}')
+        dir_path = os.path.join(path, 'SC')
+        os.makedirs(dir_path, exist_ok=True)
+        sc_0p05_file = os.path.join(dir_path, 'SnowCover_0p05.nc')
+        sc_0p1_file = os.path.join(dir_path, 'SnowCover_0p1.nc4')
+        sc_0p1_mask_file = os.path.join(dir_path, 'SnowCover_0p1_mask.nc4')
+        # The snow cover fraction should be kept at the same resolution as diff_3.nc of Sr and Dr Data, from 0.05° to 0.1°
+        run_command(f"gdalwarp -multi -wo NUM_THREADS=48 -ot Float32 -of netCDF -co FORMAT=NC4 -r bilinear -ts 3600 1800 -overwrite {sc_0p05_file} {sc_0p1_file}")
+        run_command(f'cdo -f nc4 -z zip -setrtoc2,10,100,0,1 {sc_0p1_file} {sc_0p1_mask_file}')
+        print("SnowCover completed")
+
+    def IGBP():
+        dir_path = os.path.join(path, 'IGBP')
+        os.makedirs(dir_path, exist_ok=True)
+        origin_file = os.path.join(dir_path, 'global_igbp_15s_2020.nc')
+        igbp_file = os.path.join(dir_path, 'IGBP.nc4')
+        run_command(f'cdo -f nc4 -z zip -seltimestep,1 {origin_file} {igbp_file}')
+        print("IGBP completed")
+
+    def Koppen():
+        dir_path = os.path.join(path, 'Koppen')
+        os.makedirs(dir_path, exist_ok=True)
+        origin_tif_file = os.path.join(dir_path, 'Beck_KG_V1_present_0p0083.tif')
+        origin_nc4_file = os.path.join(dir_path, 'Beck_KG_V1_present_0p0083.nc4')
+        remap_file = os.path.join(path, '500.txt')
+        koppen_file = os.path.join(dir_path, 'Koppen.nc4')
+        run_command(f"gdal_translate -of netCDF -co FORMAT=NC4 -a_srs EPSG:4326 {origin_tif_file} {origin_nc4_file}")
+        run_command(f"cdo -f nc4 -z zip -b I32 -P 48 --no_remap_weights remaplaf,{remap_file} {origin_nc4_file} {koppen_file}")
+        print("Koppen completed")
+
+    def area():
+        dir_path = os.path.join(path, 'Area')
+        os.makedirs(dir_path, exist_ok=True)
+        data_file = os.path.join(path, 'diff', 'diff.nc')
+        area_file = os.path.join(dir_path, 'Area.nc')
+        # area_file = os.path.join(dir_path, 'Area_0p1.nc')
+
+        def count_area(lat1,lat2):
+            lat1,lat2 = map(radians,[lat1,lat2])
+            r = 6.37122e6
+            dlon = 0.00416666688397527
+            # dlon = 0.1
+            dlon_rad = math.radians(dlon)
+            area = abs(r**2 * dlon_rad * (sin(lat2)-sin(lat1)))
+            # print(area)
+            return area
+
+        data = xr.open_dataset(data_file)
+        lat = data['lat']
+        lon = data['lon']
+        inc = 0.00416666688397527
+        # inc = 0.1
+        lat1 = lat-inc/2
+        lat2 = lat+inc/2    
+        grid1,grid2 = np.meshgrid(lon, lat)
+        area = np.zeros_like(grid1)
+        result = Parallel(n_jobs=12)(delayed(count_area)(lat1[i], lat2[i]) for i in range(len(lat)))
+        for i in range(len(lat)):
+            area[i, :] = result[i]
+            print(area[i,0])
+        print(f'The total area of the earth: {np.sum(area):.3f} $m^2$')
+                
+        output_ds = xr.Dataset({'area': (('lat', 'lon'), area)},
+                            coords={'lat': data['lat'], 'lon': data['lon']})
+        print(area)
+        print(f'The total area of the earth: {np.sum(area)/1e12:.3f} million $km^2$')
+        output_ds.to_netcdf(area_file)
+        print("Area completed")
+
+    def DTB():
+        # Iowa measured data, the data is given by Shangguan et al.
+        dir_path = os.path.join(path, 'DTB', 'DTB_Iowa')
+        os.makedirs(dir_path, exist_ok=True)
+        tif_file = os.path.join(dir_path, 'Iowa.tif')
+        nc_file = os.path.join(dir_path, 'Iowa.nc4')
+        run_command(f'gdal_translate -of netCDF -co FORMAT=NC4 -a_srs EPSG:4326 {tif_file} {nc_file}')
         
-        shutil.copyfile('DTB_temp1.nc', f'DTB_{layer[i]}_{layer[i+1]}_mask.nc')
-        with nc.Dataset(f'DTB_{layer[i]}_{layer[i+1]}_mask.nc', 'a') as file:
-            s_var = file.variables['Band1']
-            new_s_data = s1 
-            s_var[:,:] = new_s_data
-            
-    return dir_path
-# -------------------------------- DTB layer ------------------------------------------------
-
-
-# -------------------------------- calculate Ssoil ------------------------------------------------
-def Ssoil():
-    dir_path2 = DTB_layer()
-    dir_path = path1+'Ssoil/Ssoil_v3/'
-    os.makedirs(dir_path, exist_ok=True)
-    os.chdir(dir_path)
-
-    layer = [0, 5, 15, 30, 60, 100, 150, float('inf')]
-    layer_depth_mm = [50, 100, 150, 300, 400, 500]
-
-    for i in range(6):
-        os.system(f'ln -sf {dir_path}../pawl{i}_500.nc {dir_path}pawl{i}_500.nc')
-        os.system(f"cdo -mulc,{layer_depth_mm[i]} pawl{i}_500.nc pawl{i}_500_mm.nc")
+        # Send the processed Soilgrids data cp over
+        dir_path = os.path.join(path, 'DTB', 'DTB_Shangguan')
+        os.makedirs(dir_path, exist_ok=True)
+        tif_file = os.path.join(dir_path, 'BDTICM_M_250m_ll.tif')
+        nc_file = os.path.join(dir_path, 'DTB_Shangguan.nc4')
+        run_command(f"gdalwarp -multi -wo NUM_THREADS=48 -ot Float32 -of netCDF -co FORMAT=NC4 -r bilinear -ts 86400 43200 -t_srs EPSG:4326 -te -180 -90 180 90 -overwrite {tif_file} {nc_file}")
         
-        filelistname = ' '.join(f'pawl{j}_500_mm.nc' for j in range(i+1))
-        os.system(f'cdo enssum {filelistname} pawl{i}_500_mm_sum.nc')
+        # gNATSGO bedrock data exported by GEE, 2 of which contains the Iowa region
+        dir_path = os.path.join(path, 'DTB', 'DTB_gNATSGO')
+        os.makedirs(dir_path, exist_ok=True)
+        gNATSGO_file = os.path.join(dir_path, 'DTB_gNATSGO.nc4')
+        for i in range(8):
+            tif_file = os.path.join(dir_path, f'Bedrock_US_gNATSGO_90m-{i+1}.tif')
+            nc_file = os.path.join(dir_path, f'Bedrock_US_gNATSGO_90m-{i+1}.nc4')
+            run_command(f'gdal_translate -of netCDF -co FORMAT=NC4 -a_srs EPSG:4326 {tif_file} {nc_file}')
+        filelist = [f'{dir_path}/Bedrock_US_gNATSGO_90m-{i}.nc4' for i in range(5, 9)] + [f'{dir_path}Bedrock_US_gNATSGO_90m-{i}.nc4' for i in range(1, 5)]
+        filelistname = ' '.join(filelist)
+        run_command(f'cdo -f nc4 -z zip -collgrid {filelistname} {gNATSGO_file}')
 
-        # 将500m分辨率的每层数据乘于该层的基岩深度，基岩深度属于该层留下，不属于该层基岩则替换为0
-        os.system(f"cdo -mul pawl{i}_500.nc {dir_path2}DTB_{layer[i]}_{layer[i+1]}.nc pawl{i}_500_mm_mask.nc")
-    
-    
-    for i in range(1,6):    
-        # mask每层（除本层外）的累计土壤水数据,第一层为他本身,最后一层只有累计值，基岩深度属于该层留下，其余则替换为0，这里mask为下一层的分布范围
-        os.system(f"cdo -mul pawl{i-1}_500_mm_sum.nc {dir_path2}DTB_{layer[i]}_{layer[i+1]}_mask.nc pawl{i}_500_mm_sum_mask.nc")
-        
-        os.system(f"cdo -add pawl{i}_500_mm_mask.nc pawl{i}_500_mm_sum_mask.nc pawl{i}_all_mask.nc")
-        
-    os.system(f"cdo -mul pawl{6-1}_500_mm_sum.nc {dir_path2}DTB_{layer[6]}_{layer[6+1]}_mask.nc pawl{6}_500_mm_sum_mask.nc")
-    os.system(f'cp pawl{0}_500_mm_mask.nc pawl{0}_500_mm_sum_mask.nc')
-
-    filelistname = ' '.join(f'pawl{i}_500_mm_sum_mask.nc' for i in range(7))
-    os.system(f'cdo enssum {filelistname} Ssoil.nc')
-    
-    print("Ssoil_v3.nc已完成")
-# -------------------------------- calculate Ssoil ------------------------------------------------
-# ---------------------------------------------------------------------------------- Calculate Ssoil -------------------------------------------------------------------------------------------------
-
-
-# ---------------------------------------------------------------------------------- Snow Cover -------------------------------------------------------------------------------------------------
-def SnowCover():
-    os.system('python pre_SC.py')
-    dir_path = path1+'SC/'
-    os.chdir(dir_path)
-    # 积雪分数应保持和计算Sr、Dr的数据diff_3.nc相同分辨率，从0.05°为0.1°
-    os.system(f'cdo -b F32 -P 12 --no_remap_weights -remapbil,{path1}0p1.txt SnowCover_0p05.nc SnowCover_0p1.nc')
-    os.system('cdo -setmisstoc,1 -setrtoc2,10,100,0,1 SnowCover_0p1.nc SnowCover_0p1_mask.nc')
-    print("SnowCover已完成")
-# ---------------------------------------------------------------------------------- Snow Cover -------------------------------------------------------------------------------------------------
-
-
-# ---------------------------------------------------------------------------------- IGBP Koppen Area -------------------------------------------------------------------------------------------------
-def IGBP_Koppen():
-    dir_path = path1+'IGBP/'
-    os.chdir(dir_path)
-    os.system(f'cp /stu01/linwy20/LCdata/MODIS/global_igbp_15s_2020.nc {dir_path}/global_igbp_15s_2020.nc')
-    os.system(f"cdo -b I32 -P 12 --no_remap_weights remaplaf,{path1}500.txt global_igbp_15s_2020.nc IGBP.nc")
-    print("IGBP已完成")
-
-    dir_path = path1+'Koppen/'
-    os.chdir(dir_path)
-    os.system("gdal_translate -of netCDF -a_srs EPSG:4326 Beck_KG_V1_present_0p0083.tif Koppen_1km.nc")
-    os.system(f"cdo -b I32 -P 12 --no_remap_weights remaplaf,{path1}500.txt Koppen_1km.nc Koppen.nc")
-    print("Koppen已完成")
-
-def count_area(lat1,lat2):
-    lat1,lat2 = map(radians,[lat1,lat2])
-    r = 6.37122e6
-    # dlon = 0.00416666688397527
-    dlon = 0.1
-    dlon_rad = math.radians(dlon)
-    area = abs(r**2 * dlon_rad * (sin(lat2)-sin(lat1)))
-    # print(area)
-    return area
-
-def area():
-    dir_path = path1+'Area/'
-    os.chdir(dir_path)
-    # data = xr.open_dataset(f'{path1}mask1/mask1_v3/mask1.nc')
-    data = xr.open_dataset(f'{path1}diff/diff.nc')
-    
-    lat = data['lat']
-    lon = data['lon']
-    # inc = 0.00416666688397527
-    inc = 0.1
-    lat1 = lat-inc/2
-    lat2 = lat+inc/2    
-    grid1,grid2 = np.meshgrid(lon, lat)
-    area = np.zeros_like(grid1)
-    result = Parallel(n_jobs=3)(delayed(count_area)(lat1[i], lat2[i]) for i in range(len(lat)))
-    for i in range(len(lat)):
-        area[i, :] = result[i]
-        print(area[i,0])
-    print(f'地球总面积为：{np.sum(area):.3f} $m^2$')
-            
-    output_ds = xr.Dataset({'area': (('lat', 'lon'), area)},
-                        coords={'lat': data['lat'], 'lon': data['lon']})
-    output_ds.to_netcdf('Area_0p1.nc')
-    print(area)
-    print(f'地球总面积为：{np.sum(area)/1e12:.3f} 百万$km^2$')
-    # output_ds.to_netcdf('Area.nc')
-    print("Area已完成")
-# ---------------------------------------------------------------------------------- IGBP Koppen Area -------------------------------------------------------------------------------------------------
-
-def DTB():
-    #Iowa实测数据，该数据由上官老师给出
-    dir_path = path1+'/DTB/Iowa/'
-    os.chdir(dir_path)
-    os.system('gdal_translate -of netCDF -a_srs EPSG:4326 Iowa.tif Iowa.nc')
-    
-    #将处理好的Soilgrids数据cp过来
-    dir_path = path1+'/DTB/Soilgrids/'
-    os.chdir(dir_path)
-    os.system(f'ln -sf {dir_path}../../mask1/DTB_temp2.nc {dir_path}DTB_temp2.nc')
-    
-    #将处理好的Soilgrids根据Iowa实测修正的数据cp过来
-    dir_path = path1+'/DTB/Soilgrids_Iowa/'
-    os.chdir(dir_path)
-    os.system(f'ln -sf {dir_path}../../mask1/DTB_temp3.nc {dir_path}DTB_temp3.nc')
-    
-    #由GEE输出的gNATSGO基岩数据，其中2包含Iowa地区
-    dir_path = path1+'/DTB/gNATSGO/'
-    os.chdir(dir_path)
-    for i in range(8):
-        os.system(f'gdal_translate -of netCDF -a_srs EPSG:4326 Bedrock_US_gNATSGO_90m-{i+1}.tif Bedrock_US_gNATSGO_90m-{i+1}.nc')
-    
-if __name__ =='__main__':
-    # mask1()
-    # mask2()
-    # mask3()
-    # mask()
-    
-    # Ssoil()
-    # SnowCover()
-    
-    # IGBP_Koppen()
+    SnowCover()
+    IGBP()
+    Koppen()
     area()
-    
-    # DTB()
+    DTB()
+
+if __name__ =='__main__':
+    # mask()
+    # Ssoil()
+    other()

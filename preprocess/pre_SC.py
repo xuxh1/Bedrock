@@ -12,7 +12,7 @@ import glob
 
 def ln():
     path1 = '/stu01/zhanghan/snowf/data/MYD_C1/'
-    path2 = '/tera11/zhwei/students/Xionghui/data/SC/data_1d/'
+    path2 = '/tera04/zhwei/xionghui/bedrock/SC/data_1d/'
 
     for year in range(2003,2021):
         list = glob.glob(f'{path1}MYD10C1.A{year}*.hdf')
@@ -127,7 +127,7 @@ def wrtieout2netcdf(matrix,filename):
     #close file
     ncfile.close()
 
-path = '/tera11/zhwei/students/Xionghui/data/SC/'
+path = '/tera04/zhwei/xionghui/bedrock/SC/'
 os.chdir(path)
 print(path)
 

@@ -7,7 +7,7 @@ import os
 from joblib import Parallel, delayed
 
 path1 = '/shr03/CoLM_Forcing/'
-path2 = '/tera11/zhwei/students/Xionghui/data/PR/'
+path2 = '/tera04/zhwei/xionghui/bedrock/PR/'
 months = [str(i).zfill(2) for i in range(1, 13)]
 yearday = [365,366,365,365,365,366,365,365,365,366,365,365,365,366,365,365,365,366]
 sumday = [0, 365, 731, 1096, 1461, 1826, 2192, 2557, 2922, 3287, 3653, 4018, 4383, 4748, 5114, 5479, 5844, 6209, 6575]
@@ -139,11 +139,11 @@ def main(input_path,name,var):
             ncdata = np.array(ncname[var][:,:,:])
             ncdata_invertlat = ncdata[:,:,:]
             if year%4==0:
-                print(f"{year}年是闰年")
+                print(f"{year} is a leap year")
                 outdata_all[:,:,:] = ncdata_invertlat[:,:,:]
                 interval_8d[-1] = 6
             else:
-                print(f"{year}年是平年")
+                print(f"{year} is a normal year")
                 outdata_all[:-1,:,:] = ncdata_invertlat[:,:,:]
                 interval_8d[-1] = 5
             for i in range(46):
@@ -174,7 +174,7 @@ def ERA5():
     # Parallel(n_jobs=5)(delayed(cdo_mergetime)(filelistname[year-2003], f"{name}_{year}_total_precipitation_mmd.nc4") for year in range(2003,2021))
     data = main(output_path,name,var)   
     wrtieout2netcdf_ERA5(data,f'PR_{name}_2003_2020_8D_0p1_mm8d.nc')
-    print(f"{name}数据处理已经结束了")
+    print(f"{name} completed")
     
 # ERA5LAND:  2003-2020,1801(90~-90)x3600(0~360),hourly,tp(m/hr)
 def ERA5LAND():
@@ -191,7 +191,7 @@ def ERA5LAND():
     # Parallel(n_jobs=5)(delayed(cdo_mergetime)(filelistname, f"{name}_{year}_total_precipitation_mmd.nc") for year in range(2003,2021))
     data = main(output_path,name,var)   
     wrtieout2netcdf_ERA5(data,f'PR_{name}_2003_2020_8D_0p1_mm8d.nc')
-    print(f"{name}数据处理已经结束了")
+    print(f"{name} completed")
 
 # GDAS_GPCP:  2003-2020,600(-60~90)x1440,3hours,Rainf_f_tavg(kg m-2 s-1)
 def GDAS_GPCP():
@@ -210,7 +210,7 @@ def GDAS_GPCP():
     # Parallel(n_jobs=5)(delayed(cdo_mergetime)(filelistname[year-2003], f"{name}_{year}_total_precipitation_mmd.nc4") for year in range(2003,2021))
     data = main(output_path,name,var)   
     wrtieout2netcdf_ERA5(data,f'PR_{name}_2003_2020_8D_0p1_mm8d.nc')
-    print(f"{name}数据处理已经结束了")
+    print(f"{name} completed")
     
 # MSWX_V100:  2003-2020,1800(90~-90)x3600,precipitation(mm/3h)
 def MSWX_V100():
@@ -227,7 +227,7 @@ def MSWX_V100():
     Parallel(n_jobs=5)(delayed(cdo_mergetime)(filelistname, f"{name}_{year}_total_precipitation_mmd.nc") for year in range(2003,2021))
     data = main(output_path,name,var)   
     wrtieout2netcdf(data,f'PR_{name}_2003_2020_8D_0p1_mm8d.nc')
-    print(f"{name}数据处理已经结束了")
+    print(f"{name} completed")
 # ---------------------------------------------------------------------------------- data preprocess -------------------------------------------------------------------------------------------------
 
     

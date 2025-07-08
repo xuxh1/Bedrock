@@ -1,58 +1,81 @@
 import os
 import config
+from myfunc import run_command
 
-resolution     = config.resolution
-region         = config.region
-data_path      = config.data_path
-post_data_path = config.post_data_path
-shp_path       = config.shp_path
-fig_path       = config.fig_path
+# resolution     = config.resolution
+# region         = config.region
+# data_path      = config.data_path
+# raw_data_path = config.raw_data_path
+# shp_path       = config.shp_path
+# fig_path       = config.fig_path
 
-# def cp_500():
-#     path = f'/tera11/zhwei/students/Xionghui/data/run/500/'
-#     os.makedirs(path, exist_ok=True)
-#     os.makedirs(fig_path, exist_ok=True)
+def cp(resolution):
+    raw_data_path = f'/tera04/zhwei/xionghui/bedrock/'
+    path = f'/tera04/zhwei/xionghui/bedrock/run/{resolution}_rawdata/'
+    os.makedirs(path, exist_ok=True)
     
-#     # -----------------------------------DTB-----------------------------------------
-#     os.system(f'cp {post_data_path}mask1/mask1_v3/mask1.nc4 {path}mask1.nc4')
-#     os.system(f'cp {post_data_path}mask1/mask1_v3/DTB_temp1.nc4 {path}DTB.nc4')
+    def rsync_data(input_file, output_file='') -> None:
+        run_command(f"rsync -avP {raw_data_path}{input_file} {path}{output_file}")
 
-#     os.system(f'cp {post_data_path}mask/mask_v3/mask12.nc4 {path}mask12.nc4')
-#     os.system(f'cp {post_data_path}mask/mask_v3/mask123.nc4 {path}mask123.nc4')
+    rsync_data('mask_all/mask_adequatewater/mask_adequatewater.nc4')
+    rsync_data('mask_all/mask_woodyveg/mask_woodyveg.nc4')
+    rsync_data('mask_all/mask_shallowbedrock/mask_shallowbedrock.nc4')
+
+    rsync_data('Ssoil/Ssoil.nc4')
+    rsync_data('diff/diff.nc')
+    rsync_data(f'diff/ET_2003_2020_mean_{resolution}_mmyr_nn.nc', 'ET_mean.nc')
+    rsync_data(f'diff/PR_2003_2020_mean_{resolution}_mmyr_nn.nc', 'PR_mean.nc')
+    rsync_data(f'diff/Q_2003_2020_mean_{resolution}_mmyr_nn.nc', 'Q_mean.nc')
+    rsync_data(f'diff/ET_2003_2020_median_{resolution}_mmyr_nn.nc', 'ET_median.nc')
+    rsync_data(f'diff/PR_2003_2020_median_{resolution}_mmyr_nn.nc', 'PR_median.nc')
+    rsync_data(f'diff/Q_2003_2020_median_{resolution}_mmyr_nn.nc', 'Q_median.nc')
+    rsync_data(f'PET/PET_{resolution}.nc', 'PET.nc')
+
+    rsync_data('SC/SnowCover_0p1_mask.nc4', 'SnowCover.nc4')
+    rsync_data('Koppen/Koppen.nc4')
+    rsync_data('IGBP/IGBP.nc4')
+    rsync_data('Area/Area.nc4')
+    rsync_data('C_Density/aboveground_biomass_carbon_remap.nc4', 'Aboveground.nc4')
+    rsync_data('C_Density/belowground_biomass_carbon_remap.nc4', 'Belowground.nc4')
+    rsync_data('500.txt')
+    rsync_data('0p1.txt')
+
+def cp_0p1(resolution):
+    raw_data_path = f'/tera04/zhwei/xionghui/bedrock/'
+    path = f'/tera04/zhwei/xionghui/bedrock/run/{resolution}_rawdata/'
+    os.makedirs(path, exist_ok=True)
     
-#     os.system(f'cp {post_data_path}Ssoil/Ssoil_v3/Ssoil.nc4 {path}Ssoil.nc4')
-    
-#     # -----------------------------------ET and PR-----------------------------------
-#     os.system(f'cp {post_data_path}diff/diff.nc4 {path}diff.nc4')
-#     os.system(f'cp {post_data_path}diff/ET_2003_2020_mean_500_mmyr_nn.nc4 {path}ET_mean.nc4')
-#     os.system(f'cp {post_data_path}diff/PR_2003_2020_mean_500_mmyr_nn.nc4 {path}PR_mean.nc4')
-#     os.system(f'cp {post_data_path}diff/Q_2003_2020_mean_500_mmyr_nn.nc4 {path}Q_mean.nc4')
-#     os.system(f'cp {post_data_path}diff/ET_2003_2020_median_500_mmyr_nn.nc4 {path}ET_median.nc4')
-#     os.system(f'cp {post_data_path}diff/PR_2003_2020_median_500_mmyr_nn.nc4 {path}PR_median.nc4')
-#     os.system(f'cp {post_data_path}diff/Q_2003_2020_median_500_mmyr_nn.nc4 {path}Q_median.nc4')
+    def rsync_data(input_file, output_file='') -> None:
+        run_command(f"rsync -avP {raw_data_path}{input_file} {path}{output_file}")
 
-#     os.system(f'cp {post_data_path}PET/PET_500.nc4 {path}PET.nc4')
+    # rsync_data(f'mask_all/mask_adequatewater/mask_adequatewater_{resolution}.nc4','mask_adequatewater.nc4')
+    # rsync_data(f'mask_all/mask_woodyveg/mask_woodyveg_{resolution}.nc4','mask_woodyveg.nc4')
+    # rsync_data(f'mask_all/mask_shallowbedrock/mask_shallowbedrock_{resolution}.nc4','mask_shallowbedrock.nc4')
 
-#     os.system(f'cp {post_data_path}SC/SnowCover_0p1.nc4 {path}SnowCover.nc4')
-#     os.system(f'cp {post_data_path}mask3/mask3.nc4 {path}mask3.nc4')
-    
-#     # -----------------------------------no change-----------------------------------
-#     os.system(f'cp {post_data_path}mask2/mask2.nc4 {path}mask2.nc4')
+    # rsync_data(f'Ssoil/Ssoil_{resolution}.nc4', 'Ssoil.nc4')
+    # rsync_data('diff/diff.nc')
+    # rsync_data(f'diff/ET_2003_2020_mean_{resolution}_mmyr_nn.nc', 'ET_mean.nc')
+    # rsync_data(f'diff/PR_2003_2020_mean_{resolution}_mmyr_nn.nc', 'PR_mean.nc')
+    # rsync_data(f'diff/Q_2003_2020_mean_{resolution}_mmyr_nn.nc', 'Q_mean.nc')
+    # rsync_data(f'diff/ET_2003_2020_median_{resolution}_mmyr_nn.nc', 'ET_median.nc')
+    # rsync_data(f'diff/PR_2003_2020_median_{resolution}_mmyr_nn.nc', 'PR_median.nc')
+    # rsync_data(f'diff/Q_2003_2020_median_{resolution}_mmyr_nn.nc', 'Q_median.nc')
+    # rsync_data(f'PET/PET_{resolution}.nc', 'PET.nc')
 
-#     os.system(f'cp {post_data_path}Koppen/Koppen.nc4 {path}Koppen.nc4')
-#     os.system(f'cp {post_data_path}IGBP/IGBP.nc4 {path}IGBP.nc4')
-#     os.system(f'cp {post_data_path}Area/Area.nc4 {path}Area.nc4')
-#     os.system(f'cp {post_data_path}C_Density/aboveground_biomass_carbon_remap.nc4 {path}Aboveground.nc4')
-#     os.system(f'cp {post_data_path}C_Density/belowground_biomass_carbon_remap.nc4 {path}Belowground.nc4')
-
-#     os.system(f'cp {post_data_path}500.txt {path}')
-#     os.system(f'cp {post_data_path}0p1.txt {path}')
+    # rsync_data('SC/SnowCover_0p1.nc4', 'SnowCover.nc4')
+    # rsync_data(f'Koppen/Koppen_{resolution}.nc4', 'Koppen.nc4')
+    # rsync_data(f'IGBP/IGBP_{resolution}.nc4', 'IGBP.nc4')
+    # rsync_data(f'Area/Area_{resolution}.nc4', 'Area.nc4')
+    rsync_data('C_Density/aboveground_biomass_carbon_remap_0p1.nc', 'Aboveground.nc')
+    rsync_data('C_Density/belowground_biomass_carbon_remap_0p1.nc', 'Belowground.nc')
+    rsync_data('500.txt')
+    rsync_data('0p1.txt')
 
 def ln():
-    path1 = f'/tera11/zhwei/students/Xionghui/data/run/{resolution}_rawdata/'
-    path2 = f'/tera11/zhwei/students/Xionghui/data/run/{resolution}/'
+    path1 = f'/tera04/zhwei/xionghui/bedrock/run/{resolution}_rawdata/'
+    path2 = f'/tera04/zhwei/xionghui/bedrock/run/{resolution}/'
 
-    path_0p1 = f'/tera11/zhwei/students/Xionghui/data/run/0p1/'
+    path_0p1 = f'/tera04/zhwei/xionghui/bedrock/run/0p1/'
 
     os.makedirs(path2, exist_ok=True)
     os.makedirs(fig_path, exist_ok=True)
@@ -114,5 +137,6 @@ def ln():
 
 
 if __name__ == '__main__':
-    # cp_500()
-    ln()
+    # cp('500')
+    cp_0p1('0p1')
+    # ln()

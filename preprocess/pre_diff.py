@@ -5,7 +5,7 @@ from joblib import Parallel, delayed
 def cdo_set(n1,n2):
     os.system(f'cdo -setrtoc,-inf,0,0 {n1} {n2}')
 
-path = "/tera11/zhwei/students/Xionghui/data/"
+path = "/tera04/zhwei/xionghui/bedrock/"
 print(path)
 # def mv_ET():
 #     filelist = subprocess.getoutput(f'ls {path}/ET/').split("\n")

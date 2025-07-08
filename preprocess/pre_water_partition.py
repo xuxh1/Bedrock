@@ -12,7 +12,7 @@ data_path = config.data_path
 post_data_path = config.post_data_path
 
 def et():
-    et_path = "/tera11/zhwei/students/Xionghui/data/diff/"
+    et_path = "/tera04/zhwei/xionghui/bedrock/diff/"
     ds = xr.open_dataset(f'{et_path}ET_2003_2020_yr_{resolution}_mmyr_nn.nc')
     et = ds['et'].load()
 
@@ -28,7 +28,7 @@ def et():
 
 
 def pr():
-    pr_path = "/tera11/zhwei/students/Xionghui/data/diff/"
+    pr_path = "/tera04/zhwei/xionghui/bedrock/diff/"
     ds = xr.open_dataset(f'{pr_path}PR_2003_2020_yr_{resolution}_mmyr_nn.nc')
     pr = ds['tp'].load()
 
@@ -44,7 +44,7 @@ def pr():
 
 
 def q():
-    q_path = "/tera11/zhwei/students/Xionghui/data/diff/"
+    q_path = "/tera04/zhwei/xionghui/bedrock/diff/"
     ds = xr.open_dataset(f'{q_path}Q_2003_2020_yr_{resolution}_mmyr_nn.nc')
     q = ds['tp'].load()
 
