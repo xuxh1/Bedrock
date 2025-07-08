@@ -1,6 +1,6 @@
-# fig/
-# python.*
-# *.txt
-# bk/
-# *.slurm
-# *.out
+fig/
+python.*
+*.txt
+bk/
+*.slurm
+*.out
